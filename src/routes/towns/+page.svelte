@@ -3,8 +3,9 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import SettlementView from '#lib/components/SettlementView.svelte';
+	import { getRegion } from '#lib/data/regions.ts';
 	import { getTier } from '#lib/data/tiers.ts';
-	import { rerollShop } from '#lib/generator.ts';
+	import { familyForShop } from '#lib/generator.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
 	import type { Family, Settlement } from '#lib/types.ts';
@@ -66,10 +67,7 @@
 		<button class="btn" type="button" onclick={() => window.print()}>Print</button>
 		<button class="btn danger" type="button" onclick={() => remove(selected)}>Forget town</button>
 	</div>
-	<SettlementView
-		settlement={selected}
-		onReroll={(shopId) => towns.put(rerollShop(selected, shopId, families.list))}
-	/>
+	<SettlementView settlement={selected} onChange={(next) => towns.put(next)} />
 	<section class="card notes">
 		<label for="notes"><h2>DM notes</h2></label>
 		<textarea
@@ -112,16 +110,15 @@
 			{#each towns.list as town (town.id)}
 				<li class="card">
 					<a href="{resolve('/towns')}?id={encodeURIComponent(town.id)}">
-						<span class="tier">{getTier(town.tier).label}</span>
+						<span class="tier">{getTier(town.tier).label} · {getRegion(town.region).label}</span>
 						<strong>{town.name}</strong>
 						<span class="muted">
 							Pop. {town.population.toLocaleString('en-US')} · {town.shops.length}
 							{town.shops.length === 1 ? 'shop' : 'shops'}
 						</span>
 						<span class="emblems" aria-hidden="true">
-							{#each town.shops as shop (shop.id)}{families.get(
-									shop.type === 'smithy' ? 'weapons' : shop.type
-								).emblem}{/each}
+							{#each town.shops as shop (shop.id)}{families.get(familyForShop(shop.type))
+									.emblem}{/each}
 						</span>
 					</a>
 				</li>

@@ -143,6 +143,13 @@ export interface ShopRule {
 
 export const SHOP_RULES: ShopRule[] = [
 	{
+		// Taverns (~1 per 400 people) and inns (~1 per 2,000) together.
+		type: 'inn',
+		label: 'Inn & tavern',
+		supportValue: 400,
+		minByTier: [-1, 0, 1, 1, 1, 1, 1, 1]
+	},
+	{
 		type: 'general',
 		label: 'General store',
 		supportValue: 700,
@@ -183,8 +190,6 @@ export const SHOP_RULES: ShopRule[] = [
 
 /** Other trades and institutions with MDME-style support values, for flavour. */
 export const TRADES: { label: string; supportValue: number; minTier: number }[] = [
-	{ label: 'Taverns', supportValue: 400, minTier: 1 },
-	{ label: 'Inns', supportValue: 2000, minTier: 2 },
 	{ label: 'Blacksmiths', supportValue: 1500, minTier: 2 },
 	{ label: 'Bakers', supportValue: 800, minTier: 2 },
 	{ label: 'Healers & physicians', supportValue: 1700, minTier: 3 },

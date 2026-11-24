@@ -1,17 +1,23 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import SettlementView from '#lib/components/SettlementView.svelte';
+	import { REGIONS } from '#lib/data/regions.ts';
 	import { TIERS } from '#lib/data/tiers.ts';
-	import { generateSettlement, rerollShop } from '#lib/generator.ts';
+	import { generateSettlement } from '#lib/generator.ts';
 	import { randomSeed } from '#lib/rng.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
+	import { load, save } from '#lib/stores/storage.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
-	import type { Settlement, TierId } from '#lib/types.ts';
+	import type { RegionId, Settlement, TierId } from '#lib/types.ts';
 
 	const params = page.url.searchParams;
 	let size = $state<TierId | ''>((params.get('size') as TierId) ?? '');
+	// Most campaigns stay in one region for a while, so remember the last choice.
+	let region = $state<RegionId | 'random'>(
+		(params.get('region') as RegionId | 'random') ??
+			load<RegionId | 'random'>('kinkeep:region', 'heartland')
+	);
 	let name = $state(params.get('name') ?? '');
 	let seed = $state(params.get('seed') ?? '');
 	let settlement = $state<Settlement | null>(null);
@@ -24,6 +30,7 @@
 		const fresh = generateSettlement({
 			seed,
 			tier: size || undefined,
+			region: region === 'random' ? undefined : region,
 			name,
 			families: families.list
 		});
@@ -31,14 +38,18 @@
 		settlement = towns.get(fresh.id) ?? fresh;
 		const query = new URLSearchParams({ seed });
 		if (size) query.set('size', size);
+		query.set('region', region);
+		save('kinkeep:region', region);
 		if (name.trim()) query.set('name', name.trim());
-		goto(`${resolve('/')}?${query}`, { replace: true, shallow: true });
+		// Update the address bar in place (works at / and under a base path like /kinkeep/).
+		const url = new URL(location.href);
+		url.search = query.toString();
+		goto(url, { replace: true, shallow: true });
 	}
 
-	function reroll(shopId: string) {
-		if (!settlement) return;
-		settlement = rerollShop(settlement, shopId, families.list);
-		if (towns.has(settlement.id)) towns.put(settlement);
+	function update(next: Settlement) {
+		settlement = next;
+		if (towns.has(next.id)) towns.put(next);
 	}
 
 	async function copyLink() {
@@ -74,6 +85,15 @@
 		</select>
 	</div>
 	<div class="field">
+		<label for="region">Region</label>
+		<select id="region" bind:value={region}>
+			{#each REGIONS as r (r.id)}
+				<option value={r.id}>{r.label}</option>
+			{/each}
+			<option value="random">Random</option>
+		</select>
+	</div>
+	<div class="field">
 		<label for="name">Name <span class="muted">(optional)</span></label>
 		<input id="name" bind:value={name} placeholder="Leave blank to generate" autocomplete="off" />
 	</div>
@@ -103,7 +123,7 @@
 		<button class="btn" type="button" onclick={() => window.print()}>Print</button>
 		<span class="muted seed">Seed: <code>{settlement.seed}</code></span>
 	</div>
-	<SettlementView {settlement} onReroll={reroll} />
+	<SettlementView {settlement} onChange={update} />
 {:else}
 	<section class="empty">
 		<h1>Who keeps the shops in the next town?</h1>

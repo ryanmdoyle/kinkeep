@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { DEFAULT_FAMILIES } from '#lib/data/families.ts';
 import { TIERS } from '#lib/data/tiers.ts';
-import { generateSettlement, rerollShop } from '#lib/generator.ts';
+import { generateSettlement, rerollRumour, rerollShop } from '#lib/generator.ts';
 import { formatPrice, roundPrice } from '#lib/money.ts';
 import { createRng } from '#lib/rng.ts';
 
@@ -86,5 +86,70 @@ describe('generateSettlement', () => {
 		expect(next.shops.slice(1)).toEqual(town.shops.slice(1));
 		expect(next.shops[0].id).toBe(target.id);
 		expect(next.shops[0].keeper.familyId).toBe(target.keeper.familyId);
+	});
+});
+
+describe('inns, rumours and regions', () => {
+	it('gives villages and up an inn run by the innkeeping family', () => {
+		for (let n = 0; n < 20; n++) {
+			const town = generateSettlement({ seed: `inn${n}`, tier: 'village', families });
+			const inn = town.shops.find((s) => s.type === 'inn');
+			expect(inn?.keeper.familyId).toBe('inn');
+			expect(inn?.stock.some((i) => i.name.startsWith('House special'))).toBe(true);
+		}
+	});
+
+	it('gives every shopkeeper a filled-in rumour', () => {
+		const city = generateSettlement({ seed: 'rumours', tier: 'metropolis', families });
+		for (const shop of city.shops) {
+			expect(shop.keeper.rumour?.text).toBeTruthy();
+			expect(shop.keeper.rumour?.text).not.toMatch(/\{\w+\}/);
+			expect(['true', 'partly true', 'false']).toContain(shop.keeper.rumour?.truth);
+		}
+	});
+
+	it('rerolls only the rumour', () => {
+		const town = generateSettlement({ seed: 'r', tier: 'small-town', families });
+		const next = rerollRumour(town, town.shops[0].id, families);
+		expect({ ...next.shops[0].keeper, rumour: undefined }).toEqual({
+			...town.shops[0].keeper,
+			rumour: undefined
+		});
+		expect(next.shops.slice(1)).toEqual(town.shops.slice(1));
+	});
+
+	it('applies regional goods and prices', () => {
+		const coastal = generateSettlement({
+			seed: 'sea',
+			tier: 'small-city',
+			region: 'coastal',
+			families
+		});
+		const heartland = generateSettlement({
+			seed: 'sea',
+			tier: 'small-city',
+			region: 'heartland',
+			families
+		});
+		expect(coastal.region).toBe('coastal');
+		const generalItems = (s: typeof coastal) =>
+			s.shops.filter((x) => x.type === 'general').flatMap((x) => x.stock.map((i) => i.name));
+		expect(generalItems(coastal)).toContain('Salted fish (1 day)');
+		expect(generalItems(heartland)).not.toContain('Salted fish (1 day)');
+	});
+
+	it('moves goods into smaller places where the region makes them common', () => {
+		// Scimitars are normally large-town goods; on the desert road a village smith has them.
+		let found = false;
+		for (let n = 0; n < 20 && !found; n++) {
+			const village = generateSettlement({
+				seed: `d${n}`,
+				tier: 'village',
+				region: 'desert',
+				families
+			});
+			found = village.shops.some((s) => s.stock.some((i) => i.name === 'Scimitar'));
+		}
+		expect(found).toBe(true);
 	});
 });

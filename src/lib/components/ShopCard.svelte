@@ -13,8 +13,15 @@
 		shop,
 		family,
 		kin = [],
-		onReroll
-	}: { shop: Shop; family: Family; kin?: Kin[]; onReroll?: () => void } = $props();
+		onReroll,
+		onRumour
+	}: {
+		shop: Shop;
+		family: Family;
+		kin?: Kin[];
+		onReroll?: () => void;
+		onRumour?: () => void;
+	} = $props();
 
 	const typeLabel = $derived(
 		shop.name.includes('Peddler')
@@ -65,6 +72,22 @@
 			{/each}
 			<li class="bargain"><span class="muted">Bargaining:</span> {shop.keeper.bargaining.label}</li>
 		</ul>
+		{#if shop.keeper.rumour}
+			<div class="rumour">
+				<p>
+					<span class="label">Rumour</span>
+					{shop.keeper.rumour.text}
+				</p>
+				<p class="truth-row">
+					<span class="truth {shop.keeper.rumour.truth.replace(' ', '-')}">
+						DM: {shop.keeper.rumour.truth}
+					</span>
+					{#if onRumour}
+						<button class="link no-print" type="button" onclick={onRumour}>Another rumour</button>
+					{/if}
+				</p>
+			</div>
+		{/if}
 		{#if kin.length}
 			<p class="kin">
 				<span class="muted">Kin the party has met:</span>
@@ -109,7 +132,7 @@
 										</span>{/if}
 									{#if item.note}<span class="note">{item.note}</span>{/if}
 								</td>
-								<td class="num">{item.qty}</td>
+								<td class="num">{item.qty < 0 ? '—' : item.qty}</td>
 								<td class="num price">{formatPrice(item.price)}</td>
 							</tr>
 						{/each}
@@ -199,6 +222,51 @@
 		margin-top: 0.3rem;
 		font-size: 0.9rem;
 	}
+	.rumour {
+		margin-top: 0.6rem;
+		padding: 0.5rem 0.65rem;
+		border: 1px dashed var(--line);
+		border-radius: 8px;
+		font-size: 0.92rem;
+	}
+	.rumour p {
+		margin: 0;
+	}
+	.rumour .label {
+		font-weight: 700;
+		margin-right: 0.25rem;
+	}
+	.truth-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-top: 0.3rem !important;
+		font-size: 0.8rem;
+	}
+	.truth {
+		padding: 0 0.45rem;
+		border-radius: 999px;
+		border: 1px solid currentColor;
+	}
+	.truth.true {
+		color: var(--good);
+	}
+	.truth.partly-true {
+		color: var(--warn);
+	}
+	.truth.false {
+		color: var(--danger);
+	}
+	.link {
+		background: none;
+		border: 0;
+		padding: 0.25rem;
+		color: var(--accent);
+		text-decoration: underline;
+		cursor: pointer;
+		font-size: 0.85rem;
+	}
 	.kin {
 		margin: 0.5rem 0 0;
 		font-size: 0.9rem;
@@ -274,13 +342,13 @@
 		color: var(--muted);
 	}
 	.rarity.uncommon {
-		color: #3d8b40;
+		color: var(--good);
 	}
 	.rarity.rare {
-		color: #2f6fb5;
+		color: var(--rare);
 	}
 	.rarity.very-rare {
-		color: #8a4fc2;
+		color: var(--very-rare);
 	}
 	.orders h4 {
 		margin: 0.75rem 0 0.25rem;

@@ -1,12 +1,25 @@
 import { CATALOGS, SPECIAL_ORDER_WAIT } from '#lib/data/catalog.ts';
 import { HAIR_COLORS } from '#lib/data/families.ts';
 import { AGES, BARGAINING, settlementName } from '#lib/data/names.ts';
+import { REGIONS, getRegion } from '#lib/data/regions.ts';
+import {
+	DIRECTIONS,
+	LOCAL_NAMES,
+	LOCAL_TRADES,
+	MONSTERS,
+	ROLE_RUMOURS,
+	TRUTH_WEIGHTS
+} from '#lib/data/rumours.ts';
 import { SHOP_RULES, TIERS, TRADES, getTier, type Tier } from '#lib/data/tiers.ts';
 import { roundPrice } from '#lib/money.ts';
 import { createRng, hashString, randomSeed, type Rng } from '#lib/rng.ts';
 import type {
+	CatalogItem,
 	Family,
 	FamilyRole,
+	Region,
+	RegionId,
+	Rumour,
 	Settlement,
 	Shop,
 	ShopType,
@@ -19,8 +32,21 @@ export interface GenerateOptions {
 	seed?: string;
 	/** Leave out to pick a size at random (weighted toward small places, like real life). */
 	tier?: TierId;
+	/** Leave out to pick a region at random. */
+	region?: RegionId;
 	name?: string;
 	families: Family[];
+}
+
+/** Everything the shop builders need, passed around as one bundle. */
+interface Ctx {
+	rng: Rng;
+	tier: Tier;
+	region: Region;
+	families: Family[];
+	/** "familyId:FirstName" already used in this town. */
+	usedNames: Set<string>;
+	usedShopNames: Set<string>;
 }
 
 export function familyForShop(type: ShopType): FamilyRole {
@@ -57,10 +83,36 @@ function realisticCount(rng: Rng, pop: number, supportValue: number): number {
 }
 
 function fillTemplate(template: string, vars: Record<string, string>): string {
-	return template.replace(/\{(\w+)\}/g, (_, key: string) => vars[key] ?? '');
+	return template.replace(/\{(\w+)\}/g, (match, key: string) => vars[key] ?? match);
 }
 
-function makeKeeper(rng: Rng, family: Family, usedNames: Set<string>): Shopkeeper {
+function makeRumour(ctx: Ctx, family: Family): Rumour {
+	const { rng, region } = ctx;
+	let pool = ROLE_RUMOURS[family.id] ?? ROLE_RUMOURS.general;
+	if (region.rumours.length && rng.chance(0.35)) {
+		pool = region.rumours;
+	} else if (family.id === 'inn' && rng.chance(0.5)) {
+		// Innkeepers hear a bit of everything.
+		pool = ROLE_RUMOURS[rng.pick(Object.keys(ROLE_RUMOURS) as FamilyRole[])];
+	}
+
+	const others = ctx.families.filter((f) => f.id !== family.id);
+	const text = fillTemplate(rng.pick(pool), {
+		place: settlementName(rng, rng.int(0, 4), region),
+		person: `${rng.pick(LOCAL_NAMES)} ${rng.pick(LOCAL_TRADES)}`,
+		monster: rng.pick(MONSTERS),
+		direction: rng.pick(DIRECTIONS),
+		kin: others.length ? rng.pick(others).surname : 'other'
+	});
+
+	const total = TRUTH_WEIGHTS.reduce((a, b) => a + b.weight, 0);
+	let roll = rng.next() * total;
+	const truth = TRUTH_WEIGHTS.find((t) => (roll -= t.weight) <= 0)?.truth ?? 'true';
+	return { text, truth };
+}
+
+function makeKeeper(ctx: Ctx, family: Family): Shopkeeper {
+	const { rng, usedNames } = ctx;
 	const available = family.firstNames.filter((n) => !usedNames.has(`${family.id}:${n}`));
 	const firstName = rng.pick(available.length ? available : family.firstNames) ?? 'Unnamed';
 	usedNames.add(`${family.id}:${firstName}`);
@@ -76,12 +128,42 @@ function makeKeeper(rng: Rng, family: Family, usedNames: Set<string>): Shopkeepe
 		age: rng.pick(AGES),
 		quirks,
 		greeting: fillTemplate(rng.pick(family.greetings) ?? '', { surname: family.surname }),
-		bargaining: rng.pick(BARGAINING)
+		bargaining: rng.pick(BARGAINING),
+		rumour: makeRumour(ctx, family)
 	};
 }
 
-function makeStock(rng: Rng, type: ShopType, tier: Tier, keeper: Shopkeeper, peddler: boolean) {
-	const catalog = CATALOGS[type];
+/** The shop's catalog with the region's local goods added and tiers shifted. */
+function regionalCatalog(type: ShopType, region: Region): CatalogItem[] {
+	const base = [...CATALOGS[type], ...(region.extraItems[type] ?? [])];
+	const seen = new Set<string>();
+	return base
+		.filter((item) => !seen.has(item.name) && seen.add(item.name))
+		.map((item) => ({
+			...item,
+			minTier: Math.max(0, item.minTier + (region.tierShift[item.name] ?? 0))
+		}));
+}
+
+function regionalPrice(item: CatalogItem, region: Region): number {
+	return (
+		item.price * (region.priceByCategory[item.category] ?? 1) * (region.priceByItem[item.name] ?? 1)
+	);
+}
+
+function maxQuantity(item: CatalogItem, type: ShopType): number {
+	const forged = type === 'smithy' || type === 'weapons' || type === 'armor';
+	if (item.category === 'Ammunition') return 10;
+	if (item.category === 'Lodging') return 6;
+	if (item.price >= 100) return 1;
+	if (item.price >= 20 || (forged && item.category.includes('armor'))) return 2;
+	if (forged) return 4;
+	return item.price >= 1 ? 8 : 20;
+}
+
+function makeStock(ctx: Ctx, type: ShopType, keeper: Shopkeeper, peddler: boolean) {
+	const { rng, tier, region } = ctx;
+	const catalog = regionalCatalog(type, region);
 	const stock: StockItem[] = [];
 	const priceMod = tier.priceMod * (1 + keeper.bargaining.modifier);
 
@@ -90,63 +172,52 @@ function makeStock(rng: Rng, type: ShopType, tier: Tier, keeper: Shopkeeper, ped
 		const chance = peddler ? 0.35 : item.staple ? 1 : tier.stockChance;
 		if (!rng.chance(chance)) continue;
 
-		// Cheap things come by the dozen, magic items one at a time.
-		const forged = type === 'smithy' || type === 'weapons' || type === 'armor';
-		const maxQty =
-			item.category === 'Ammunition'
-				? 10
-				: item.price >= 100
-					? 1
-					: item.price >= 20 || (forged && item.category.includes('armor'))
-						? 2
-						: forged
-							? 4
-							: item.price >= 1
-								? 8
-								: 20;
-		const bigTownBonus = tier.index >= 5 && maxQty > 1 ? 2 : 1;
-		const qty = rng.int(1, Math.max(1, Math.round(maxQty * bigTownBonus)));
+		const bigTownBonus = tier.index >= 5 ? 2 : 1;
+		const max = maxQuantity(item, type);
+		const qty = item.unlimited ? -1 : rng.int(1, max > 1 ? max * bigTownBonus : 1);
 		const jitter = 0.9 + rng.next() * 0.2;
 
 		stock.push({
 			name: item.name,
 			category: item.category,
-			price: roundPrice(item.price * priceMod * jitter),
+			price: roundPrice(regionalPrice(item, region) * priceMod * jitter),
 			qty,
 			note: item.note,
 			rarity: item.rarity
 		});
 	}
 
-	const specialOrders = peddler
-		? []
-		: catalog
-				.filter((item) => item.minTier > tier.index && item.minTier <= tier.index + 3)
-				.filter(() => rng.chance(0.5))
-				.slice(0, 6)
-				.map((item) => ({
-					name: item.name,
-					// Ordering from afar costs extra.
-					price: roundPrice(item.price * priceMod * 1.25),
-					wait: SPECIAL_ORDER_WAIT[item.minTier - tier.index]
-				}));
+	if (type === 'inn' && region.dishes.length) {
+		stock.unshift({
+			name: `House special: ${rng.pick(region.dishes)}`,
+			category: 'Meals',
+			price: roundPrice(0.4 * priceMod * (region.priceByCategory.Meals ?? 1)),
+			qty: -1
+		});
+	}
+
+	const specialOrders =
+		peddler || type === 'inn'
+			? []
+			: catalog
+					.filter((item) => item.minTier > tier.index && item.minTier <= tier.index + 3)
+					.filter(() => rng.chance(0.5))
+					.slice(0, 6)
+					.map((item) => ({
+						name: item.name,
+						// Ordering from afar costs extra.
+						price: roundPrice(regionalPrice(item, region) * priceMod * 1.25),
+						wait: SPECIAL_ORDER_WAIT[item.minTier - tier.index]
+					}));
 
 	return { stock, specialOrders };
 }
 
-function makeShop(
-	rng: Rng,
-	type: ShopType,
-	tier: Tier,
-	families: Family[],
-	usedNames: Set<string>,
-	usedShopNames: Set<string>,
-	idx: number,
-	peddler = false
-): Shop {
-	const family = families.find((f) => f.id === familyForShop(type));
+function makeShop(ctx: Ctx, type: ShopType, idx: number, peddler = false): Shop {
+	const { rng } = ctx;
+	const family = ctx.families.find((f) => f.id === familyForShop(type));
 	if (!family) throw new Error(`No family for shop type ${type}`);
-	const keeper = makeKeeper(rng, family, usedNames);
+	const keeper = makeKeeper(ctx, family);
 
 	let name = '';
 	for (let attempt = 0; attempt < 6; attempt++) {
@@ -160,29 +231,36 @@ function makeShop(
 			first: keeper.firstName,
 			adj: rng.pick(family.adjectives) ?? ''
 		});
-		if (!usedShopNames.has(name)) break;
+		if (!ctx.usedShopNames.has(name)) break;
 	}
-	usedShopNames.add(name);
+	ctx.usedShopNames.add(name);
 
-	const { stock, specialOrders } = makeStock(rng, type, tier, keeper, peddler);
+	const { stock, specialOrders } = makeStock(ctx, type, keeper, peddler);
 	return { id: `${type}-${idx}`, type, name, keeper, stock, specialOrders };
 }
 
 export function generateSettlement(opts: GenerateOptions): Settlement {
 	const seed = opts.seed?.trim() || randomSeed();
 	const rng = createRng(seed);
-	// Roll the tier with its own stream so picking a size by hand doesn't
-	// change everything else about a seed.
+	// Roll size and region with their own streams so picking one by hand
+	// doesn't change everything else about a seed.
 	const tier = opts.tier ? getTier(opts.tier) : pickTier(createRng(`${seed}:tier`));
+	const region = opts.region ? getRegion(opts.region) : createRng(`${seed}:region`).pick(REGIONS);
 
 	const population = rollPopulation(rng, tier);
-	const generatedName = settlementName(rng, tier.index);
+	const generatedName = settlementName(rng, tier.index, region);
 	const name = opts.name?.trim() || generatedName;
 
+	const ctx: Ctx = {
+		rng,
+		tier,
+		region,
+		families: opts.families,
+		usedNames: new Set(),
+		usedShopNames: new Set()
+	};
 	const shops: Shop[] = [];
 	const shopTotals: Partial<Record<ShopType, number>> = {};
-	const usedNames = new Set<string>();
-	const usedShopNames = new Set<string>();
 
 	for (const rule of SHOP_RULES) {
 		const min = rule.minByTier[tier.index];
@@ -192,9 +270,7 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 		// A thorp has no store, but sometimes a peddler is passing through.
 		if (rule.type === 'general' && tier.index === 0) {
 			if (rng.chance(0.5)) {
-				shops.push(
-					makeShop(rng, 'general', tier, opts.families, usedNames, usedShopNames, 0, true)
-				);
+				shops.push(makeShop(ctx, 'general', 0, true));
 				shopTotals.general = 1;
 			}
 			continue;
@@ -203,9 +279,7 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 		if (total === 0) continue;
 		shopTotals[rule.type] = total;
 		const featured = Math.min(total, tier.featuredCap);
-		for (let n = 0; n < featured; n++) {
-			shops.push(makeShop(rng, rule.type, tier, opts.families, usedNames, usedShopNames, n));
-		}
+		for (let n = 0; n < featured; n++) shops.push(makeShop(ctx, rule.type, n));
 	}
 
 	const trades = TRADES.filter((t) => tier.index >= t.minTier).map((t) => ({
@@ -214,16 +288,28 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 	}));
 
 	return {
-		// Same seed + size + name always gives the same id, so saving twice updates.
-		id: hashString(`${seed}|${tier.id}|${name}`).toString(36),
+		// Same seed + size + region + name always gives the same id, so saving twice updates.
+		id: hashString(`${seed}|${tier.id}|${region.id}|${name}`).toString(36),
 		seed,
 		name,
 		tier: tier.id,
+		region: region.id,
 		population,
 		createdAt: new Date().toISOString(),
 		shops,
 		shopTotals,
 		trades
+	};
+}
+
+function contextFor(settlement: Settlement, families: Family[], salt: string): Ctx {
+	return {
+		rng: createRng(`${settlement.seed}:${salt}:${Math.random()}`),
+		tier: getTier(settlement.tier),
+		region: getRegion(settlement.region),
+		families,
+		usedNames: new Set(settlement.shops.map((s) => `${s.keeper.familyId}:${s.keeper.firstName}`)),
+		usedShopNames: new Set(settlement.shops.map((s) => s.name))
 	};
 }
 
@@ -234,16 +320,28 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 export function rerollShop(settlement: Settlement, shopId: string, families: Family[]): Settlement {
 	const target = settlement.shops.find((s) => s.id === shopId);
 	if (!target) return settlement;
-	const rng = createRng(`${settlement.seed}:${shopId}:${Math.random()}`);
-	const tier = getTier(settlement.tier);
-	const usedNames = new Set(
-		settlement.shops.map((s) => `${s.keeper.familyId}:${s.keeper.firstName}`)
-	);
-	const usedShopNames = new Set(settlement.shops.map((s) => s.name));
-	const peddler = tier.index === 0;
-	const fresh = makeShop(rng, target.type, tier, families, usedNames, usedShopNames, 0, peddler);
+	const ctx = contextFor(settlement, families, shopId);
+	const peddler = ctx.tier.index === 0 && target.type === 'general';
+	const fresh = makeShop(ctx, target.type, 0, peddler);
 	return {
 		...settlement,
 		shops: settlement.shops.map((s) => (s.id === shopId ? { ...fresh, id: shopId } : s))
+	};
+}
+
+/** Gives one shopkeeper a new rumour, leaving everything else alone. */
+export function rerollRumour(
+	settlement: Settlement,
+	shopId: string,
+	families: Family[]
+): Settlement {
+	const ctx = contextFor(settlement, families, `${shopId}:rumour`);
+	return {
+		...settlement,
+		shops: settlement.shops.map((s) => {
+			if (s.id !== shopId) return s;
+			const family = families.find((f) => f.id === s.keeper.familyId);
+			return family ? { ...s, keeper: { ...s.keeper, rumour: makeRumour(ctx, family) } } : s;
+		})
 	};
 }

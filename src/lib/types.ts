@@ -12,10 +12,36 @@ export type TierId =
  * The kinds of shop a settlement can have. Small places get a single `smithy`
  * that sells both weapons and armor; towns and up split it into two shops.
  */
-export type ShopType = 'general' | 'smithy' | 'weapons' | 'armor' | 'potions' | 'magic';
+export type ShopType = 'inn' | 'general' | 'smithy' | 'weapons' | 'armor' | 'potions' | 'magic';
 
 /** Which family runs which shop type. The smithy is run by the weapons family. */
-export type FamilyRole = 'general' | 'weapons' | 'armor' | 'potions' | 'magic';
+export type FamilyRole = Exclude<ShopType, 'smithy'>;
+
+export type RegionId =
+	'heartland' | 'coastal' | 'mountain' | 'northern' | 'desert' | 'forest' | 'swamp';
+
+export interface Region {
+	id: RegionId;
+	label: string;
+	blurb: string;
+	/** What the place is known for; shown on the settlement. */
+	specialities: string[];
+	/** House specials served at inns. */
+	dishes: string[];
+	/** Extra name parts mixed into settlement names. */
+	namePrefixes: string[];
+	nameSuffixes: string[];
+	/** Price multipliers by item category (e.g. "Heavy armor": 1.2). */
+	priceByCategory: Record<string, number>;
+	/** Price multipliers by exact item name. */
+	priceByItem: Record<string, number>;
+	/** Shifts an item's minimum tier (negative = found in smaller places here). */
+	tierShift: Record<string, number>;
+	/** Regional goods added to shop catalogs. */
+	extraItems: Partial<Record<ShopType, CatalogItem[]>>;
+	/** Region-flavoured rumours. */
+	rumours: string[];
+}
 
 export interface Family {
 	/** Stable id; also the role it fills. */
@@ -58,6 +84,8 @@ export interface CatalogItem {
 	note?: string;
 	/** Always in stock if the tier allows it. */
 	staple?: boolean;
+	/** Sold by the serving, not counted (drinks, meals, services). */
+	unlimited?: boolean;
 	rarity?: 'common' | 'uncommon' | 'rare' | 'very rare';
 }
 
@@ -65,6 +93,7 @@ export interface StockItem {
 	name: string;
 	category: string;
 	price: number;
+	/** -1 means "as much as you like" (meals, drinks, services). */
 	qty: number;
 	note?: string;
 	rarity?: CatalogItem['rarity'];
@@ -78,6 +107,13 @@ export interface Shopkeeper {
 	greeting: string;
 	/** Haggling stance shown to the DM. */
 	bargaining: { label: string; modifier: number };
+	/** Something they'll tell the party, and whether it's true (DM's eyes only). */
+	rumour?: Rumour;
+}
+
+export interface Rumour {
+	text: string;
+	truth: 'true' | 'partly true' | 'false';
 }
 
 export interface Shop {
@@ -100,6 +136,8 @@ export interface Settlement {
 	seed: string;
 	name: string;
 	tier: TierId;
+	/** Missing on towns saved before regions existed; treat as heartland. */
+	region?: RegionId;
 	population: number;
 	createdAt: string;
 	shops: Shop[];

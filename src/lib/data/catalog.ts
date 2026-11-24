@@ -256,12 +256,40 @@ const MAGIC_LIST: CatalogItem[] = [
 	i('Spell scroll (6th level)', 2500, 7, 'Scroll', { rarity: 'very rare' })
 ];
 
+const INN_LIST: CatalogItem[] = [
+	i('Ale (mug)', 0.04, 1, 'Drink', { staple: true, unlimited: true }),
+	i('Ale (gallon)', 0.2, 1, 'Drink', { unlimited: true }),
+	i('Wine, common (pitcher)', 0.2, 1, 'Drink', { staple: true, unlimited: true }),
+	i('Mead (mug)', 0.05, 2, 'Drink', { unlimited: true }),
+	i('Wine, fine (bottle)', 10, 4, 'Drink'),
+	i('Bread (loaf)', 0.02, 1, 'Food', { staple: true, unlimited: true }),
+	i('Cheese (hunk)', 0.1, 1, 'Food', { unlimited: true }),
+	i('Meat (chunk)', 0.3, 1, 'Food', { unlimited: true }),
+	i('Meal, poor', 0.06, 1, 'Meals', { staple: true, unlimited: true }),
+	i('Meal, modest', 0.3, 2, 'Meals', { staple: true, unlimited: true }),
+	i('Meal, comfortable', 0.5, 3, 'Meals', { unlimited: true }),
+	i('Meal, wealthy', 0.8, 4, 'Meals', { unlimited: true }),
+	i('Meal, aristocratic', 2, 5, 'Meals', { unlimited: true }),
+	i('Common room floor (per night)', 0.07, 1, 'Lodging', { staple: true, unlimited: true }),
+	i('Room, poor (per night)', 0.1, 1, 'Lodging'),
+	i('Room, modest (per night)', 0.5, 2, 'Lodging', { staple: true }),
+	i('Room, comfortable (per night)', 0.8, 3, 'Lodging'),
+	i('Room, wealthy (per night)', 2, 4, 'Lodging'),
+	i('Suite, aristocratic (per night)', 4, 5, 'Lodging'),
+	i('Stabling (per day)', 0.5, 2, 'Services', { unlimited: true }),
+	i('Hot bath', 0.2, 3, 'Services', { unlimited: true }),
+	i('Messenger (per mile)', 0.02, 3, 'Services', { unlimited: true })
+];
+
 /** Peddlers in a thorp carry a tiny, random bag of general goods. */
 export const CATALOGS: Record<ShopType, CatalogItem[]> = {
+	inn: INN_LIST,
 	general: GENERAL_GOODS,
+	// A village smith makes a bit of everything; the tier filter (and the
+	// region) decide what is actually on the shelf.
 	smithy: [
-		...WEAPON_LIST.filter((x) => x.minTier <= 3 && x.category !== 'Special'),
-		...ARMOR_LIST.filter((x) => x.minTier <= 3)
+		...WEAPON_LIST.filter((x) => x.category !== 'Special'),
+		...ARMOR_LIST.filter((x) => x.category !== 'Special')
 	],
 	weapons: WEAPON_LIST,
 	armor: ARMOR_LIST,

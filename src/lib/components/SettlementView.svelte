@@ -1,15 +1,18 @@
 <script lang="ts">
 	import ShopCard from '#lib/components/ShopCard.svelte';
 	import { SHOP_RULES, getTier } from '#lib/data/tiers.ts';
-	import { familyForShop } from '#lib/generator.ts';
+	import { getRegion } from '#lib/data/regions.ts';
+	import { familyForShop, rerollRumour, rerollShop } from '#lib/generator.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
 	import type { Settlement } from '#lib/types.ts';
 
-	let { settlement, onReroll }: { settlement: Settlement; onReroll?: (shopId: string) => void } =
+	/** Pass `onChange` to allow rerolling shops and rumours. */
+	let { settlement, onChange }: { settlement: Settlement; onChange?: (next: Settlement) => void } =
 		$props();
 
 	const tier = $derived(getTier(settlement.tier));
+	const region = $derived(getRegion(settlement.region));
 
 	const totals = $derived(
 		SHOP_RULES.filter((r) => settlement.shopTotals[r.type]).map((r) => {
@@ -22,9 +25,12 @@
 
 <section class="settlement">
 	<header class="head">
-		<p class="tier">{tier.label} · population {settlement.population.toLocaleString('en-US')}</p>
+		<p class="tier">
+			{tier.label} · {region.label} · population {settlement.population.toLocaleString('en-US')}
+		</p>
 		<h1>{settlement.name}</h1>
-		<p class="muted blurb">{tier.blurb}</p>
+		<p class="muted blurb">{tier.blurb} {region.blurb}</p>
+		<p class="known-for"><strong>Known for:</strong> {region.specialities.join(', ')}</p>
 	</header>
 
 	<div class="summary">
@@ -73,7 +79,12 @@
 				{shop}
 				family={families.get(familyId)}
 				kin={towns.kinOf(familyId, settlement.id)}
-				onReroll={onReroll ? () => onReroll(shop.id) : undefined}
+				onReroll={onChange
+					? () => onChange(rerollShop(settlement, shop.id, families.list))
+					: undefined}
+				onRumour={onChange
+					? () => onChange(rerollRumour(settlement, shop.id, families.list))
+					: undefined}
 			/>
 		{/each}
 	</div>
@@ -98,7 +109,10 @@
 	}
 	.blurb {
 		margin: 0;
-		max-width: 60ch;
+		max-width: 70ch;
+	}
+	.known-for {
+		margin: 0.35rem 0 0;
 	}
 	.summary {
 		display: grid;

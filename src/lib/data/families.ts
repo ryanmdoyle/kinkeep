@@ -8,6 +8,74 @@ import type { Family, FamilyRole } from '#lib/types.ts';
  */
 export const DEFAULT_FAMILIES: Family[] = [
 	{
+		id: 'inn',
+		surname: 'Hearthscale',
+		groupName: 'Clan Hearthscale',
+		race: 'Dragonborn',
+		emblem: '🍺',
+		color: '#b5651d',
+		signature:
+			'Copper-scaled and broad, with a stained leather apron, and a habit of lighting the hearth (and the odd pipe) with a polite little puff of flame.',
+		personality:
+			'Big-hearted, booming hosts who remember every guest. They love a full common room, a good song and a better story, and they hear everything.',
+		voice:
+			'Loud and warm. Laugh at your own jokes, call everyone "friend" and slap the bar for emphasis.',
+		greetings: [
+			"Friends! Come in out of the cold. Sit, sit, I'll light the fire. *puff*",
+			'Welcome to the finest hall in town! Also the only hall in town. Ha!',
+			"You look like you've walked a long road. First drink's on the {surname}s.",
+			'Boots off the table, weapons by the door, and tell me everything.'
+		],
+		quirks: [
+			"Remembers every guest's drink order, even from years ago.",
+			'Will give a free room for a song, a story or a good fight story (no actual fighting).',
+			'Keeps a "trouble jar" of coins: anyone who starts a brawl pays into it.',
+			'Has a bard-in-residence who is terrible, and is fiercely loyal to them.',
+			"Sneezes sparks when they laugh too hard. There's a scorch mark on the ceiling.",
+			'Keeps a wall of tankards for regulars, and one hook that is always left empty.',
+			'Writes to the other {surname} inns, so they often know the party is coming.',
+			'Brews a secret family ale and will only say it contains "a bit of dragon".',
+			'Runs a betting book on local events and will take bets on the party.',
+			'Insists every guest signs the guest book. It goes back two hundred years.'
+		],
+		firstNames: [
+			'Rhogar',
+			'Kava',
+			'Torinn',
+			'Surina',
+			'Medrash',
+			'Biri',
+			'Arjhan',
+			'Farideh',
+			'Ghesh',
+			'Nala',
+			'Heskan',
+			'Thava',
+			'Pandjed',
+			'Uadjit',
+			'Balasar',
+			'Mishann'
+		],
+		shopNames: [
+			'The {adj} Flagon',
+			'The {adj} Hearth',
+			'The {adj} Wyrm',
+			"{first}'s Rest",
+			'{surname} Hall',
+			'The {adj} Tankard'
+		],
+		adjectives: [
+			'Copper',
+			'Smoking',
+			'Sleeping',
+			'Merry',
+			'Roaring',
+			'Laughing',
+			'Golden',
+			'Crooked'
+		]
+	},
+	{
 		id: 'general',
 		surname: 'Pennywhistle',
 		groupName: 'the Pennywhistle family',
@@ -298,6 +366,7 @@ export const DEFAULT_FAMILIES: Family[] = [
 ];
 
 export const FAMILY_ROLE_LABELS: Record<FamilyRole, string> = {
+	inn: 'Inns & taverns',
 	general: 'General stores',
 	weapons: 'Weapons & smithies',
 	armor: 'Armor',

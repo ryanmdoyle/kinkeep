@@ -1,4 +1,5 @@
 import type { Rng } from '#lib/rng.ts';
+import type { Region } from '#lib/types.ts';
 
 const PREFIXES = [
 	'Oak',
@@ -114,10 +115,17 @@ const SMALL_FORMS = [
 	'Upper {name}'
 ];
 
-export function settlementName(rng: Rng, tierIndex: number): string {
+export function settlementName(rng: Rng, tierIndex: number, region?: Region): string {
 	const suffixes = tierIndex <= 2 ? SMALL_SUFFIXES : tierIndex <= 4 ? TOWN_SUFFIXES : CITY_SUFFIXES;
-	let prefix = rng.pick(PREFIXES);
-	let suffix = rng.pick(suffixes);
+	// Regional name parts show up often enough to give an area its own feel.
+	let prefix =
+		region?.namePrefixes.length && rng.chance(0.6)
+			? rng.pick(region.namePrefixes)
+			: rng.pick(PREFIXES);
+	let suffix =
+		region?.nameSuffixes.length && rng.chance(0.5)
+			? rng.pick(region.nameSuffixes)
+			: rng.pick(suffixes);
 	// Avoid doubled letters like "Millley" reading badly.
 	if (prefix.at(-1) === suffix[0]) suffix = suffix.slice(1);
 	if (prefix.endsWith('e') && suffix.startsWith('e')) prefix = prefix.slice(0, -1);
