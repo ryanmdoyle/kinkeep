@@ -1,3 +1,5 @@
+import type { Versioned } from '#lib/content/versioned.ts';
+
 export type TierId =
 	| 'thorp'
 	| 'hamlet'
@@ -27,10 +29,10 @@ export interface Region {
 	/** What the place is known for; shown on the settlement. */
 	specialities: string[];
 	/** House specials served at inns. */
-	dishes: string[];
+	dishes: Versioned<string>;
 	/** Extra name parts mixed into settlement names. */
-	namePrefixes: string[];
-	nameSuffixes: string[];
+	namePrefixes: Versioned<string>;
+	nameSuffixes: Versioned<string>;
 	/** Price multipliers by item category (e.g. "Heavy armor": 1.2). */
 	priceByCategory: Record<string, number>;
 	/** Price multipliers by exact item name. */
@@ -38,9 +40,9 @@ export interface Region {
 	/** Shifts an item's minimum tier (negative = found in smaller places here). */
 	tierShift: Record<string, number>;
 	/** Regional goods added to shop catalogs. */
-	extraItems: Partial<Record<ShopType, CatalogItem[]>>;
+	extraItems: Partial<Record<ShopType, Versioned<CatalogItem>>>;
 	/** Region-flavoured rumours. */
-	rumours: string[];
+	rumours: Versioned<string>;
 }
 
 export interface Family {
@@ -72,6 +74,11 @@ export interface Family {
 	shopNames: string[];
 	adjectives: string[];
 }
+
+type FamilyListKey = 'greetings' | 'quirks' | 'firstNames' | 'shopNames' | 'adjectives';
+
+/** A built-in family as written in the data files: its lists are versioned tables. */
+export type FamilyDef = Omit<Family, FamilyListKey> & Record<FamilyListKey, Versioned<string>>;
 
 export interface CatalogItem {
 	name: string;
@@ -109,12 +116,38 @@ export interface Shopkeeper {
 	bargaining: { label: string; modifier: number };
 	/** Something they'll tell the party, and whether it's true (DM's eyes only). */
 	rumour?: Rumour;
+	/** Content keys of the quirk lines used, so a campaign can avoid repeating them. */
+	quirkKeys?: string[];
 }
+
+export type Truth = 'true' | 'partly true' | 'false';
 
 export interface Rumour {
 	text: string;
-	truth: 'true' | 'partly true' | 'false';
+	truth: Truth;
+	/** Content key of the rumour line used (missing on towns saved before campaigns). */
+	key?: string;
+	/** True when it came from the campaign's own rumour bank. */
+	custom?: boolean;
 }
+
+/** A rumour the DM wants spread through their campaign's shops. */
+export interface CustomRumour {
+	id: string;
+	/** May use {place}, {person}, {monster}, {direction} and {kin}. */
+	text: string;
+	truth: Truth;
+	/** Shop families that may tell it. Empty means any shopkeeper. */
+	roles: FamilyRole[];
+}
+
+/**
+ * How shopkeepers use the campaign's own rumours:
+ * - first: tell each of yours once before any built-in ones
+ * - mix: about half yours, half built-in
+ * - only: never use built-in rumours
+ */
+export type RumourMode = 'first' | 'mix' | 'only';
 
 export interface Shop {
 	id: string;
@@ -134,6 +167,10 @@ export interface TradeCount {
 export interface Settlement {
 	id: string;
 	seed: string;
+	/** Content version the town was built with (missing = 1). */
+	contentVersion?: number;
+	/** The campaign the town is saved in. */
+	campaignId?: string;
 	name: string;
 	tier: TierId;
 	/** Missing on towns saved before regions existed; treat as heartland. */
@@ -146,4 +183,20 @@ export interface Settlement {
 	/** Other realistic tradespeople and institutions, for flavour. */
 	trades: TradeCount[];
 	notes?: string;
+}
+
+export interface Campaign {
+	id: string;
+	name: string;
+	createdAt: string;
+	/**
+	 * Families this campaign has changed. Roles not listed use the built-in
+	 * family, so they pick up new built-in names, quirks and greetings.
+	 */
+	families: Partial<Record<FamilyRole, Family>>;
+	/** Skip names, quirks and rumours already used in this campaign's saved towns. */
+	avoidRepeats: boolean;
+	/** The DM's own rumours to spread through the campaign's shops. */
+	rumours?: CustomRumour[];
+	rumourMode?: RumourMode;
 }

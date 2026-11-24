@@ -6,9 +6,10 @@
 	import { getRegion } from '#lib/data/regions.ts';
 	import { getTier } from '#lib/data/tiers.ts';
 	import { familyForShop } from '#lib/generator.ts';
+	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
-	import type { Family, Settlement } from '#lib/types.ts';
+	import type { Campaign, Family, Settlement } from '#lib/types.ts';
 
 	const selectedId = $derived(page.url.searchParams.get('id'));
 	const selected = $derived(selectedId ? towns.get(selectedId) : undefined);
@@ -25,7 +26,8 @@
 	}
 
 	function exportAll() {
-		const data = { app: 'kinkeep', version: 1, towns: towns.list, families: families.list };
+		// Version 2 backups hold every campaign and every town.
+		const data = { app: 'kinkeep', version: 2, campaigns: campaigns.list, towns: towns.all };
 		const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
 		const a = document.createElement('a');
 		a.href = URL.createObjectURL(blob);
@@ -40,16 +42,37 @@
 		const file = input.files?.[0];
 		if (!file) return;
 		try {
-			const data = JSON.parse(await file.text()) as { towns?: Settlement[]; families?: Family[] };
+			const data = JSON.parse(await file.text()) as {
+				towns?: Settlement[];
+				families?: Family[];
+				campaigns?: Campaign[];
+			};
 			if (!Array.isArray(data.towns)) throw new Error('No towns found in that file.');
+
+			if (Array.isArray(data.campaigns)) {
+				const proceed = confirm(
+					`Import ${data.campaigns.length} campaigns and ${data.towns.length} towns? ` +
+						'Campaigns and towns with the same id are replaced; everything else is kept.'
+				);
+				if (!proceed) return;
+				for (const campaign of data.campaigns) campaigns.put(campaign);
+				for (const town of data.towns) towns.put(town);
+				return;
+			}
+
+			// An older backup (before campaigns): bring it into the current campaign.
 			const proceed = confirm(
-				`Import ${data.towns.length} towns? OK merges them with your current towns.`
+				`Import ${data.towns.length} towns into "${campaigns.active.name}"? ` +
+					'OK merges them with the towns already there.'
 			);
 			if (!proceed) return;
-			for (const town of data.towns) towns.put(town);
+			const campaignId = campaigns.active.id;
+			for (const town of data.towns) towns.put({ ...town, campaignId });
 			if (
 				Array.isArray(data.families) &&
-				confirm('Also replace your families with the ones in the file?')
+				confirm(
+					`Also replace the families in "${campaigns.active.name}" with the ones in the file?`
+				)
 			) {
 				families.replaceAll(data.families);
 			}
@@ -82,8 +105,11 @@
 {:else}
 	<header class="list-head">
 		<div>
-			<h1>Saved towns</h1>
-			<p class="muted">Saved in this browser. Export a backup to move them to another device.</p>
+			<h1>Towns in {campaigns.active.name}</h1>
+			<p class="muted">
+				Saved in this browser. <a href={resolve('/campaigns')}>Switch campaign</a>, or export a
+				backup (every campaign) to move them to another device.
+			</p>
 		</div>
 		<div class="io no-print">
 			<button class="btn" type="button" onclick={exportAll}>Export backup</button>
@@ -102,7 +128,7 @@
 
 	{#if towns.list.length === 0}
 		<div class="card empty">
-			<p>No saved towns yet.</p>
+			<p>No saved towns in this campaign yet.</p>
 			<a class="btn primary" href={resolve('/')}>Generate one</a>
 		</div>
 	{:else}

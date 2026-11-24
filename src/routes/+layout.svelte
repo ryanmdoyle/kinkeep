@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { asset, resolve } from '$app/paths';
 	import { page } from '$app/state';
+	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
@@ -9,7 +10,9 @@
 	const links = [
 		{ href: resolve('/'), label: 'Generate', match: '/' },
 		{ href: resolve('/towns'), label: 'Saved towns', match: '/towns' },
-		{ href: resolve('/families'), label: 'Families', match: '/families' }
+		{ href: resolve('/families'), label: 'Families', match: '/families' },
+		{ href: resolve('/rumours'), label: 'Rumours', match: '/rumours' },
+		{ href: resolve('/campaigns'), label: 'Campaigns', match: '/campaigns' }
 	];
 </script>
 
@@ -31,6 +34,18 @@
 				</a>
 			{/each}
 		</nav>
+		<label class="campaign">
+			<span class="visually-hidden">Campaign</span>
+			<select
+				value={campaigns.active.id}
+				onchange={(e) => campaigns.select(e.currentTarget.value)}
+				title="Towns, families and used content belong to the campaign"
+			>
+				{#each campaigns.list as c (c.id)}
+					<option value={c.id}>{c.name}</option>
+				{/each}
+			</select>
+		</label>
 	</div>
 </header>
 
@@ -65,7 +80,13 @@
 	}
 	nav {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 0.25rem;
+	}
+	.campaign select {
+		max-width: 14rem;
+		padding: 0.3rem 0.5rem;
+		font-size: 0.9rem;
 	}
 	nav a {
 		padding: 0.4rem 0.7rem;

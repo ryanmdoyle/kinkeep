@@ -80,10 +80,12 @@
 				family={families.get(familyId)}
 				kin={towns.kinOf(familyId, settlement.id)}
 				onReroll={onChange
-					? () => onChange(rerollShop(settlement, shop.id, families.list))
+					? () =>
+							onChange(rerollShop(settlement, shop.id, towns.inputFor(undefined, settlement.id)))
 					: undefined}
 				onRumour={onChange
-					? () => onChange(rerollRumour(settlement, shop.id, families.list))
+					? () =>
+							onChange(rerollRumour(settlement, shop.id, towns.inputFor(undefined, settlement.id)))
 					: undefined}
 			/>
 		{/each}

@@ -1,44 +1,36 @@
-import { DEFAULT_FAMILIES } from '#lib/data/families.ts';
+import { defaultFamily } from '#lib/data/families.ts';
 import type { Family, FamilyRole } from '#lib/types.ts';
-import { load, save } from './storage.ts';
+import { campaigns, familyOverrides } from './campaigns.svelte.ts';
 
-const KEY = 'kinkeep:families';
-
-function clone<T>(value: T): T {
-	return JSON.parse(JSON.stringify(value)) as T;
-}
-
-/** Merges saved families over the defaults so new fields get filled in. */
-function initial(): Family[] {
-	const saved = load<Family[]>(KEY, []);
-	return DEFAULT_FAMILIES.map((def) => ({ ...clone(def), ...saved.find((f) => f.id === def.id) }));
-}
-
+/**
+ * The active campaign's families. Built-in families that haven't been
+ * changed keep picking up new names, quirks and greetings as they're added;
+ * a changed family is the campaign's own copy.
+ */
 class FamilyStore {
-	list = $state<Family[]>(initial());
+	get list(): Family[] {
+		return campaigns.familiesFor(campaigns.active);
+	}
 
 	get(id: FamilyRole): Family {
-		return this.list.find((f) => f.id === id) ?? DEFAULT_FAMILIES.find((f) => f.id === id)!;
+		return this.list.find((f) => f.id === id) ?? defaultFamily(id);
+	}
+
+	isCustom(id: FamilyRole): boolean {
+		return Boolean(campaigns.active.families[id]);
 	}
 
 	update(id: FamilyRole, patch: Partial<Family>) {
-		this.list = this.list.map((f) => (f.id === id ? { ...f, ...patch, id } : f));
-		save(KEY, this.list);
+		campaigns.setFamily(id, { ...this.get(id), ...patch, id });
 	}
 
 	reset(id?: FamilyRole) {
-		this.list = this.list.map((f) =>
-			!id || f.id === id ? clone(DEFAULT_FAMILIES.find((d) => d.id === f.id)!) : f
-		);
-		save(KEY, this.list);
+		if (id) campaigns.setFamily(id, undefined);
+		else campaigns.update(campaigns.active.id, { families: {} });
 	}
 
 	replaceAll(list: Family[]) {
-		this.list = DEFAULT_FAMILIES.map((def) => ({
-			...clone(def),
-			...list.find((f) => f.id === def.id)
-		}));
-		save(KEY, this.list);
+		campaigns.update(campaigns.active.id, { families: familyOverrides(list) });
 	}
 }
 
