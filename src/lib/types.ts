@@ -120,12 +120,34 @@ export interface Shopkeeper {
 	quirkKeys?: string[];
 }
 
+export type Truth = 'true' | 'partly true' | 'false';
+
 export interface Rumour {
 	text: string;
-	truth: 'true' | 'partly true' | 'false';
+	truth: Truth;
 	/** Content key of the rumour line used (missing on towns saved before campaigns). */
 	key?: string;
+	/** True when it came from the campaign's own rumour bank. */
+	custom?: boolean;
 }
+
+/** A rumour the DM wants spread through their campaign's shops. */
+export interface CustomRumour {
+	id: string;
+	/** May use {place}, {person}, {monster}, {direction} and {kin}. */
+	text: string;
+	truth: Truth;
+	/** Shop families that may tell it. Empty means any shopkeeper. */
+	roles: FamilyRole[];
+}
+
+/**
+ * How shopkeepers use the campaign's own rumours:
+ * - first: tell each of yours once before any built-in ones
+ * - mix: about half yours, half built-in
+ * - only: never use built-in rumours
+ */
+export type RumourMode = 'first' | 'mix' | 'only';
 
 export interface Shop {
 	id: string;
@@ -174,4 +196,7 @@ export interface Campaign {
 	families: Partial<Record<FamilyRole, Family>>;
 	/** Skip names, quirks and rumours already used in this campaign's saved towns. */
 	avoidRepeats: boolean;
+	/** The DM's own rumours to spread through the campaign's shops. */
+	rumours?: CustomRumour[];
+	rumourMode?: RumourMode;
 }

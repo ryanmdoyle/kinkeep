@@ -11,6 +11,7 @@
 		{ href: resolve('/'), label: 'Generate', match: '/' },
 		{ href: resolve('/towns'), label: 'Saved towns', match: '/towns' },
 		{ href: resolve('/families'), label: 'Families', match: '/families' },
+		{ href: resolve('/rumours'), label: 'Rumours', match: '/rumours' },
 		{ href: resolve('/campaigns'), label: 'Campaigns', match: '/campaigns' }
 	];
 </script>

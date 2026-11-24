@@ -17,11 +17,13 @@ import { roundPrice } from '#lib/money.ts';
 import { createRng, hashString, randomSeed, type Rng } from '#lib/rng.ts';
 import type {
 	CatalogItem,
+	CustomRumour,
 	Family,
 	FamilyRole,
 	Region,
 	RegionId,
 	Rumour,
+	RumourMode,
 	Settlement,
 	Shop,
 	ShopType,
@@ -48,20 +50,27 @@ import type {
  * towns change.
  */
 
-export interface GenerateOptions {
+/** What a campaign brings to generation: its families and its history. */
+export interface CampaignInput {
+	families: Family[];
+	/** Content keys already used in the campaign; picks skip these while others are left. */
+	avoid?: Iterable<string>;
+	/** The DM's own rumours to spread through the shops. */
+	customRumours?: CustomRumour[];
+	rumourMode?: RumourMode;
+}
+
+export interface GenerateOptions extends CampaignInput {
 	seed?: string;
 	/** Leave out to pick a size at random (weighted toward small places, like real life). */
 	tier?: TierId;
 	/** Leave out to pick a region at random. */
 	region?: RegionId;
 	name?: string;
-	families: Family[];
 	/** Content version to build with. Defaults to the newest. */
 	contentVersion?: number;
 	/** Campaign the town belongs to (part of its id). */
 	campaignId?: string;
-	/** Content keys already used in the campaign; picks skip these while others are left. */
-	avoid?: Iterable<string>;
 }
 
 /** Everything the shop builders need, passed around as one bundle. */
@@ -72,6 +81,26 @@ interface Ctx {
 	families: Family[];
 	/** Content keys used in the campaign or already in this town. */
 	taken: Set<string>;
+	customRumours: CustomRumour[];
+	rumourMode: RumourMode;
+}
+
+function newCtx(
+	input: CampaignInput,
+	version: number,
+	tier: Tier,
+	region: Region,
+	alsoTaken: string[] = []
+): Ctx {
+	return {
+		version,
+		tier,
+		region,
+		families: input.families,
+		taken: new Set([...(input.avoid ?? []), ...alsoTaken]),
+		customRumours: (input.customRumours ?? []).filter((r) => r.text.trim()),
+		rumourMode: input.rumourMode ?? 'first'
+	};
 }
 
 const ROLES: FamilyRole[] = ['inn', 'general', 'weapons', 'armor', 'potions', 'magic'];
@@ -113,7 +142,49 @@ function fillTemplate(template: string, vars: Record<string, string>): string {
 	return template.replace(/\{(\w+)\}/g, (match, key: string) => vars[key] ?? match);
 }
 
-function makeRumour(ctx: Ctx, rng: Rng, family: Family): Rumour {
+/** Fills {place}, {person}, {monster}, {direction} and {kin} in a rumour line. */
+function fillRumour(ctx: Ctx, rng: Rng, family: Family, template: string): string {
+	const { version: v, region } = ctx;
+	const fill = rng.fork('fill');
+	const others = ctx.families.filter((f) => f.id !== family.id);
+	const place = fill.fork('place');
+	return fillTemplate(template, {
+		place: settlementName(place, place.int(0, 4), v, region),
+		person: `${fill.fork('person').pick(at(LOCAL_NAMES, v))} ${fill.fork('trade').pick(at(LOCAL_TRADES, v))}`,
+		monster: fill.fork('monster').pick(at(MONSTERS, v)),
+		direction: fill.fork('direction').pick(at(DIRECTIONS, v)),
+		kin: others.length ? fill.fork('kin').pick(others).surname : 'other'
+	});
+}
+
+/** One of the campaign's own rumours that this shopkeeper could tell, if any. */
+function customRumour(ctx: Ctx, rng: Rng, family: Family): Rumour | undefined {
+	const mine = ctx.customRumours.filter((r) => !r.roles.length || r.roles.includes(family.id));
+	const told = (r: CustomRumour) => ctx.taken.has(contentKey.customRumour(r.id));
+	const untold = mine.some((r) => !told(r));
+	const use =
+		mine.length > 0 &&
+		(ctx.rumourMode === 'only' ||
+			(ctx.rumourMode === 'first' && untold) ||
+			(ctx.rumourMode === 'mix' && untold && rng.fork('custom').chance(0.5)));
+	if (!use) return undefined;
+	const chosen = rng.fork('custom-line').pick(mine, told);
+	const key = contentKey.customRumour(chosen.id);
+	ctx.taken.add(key);
+	return {
+		text: fillRumour(ctx, rng, family, chosen.text),
+		truth: chosen.truth,
+		key,
+		custom: true
+	};
+}
+
+function makeRumour(ctx: Ctx, rng: Rng, family: Family): Rumour | undefined {
+	const own = customRumour(ctx, rng, family);
+	if (own) return own;
+	// "Only mine": keepers with none of the DM's rumours to tell stay quiet.
+	if (ctx.rumourMode === 'only' && ctx.customRumours.length) return undefined;
+
 	const { version: v, region } = ctx;
 	const pools = rng.fork('pool');
 	let pool = at(ROLE_RUMOURS[family.id] ?? ROLE_RUMOURS.general, v);
@@ -140,21 +211,10 @@ function makeRumour(ctx: Ctx, rng: Rng, family: Family): Rumour {
 	const key = contentKey.rumour(template);
 	ctx.taken.add(key);
 
-	const fill = rng.fork('fill');
-	const others = ctx.families.filter((f) => f.id !== family.id);
-	const place = fill.fork('place');
-	const text = fillTemplate(template, {
-		place: settlementName(place, place.int(0, 4), v, region),
-		person: `${fill.fork('person').pick(at(LOCAL_NAMES, v))} ${fill.fork('trade').pick(at(LOCAL_TRADES, v))}`,
-		monster: fill.fork('monster').pick(at(MONSTERS, v)),
-		direction: fill.fork('direction').pick(at(DIRECTIONS, v)),
-		kin: others.length ? fill.fork('kin').pick(others).surname : 'other'
-	});
-
 	const total = TRUTH_WEIGHTS.reduce((a, b) => a + b.weight, 0);
 	let roll = rng.fork('truth').next() * total;
 	const truth = TRUTH_WEIGHTS.find((t) => (roll -= t.weight) <= 0)?.truth ?? 'true';
-	return { text, truth, key };
+	return { text: fillRumour(ctx, rng, family, template), truth, key };
 }
 
 function makeKeeper(ctx: Ctx, rng: Rng, family: Family): Shopkeeper {
@@ -312,13 +372,7 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 		? getRegion(opts.region)
 		: root.fork('region').pick(regionsAt(version));
 
-	const ctx: Ctx = {
-		version,
-		tier,
-		region,
-		families: opts.families,
-		taken: new Set(opts.avoid)
-	};
+	const ctx = newCtx(opts, version, tier, region);
 
 	const population = rollPopulation(root.fork('population'), tier);
 	// A typed-in name is kept as is; a generated one skips names the campaign has used.
@@ -381,14 +435,14 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 }
 
 /** Rerolls are meant to be fresh, so they use the newest content and a random stream. */
-function contextFor(settlement: Settlement, families: Family[], avoid?: Iterable<string>): Ctx {
-	return {
-		version: CONTENT_VERSION,
-		tier: getTier(settlement.tier),
-		region: getRegion(settlement.region),
-		families,
-		taken: new Set([...(avoid ?? []), ...usedKeys(settlement)])
-	};
+function contextFor(settlement: Settlement, input: CampaignInput): Ctx {
+	return newCtx(
+		input,
+		CONTENT_VERSION,
+		getTier(settlement.tier),
+		getRegion(settlement.region),
+		usedKeys(settlement)
+	);
 }
 
 const freshRng = (settlement: Settlement, label: string) =>
@@ -397,17 +451,16 @@ const freshRng = (settlement: Settlement, label: string) =>
 /**
  * Rerolls one shop (new keeper from the same family, new stock). Other shops
  * keep their names, quirks and rumours reserved so we don't get two Brunnas
- * in town. `avoid` is the campaign's used content.
+ * in town.
  */
 export function rerollShop(
 	settlement: Settlement,
 	shopId: string,
-	families: Family[],
-	avoid?: Iterable<string>
+	input: CampaignInput
 ): Settlement {
 	const target = settlement.shops.find((s) => s.id === shopId);
 	if (!target) return settlement;
-	const ctx = contextFor(settlement, families, avoid);
+	const ctx = contextFor(settlement, input);
 	const peddler = ctx.tier.index === 0 && target.type === 'general';
 	const fresh = makeShop(ctx, freshRng(settlement, shopId), target.type, 0, peddler);
 	return {
@@ -420,16 +473,15 @@ export function rerollShop(
 export function rerollRumour(
 	settlement: Settlement,
 	shopId: string,
-	families: Family[],
-	avoid?: Iterable<string>
+	input: CampaignInput
 ): Settlement {
-	const ctx = contextFor(settlement, families, avoid);
+	const ctx = contextFor(settlement, input);
 	const rng = freshRng(settlement, `${shopId}:rumour`);
 	return {
 		...settlement,
 		shops: settlement.shops.map((s) => {
 			if (s.id !== shopId) return s;
-			const family = families.find((f) => f.id === s.keeper.familyId);
+			const family = input.families.find((f) => f.id === s.keeper.familyId);
 			return family ? { ...s, keeper: { ...s.keeper, rumour: makeRumour(ctx, rng, family) } } : s;
 		})
 	};

@@ -1,6 +1,13 @@
 import { defaultFamiliesAt } from '#lib/data/families.ts';
 import { CONTENT_VERSION } from '#lib/content/versioned.ts';
-import type { Campaign, Family, FamilyRole, Settlement } from '#lib/types.ts';
+import type {
+	Campaign,
+	CustomRumour,
+	Family,
+	FamilyRole,
+	RumourMode,
+	Settlement
+} from '#lib/types.ts';
 import { load, save } from './storage.ts';
 
 const KEY = 'kinkeep:campaigns';
@@ -112,6 +119,33 @@ class CampaignStore {
 	/** The campaign's families: built-ins at `version`, with the campaign's changes on top. */
 	familiesFor(campaign: Campaign = this.active, version = CONTENT_VERSION): Family[] {
 		return defaultFamiliesAt(version).map((def) => campaign.families[def.id] ?? def);
+	}
+
+	/** Adds rumours to the active campaign's bank (one per non-empty line of text). */
+	addRumours(lines: string[], truth: CustomRumour['truth'], roles: FamilyRole[]) {
+		const added = lines
+			.map((text) => text.trim())
+			.filter(Boolean)
+			.map((text) => ({ id: newId(), text, truth, roles: [...roles] }));
+		const campaign = this.active;
+		this.update(campaign.id, { rumours: [...(campaign.rumours ?? []), ...added] });
+		return added.length;
+	}
+
+	updateRumour(id: string, patch: Partial<Omit<CustomRumour, 'id'>>) {
+		const campaign = this.active;
+		this.update(campaign.id, {
+			rumours: (campaign.rumours ?? []).map((r) => (r.id === id ? { ...r, ...patch, id } : r))
+		});
+	}
+
+	removeRumour(id: string) {
+		const campaign = this.active;
+		this.update(campaign.id, { rumours: (campaign.rumours ?? []).filter((r) => r.id !== id) });
+	}
+
+	setRumourMode(mode: RumourMode) {
+		this.update(this.active.id, { rumourMode: mode });
 	}
 
 	setFamily(role: FamilyRole, family: Family | undefined, campaign: Campaign = this.active) {

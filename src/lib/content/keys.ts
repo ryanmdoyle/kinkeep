@@ -9,6 +9,9 @@ import type { FamilyRole, Settlement } from '#lib/types.ts';
  */
 const short = (text: string) => hashString(text).toString(36);
 
+/** Keys of a campaign's own rumours start with this. */
+export const CUSTOM_RUMOUR_PREFIX = 'rumour:custom:';
+
 export const contentKey = {
 	town: (name: string) => `town:${name}`,
 	shop: (name: string) => `shop:${name}`,
@@ -16,7 +19,9 @@ export const contentKey = {
 	/** Keyed by the template line, before {surname}/{color} are filled in. */
 	quirk: (familyId: FamilyRole, template: string) => `quirk:${familyId}:${short(template)}`,
 	/** Keyed by the template line, before {place}/{person}/... are filled in. */
-	rumour: (template: string) => `rumour:${short(template)}`
+	rumour: (template: string) => `rumour:${short(template)}`,
+	/** A campaign's own rumour, keyed by id so editing its wording keeps its history. */
+	customRumour: (id: string) => `${CUSTOM_RUMOUR_PREFIX}${id}`
 };
 
 export type ContentKind = 'town' | 'shop' | 'keeper' | 'quirk' | 'rumour';

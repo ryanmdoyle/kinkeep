@@ -76,6 +76,7 @@
 			<div class="rumour">
 				<p>
 					<span class="label">Rumour</span>
+					{#if shop.keeper.rumour.custom}<span class="mine">yours</span>{/if}
 					{shop.keeper.rumour.text}
 				</p>
 				<p class="truth-row">
@@ -235,6 +236,18 @@
 	.rumour .label {
 		font-weight: 700;
 		margin-right: 0.25rem;
+	}
+	.mine {
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--accent);
+		border: 1px solid currentColor;
+		border-radius: 999px;
+		padding: 0 0.4rem;
+		margin-right: 0.3rem;
+		vertical-align: 1px;
 	}
 	.truth-row {
 		display: flex;

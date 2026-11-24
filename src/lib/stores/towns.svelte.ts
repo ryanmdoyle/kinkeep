@@ -1,4 +1,6 @@
-import { kindOf, usedKeys, type ContentKind } from '#lib/content/keys.ts';
+import { CUSTOM_RUMOUR_PREFIX, kindOf, usedKeys, type ContentKind } from '#lib/content/keys.ts';
+import { CONTENT_VERSION } from '#lib/content/versioned.ts';
+import type { CampaignInput } from '#lib/generator.ts';
 import type { FamilyRole, Settlement } from '#lib/types.ts';
 import { campaigns, TOWNS_KEY } from './campaigns.svelte.ts';
 import { load, save } from './storage.ts';
@@ -60,9 +62,50 @@ class TownStore {
 		return keys;
 	}
 
-	/** What the avoid-repeats rule should skip right now (empty when it's off). */
+	/**
+	 * What new towns should skip right now: everything used in the campaign
+	 * when avoid-repeats is on, and always the DM's own rumours already placed,
+	 * so they get spread around instead of repeated.
+	 */
 	avoidFor(exceptTownId?: string): Set<string> {
-		return campaigns.active.avoidRepeats ? this.usedKeys(undefined, exceptTownId) : new Set();
+		const used = this.usedKeys(undefined, exceptTownId);
+		if (campaigns.active.avoidRepeats) return used;
+		return new Set([...used].filter((k) => k.startsWith(CUSTOM_RUMOUR_PREFIX)));
+	}
+
+	/** Everything the active campaign feeds into generating or rerolling a town. */
+	inputFor(version = CONTENT_VERSION, exceptTownId?: string): CampaignInput {
+		const campaign = campaigns.active;
+		return {
+			families: campaigns.familiesFor(campaign, version),
+			avoid: this.avoidFor(exceptTownId),
+			customRumours: campaign.rumours ?? [],
+			rumourMode: campaign.rumourMode ?? 'first'
+		};
+	}
+
+	/** Where each of the campaign's own rumours has been placed in its saved towns. */
+	rumourPlacements(campaignId = campaigns.active.id) {
+		const placed = new Map<
+			string,
+			{ town: string; townId: string; keeper: string; shop: string }[]
+		>();
+		for (const town of this.inCampaign(campaignId)) {
+			for (const shop of town.shops) {
+				const key = shop.keeper.rumour?.key;
+				if (!key?.startsWith(CUSTOM_RUMOUR_PREFIX)) continue;
+				const id = key.slice(CUSTOM_RUMOUR_PREFIX.length);
+				const list = placed.get(id) ?? [];
+				list.push({
+					town: town.name,
+					townId: town.id,
+					keeper: shop.keeper.firstName,
+					shop: shop.name
+				});
+				placed.set(id, list);
+			}
+		}
+		return placed;
 	}
 
 	/** How much of each kind of content a campaign has used. */

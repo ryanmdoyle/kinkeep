@@ -4,6 +4,8 @@ import { TIERS } from '#lib/data/tiers.ts';
 import { generateSettlement, rerollRumour, rerollShop } from '#lib/generator.ts';
 import { formatPrice, roundPrice } from '#lib/money.ts';
 import { createRng } from '#lib/rng.ts';
+import { usedKeys } from '#lib/content/keys.ts';
+import type { CustomRumour } from '#lib/types.ts';
 
 const families = DEFAULT_FAMILIES;
 
@@ -82,7 +84,7 @@ describe('generateSettlement', () => {
 	it('rerolls a single shop and leaves the rest alone', () => {
 		const town = generateSettlement({ seed: 'reroll', tier: 'small-city', families });
 		const target = town.shops[0];
-		const next = rerollShop(town, target.id, families);
+		const next = rerollShop(town, target.id, { families });
 		expect(next.shops.slice(1)).toEqual(town.shops.slice(1));
 		expect(next.shops[0].id).toBe(target.id);
 		expect(next.shops[0].keeper.familyId).toBe(target.keeper.familyId);
@@ -110,7 +112,7 @@ describe('inns, rumours and regions', () => {
 
 	it('rerolls only the rumour', () => {
 		const town = generateSettlement({ seed: 'r', tier: 'small-town', families });
-		const next = rerollRumour(town, town.shops[0].id, families);
+		const next = rerollRumour(town, town.shops[0].id, { families });
 		expect({ ...next.shops[0].keeper, rumour: undefined }).toEqual({
 			...town.shops[0].keeper,
 			rumour: undefined
@@ -151,5 +153,83 @@ describe('inns, rumours and regions', () => {
 			found = village.shops.some((s) => s.stock.some((i) => i.name === 'Scimitar'));
 		}
 		expect(found).toBe(true);
+	});
+});
+
+describe('custom rumours', () => {
+	const bank = (n: number, roles: CustomRumour['roles'] = []): CustomRumour[] =>
+		Array.from({ length: n }, (_, i) => ({
+			id: `r${i}`,
+			text: `Custom rumour ${i} about {place}.`,
+			truth: 'false',
+			roles
+		}));
+
+	it('tells every custom rumour once before any built-in ones', () => {
+		const customRumours = bank(12);
+		let avoid = new Set<string>();
+		const told: string[] = [];
+		let builtinBeforeDone = false;
+		for (let n = 0; n < 8; n++) {
+			const town = generateSettlement({
+				seed: `c${n}`,
+				tier: 'small-town',
+				families,
+				customRumours,
+				avoid
+			});
+			for (const shop of town.shops) {
+				const r = shop.keeper.rumour!;
+				if (r.custom) {
+					told.push(r.key!);
+					expect(r.truth).toBe('false');
+					expect(r.text).not.toMatch(/\{\w+\}/);
+				} else if (new Set(told).size < customRumours.length) {
+					builtinBeforeDone = true;
+				}
+			}
+			avoid = new Set([...avoid, ...usedKeys(town)]);
+		}
+		expect(builtinBeforeDone).toBe(false);
+		expect(new Set(told).size).toBe(customRumours.length);
+		expect(told.length).toBe(customRumours.length); // none told twice
+	});
+
+	it('only gives a rumour to the shop types it is meant for', () => {
+		const customRumours = bank(3, ['weapons']);
+		const town = generateSettlement({ seed: 'roles', tier: 'large-town', families, customRumours });
+		for (const shop of town.shops) {
+			if (shop.keeper.rumour?.custom) expect(shop.keeper.familyId).toBe('weapons');
+		}
+		expect(town.shops.some((s) => s.keeper.rumour?.custom)).toBe(true);
+	});
+
+	it('uses no built-in rumours in "only" mode', () => {
+		const customRumours = bank(2, ['inn']);
+		const town = generateSettlement({
+			seed: 'only',
+			tier: 'small-city',
+			families,
+			customRumours,
+			rumourMode: 'only'
+		});
+		for (const shop of town.shops) {
+			if (shop.keeper.familyId === 'inn') expect(shop.keeper.rumour?.custom).toBe(true);
+			else expect(shop.keeper.rumour).toBeUndefined();
+		}
+	});
+
+	it('mixes custom and built-in rumours in "mix" mode', () => {
+		const customRumours = bank(40);
+		const town = generateSettlement({
+			seed: 'mix',
+			tier: 'metropolis',
+			families,
+			customRumours,
+			rumourMode: 'mix'
+		});
+		const custom = town.shops.filter((s) => s.keeper.rumour?.custom).length;
+		expect(custom).toBeGreaterThan(0);
+		expect(custom).toBeLessThan(town.shops.length);
 	});
 });

@@ -33,16 +33,14 @@
 	 * new names, quirks and rumours are added.
 	 */
 	function build(seed: string, version: number) {
-		const campaign = campaigns.active;
 		const fresh = generateSettlement({
+			...towns.inputFor(version),
 			seed,
 			tier: size || undefined,
 			region: region === 'random' ? undefined : region,
 			name,
 			contentVersion: version,
-			campaignId: campaign.id,
-			families: campaigns.familiesFor(campaign, version),
-			avoid: towns.avoidFor()
+			campaignId: campaigns.active.id
 		});
 		// If this town is saved, show the saved copy (keeps rerolls and notes).
 		settlement = towns.get(fresh.id) ?? fresh;

@@ -33,6 +33,9 @@ A settlement and shopkeeper generator for tabletop RPGs (built with D&D 5e in mi
 - **Seeds that keep working.** The same seed + size + region always rebuilds the same town. The URL
   holds the seed and the content version, so bookmarks and shared links keep working as new names,
   quirks and rumours are added. See [CONTENT.md](CONTENT.md) for how to add content safely.
+- **Your own rumours.** Running a published adventure? Paste its rumour table into the **Rumours**
+  page. Shopkeepers in that campaign spread them (yours first, mixed in, or only yours), optionally
+  only from certain shop types, and the page shows who told each one.
 - **Campaigns.** Each campaign has its own saved towns and families, and avoids reusing town names,
   shopkeepers, quirks and rumours from its saved towns until nothing fresh is left.
 - **Saved towns.** Save towns in your browser, reroll individual shops, keep DM notes, and see which
