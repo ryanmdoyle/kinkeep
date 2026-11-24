@@ -50,7 +50,37 @@ const PREFIXES = table({
 		'Dun',
 		'Ald',
 		'Bex',
-		'Cran'
+		'Cran',
+		'Bell',
+		'Wheat',
+		'Oat',
+		'Plum',
+		'Heath',
+		'Kettle',
+		'Wren',
+		'Dove',
+		'Thistle',
+		'Clover',
+		'Ox',
+		'Brock',
+		'Kirk',
+		'Mead',
+		'Pen',
+		'Marl',
+		'Ather',
+		'Hen',
+		'Brack',
+		'Cherry',
+		'Pear',
+		'Hare',
+		'Rook',
+		'Finch',
+		'Linden',
+		'Sorrel',
+		'Cress',
+		'Otter',
+		'Cob',
+		'Tarn'
 	]
 });
 
@@ -71,7 +101,17 @@ const SMALL_SUFFIXES = table({
 		'by',
 		'cote',
 		'mere',
-		'moor'
+		'moor',
+		'croft',
+		'green',
+		'bourne',
+		'hay',
+		'lees',
+		'garth',
+		'thwaite',
+		'nook',
+		'worthy',
+		'side'
 	]
 });
 
@@ -88,12 +128,36 @@ const TOWN_SUFFIXES = table({
 		'stow',
 		'march',
 		'ridge',
-		'worth'
+		'worth',
+		'market',
+		'bank',
+		'stoke',
+		'barrow',
+		'church',
+		'leigh',
+		'ferry',
+		'staple'
 	]
 });
 
 const CITY_SUFFIXES = table({
-	1: ['bury', 'burgh', 'port', 'haven', 'gate', 'minster', 'chester', 'crown', 'fort']
+	1: [
+		'bury',
+		'burgh',
+		'port',
+		'haven',
+		'gate',
+		'minster',
+		'chester',
+		'crown',
+		'fort',
+		'borough',
+		'castle',
+		'cester',
+		'spire',
+		'crest',
+		'tower'
+	]
 });
 
 const CITY_FORMS = table({
@@ -119,7 +183,9 @@ export function settlementName(rng: Rng, tierIndex: number, version: number, reg
 	if (prefix.at(-1) === suffix[0]) suffix = suffix.slice(1);
 	if (prefix.endsWith('e') && suffix.startsWith('e')) prefix = prefix.slice(0, -1);
 	const name = prefix + suffix;
-	const form = rng.fork('form').pick(at(tierIndex <= 2 ? SMALL_FORMS : CITY_FORMS, version));
+	let form = rng.fork('form').pick(at(tierIndex <= 2 ? SMALL_FORMS : CITY_FORMS, version));
+	// "Kingsford" reads well; "Kingsmurkstoke" doesn't.
+	if (form.includes('{lower}') && name.length > 8) form = '{name}';
 	return form.replace('{name}', name).replace('{lower}', name.toLowerCase());
 }
 

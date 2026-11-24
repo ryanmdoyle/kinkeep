@@ -13,12 +13,12 @@
 			{
 				"name": "Tamsin Pennywhistle's Peddler Cart",
 				"keeper": "Tamsin (older) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
+				"greeting": "Don't tell me, let me guess. Rope, rations and a tinderbox? Thought so!",
 				"quirks": [
 					"Keeps a ledger of every traveller who has ever passed through.",
-					"Is feuding (politely) with the baker next door."
+					"Keeps a stool by the counter just for folk who need a sit and a natter."
 				],
-				"rumour": "[true] Cecily the cooper is selling off family heirlooms in a hurry. Debts, or something worse.",
+				"rumour": "[true] Hew the cooper is selling off family heirlooms in a hurry. Debts, or something worse.",
 				"stock": "n4i2tx",
 				"orders": "1axn3y4"
 			}
@@ -40,9 +40,9 @@
 				"keeper": "Fenwick (older) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
 				"quirks": [
-					"Insists on wrapping every purchase in brown paper and string."
+					"Remembers what every customer bought last time, and asks how it went."
 				],
-				"rumour": "[partly true] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[partly true] Barrel staves keep going missing from the cooper's yard. Somebody's building a raft, or a lot of small boxes.",
 				"stock": "1ww041q",
 				"orders": "1axn3y4"
 			}
@@ -50,7 +50,7 @@
 	},
 	{
 		"seed": "golden-hamlet",
-		"name": "Applecote",
+		"name": "Cloverbourne",
 		"tier": "hamlet",
 		"region": "heartland",
 		"population": 100,
@@ -62,14 +62,14 @@
 		],
 		"shops": [
 			{
-				"name": "Fenwick Pennywhistle's General Goods",
-				"keeper": "Fenwick (middle-aged) Soft-hearted (−5% for a sad story)",
+				"name": "Wilmot Pennywhistle's General Goods",
+				"keeper": "Wilmot (middle-aged) Soft-hearted (−5% for a sad story)",
 				"greeting": "Come in, come in! Mind the cat. Now, what's the news from the road?",
 				"quirks": [
-					"Keeps a ledger of every traveller who has ever passed through.",
-					"Offers everyone a sticky homemade toffee."
+					"Wears their mint curls pinned up with a pencil and loses the pencil hourly.",
+					"Tucks a sprig of lavender behind each customer's ear, whether they like it or not."
 				],
-				"rumour": "[partly true] Scarecrows on the north farms are being found turned to face the road.",
+				"rumour": "[partly true] Every sheep at Ravenhay was shorn overnight. The wool's gone, and so is whoever sheared them.",
 				"stock": "1nlngg1",
 				"orders": "1ggdbb7"
 			}
@@ -77,7 +77,7 @@
 	},
 	{
 		"seed": "golden-hamlet-b",
-		"name": "Greypass",
+		"name": "Slatespur",
 		"tier": "hamlet",
 		"region": "mountain",
 		"population": 331,
@@ -90,24 +90,24 @@
 		],
 		"shops": [
 			{
-				"name": "The Sleeping Wyrm",
-				"keeper": "Ghesh (young) Soft-hearted (−5% for a sad story)",
-				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
+				"name": "The Wandering Wyrm",
+				"keeper": "Ulthra (young) Soft-hearted (−5% for a sad story)",
+				"greeting": "Mud on the floor? Pah! Mud's good luck in a Hearthscale house. Come in, come in!",
 				"quirks": [
-					"Insists every guest signs the guest book. It goes back two hundred years."
+					"Is quietly terrified of mice and pays a copper for every one caught."
 				],
-				"rumour": "[false] A minstrel came through singing a song about a hoard in Aldale. The song names the guards.",
-				"stock": "15x8uz6",
+				"rumour": "[false] The Emberforge family threw a feast here and paid with a bag of pearls. Where does a shopkeeper get pearls?",
+				"stock": "ckjxej",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Honest Basket",
-				"keeper": "Hettie (old) Slightly desperate for sales (−10%)",
-				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
+				"name": "Pennywhistle's Everything Shop",
+				"keeper": "Rufus (old) Slightly desperate for sales (−10%)",
+				"greeting": "Hello, hello! Don't mind the clutter, it's all for sale. Well, most of it.",
 				"quirks": [
-					"Is convinced one of the adventurers is secretly royalty."
+					"Forecasts the weather with a creaky knee and is right more often than the almanac."
 				],
-				"rumour": "[partly true] The old well behind the chapel has started whispering. Only at noon, mind.",
+				"rumour": "[partly true] Wat the reeve won the pig at the fair and has been treating it like a prince. Says it talks.",
 				"stock": "1c1b9k8",
 				"orders": "175k1zn"
 			}
@@ -132,13 +132,13 @@
 		],
 		"shops": [
 			{
-				"name": "The Laughing Hearth",
-				"keeper": "Torinn (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
+				"name": "The Snoring Ox",
+				"keeper": "Ilthara (middle-aged) Soft-hearted (−5% for a sad story)",
+				"greeting": "You've got a story on you, I can tell. Sit down, have a pie, and spill it.",
 				"quirks": [
-					"Insists every guest signs the guest book. It goes back two hundred years."
+					"Keeps a jar of pickled eggs on the bar that nobody has ever been brave enough to try."
 				],
-				"rumour": "[partly true] A wagon came in from Hollyley with every crate empty, and the driver won't say a word.",
+				"rumour": "[partly true] The bridge toll went up again. The toll-keeper says it's on orders, but nobody's seen the orders.",
 				"stock": "1fb2f5g",
 				"orders": "1axn3y4"
 			},
@@ -147,20 +147,20 @@
 				"keeper": "Clover (older) Soft-hearted (−5% for a sad story)",
 				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
 				"quirks": [
-					"Has an ancient, enormous cat that sleeps on the counter."
+					"Offers a discount to anyone who can name all the Pennywhistle cousins. Nobody can."
 				],
-				"rumour": "[false] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[false] Someone's stealing washing off the lines. Only left socks, and only on washdays.",
 				"stock": "1xxx98j",
 				"orders": "1xzh46z"
 			},
 			{
-				"name": "Bardek Emberforge's Smithy",
-				"keeper": "Bardek (middle-aged) Slightly desperate for sales (−10%)",
-				"greeting": "Hmph. Show me your hands. ...Calluses. Good. Come in.",
+				"name": "Morrin Emberforge's Smithy",
+				"keeper": "Morrin (middle-aged) Slightly desperate for sales (−10%)",
+				"greeting": "Ask the price, I'll tell you. Haggle, and I'll double it.",
 				"quirks": [
-					"Has never once smiled in front of a customer. Probably."
+					"Won't set jewels in a hilt: \"Jewels are for folk who can't fight.\""
 				],
-				"rumour": "[partly true] The new reeve in Elmthorpe End is taxing ale by the sip.",
+				"rumour": "[partly true] The lord's steward has been measuring fields with a rope and a strange brass gauge. Nobody asked him to.",
 				"stock": "xocg6h",
 				"orders": "ly7ysc"
 			}
@@ -185,37 +185,37 @@
 		],
 		"shops": [
 			{
-				"name": "Medrash's Rest",
+				"name": "The Smoking Goose",
 				"keeper": "Medrash (old) Drives a hard bargain (+10%)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"greeting": "Rooms upstairs, food at the bar, gossip anywhere you like. What'll it be, friends?",
 				"quirks": [
-					"Will give a free room for a song, a story or a good fight story (no actual fighting)."
+					"Grows herbs in the window boxes and drops a sprig of something into every bowl."
 				],
-				"rumour": "[true] The caravan from Ashfjord is three days overdue.",
-				"stock": "1oku9n7",
+				"rumour": "[true] My ale's been going sour overnight. Only the barrels against the east wall of the cellar.",
+				"stock": "1g6nsz7",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Provisions",
-				"keeper": "Posy (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Come in, come in! Mind the cat. Now, what's the news from the road?",
+				"name": "Pennywhistle's Nooks & Crannies",
+				"keeper": "Larkin (middle-aged) Soft-hearted (−5% for a sad story)",
+				"greeting": "Back again? Oh, no, that was the other lot. You all look alike under the mud.",
 				"quirks": [
-					"Offers everyone a sticky homemade toffee.",
-					"Keeps a ledger of every traveller who has ever passed through."
+					"Can't resist reading a customer's shopping list aloud to the whole shop.",
+					"Owns a parrot that repeats the last bit of gossip it heard, at the worst moment."
 				],
-				"rumour": "[true] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[true] The market cross has started leaning. Old folk say it marks where something's buried, and now it's pointing.",
 				"stock": "1971j6t",
 				"orders": "b56gx2"
 			},
 			{
-				"name": "Dorgan Emberforge's Smithy",
-				"keeper": "Dorgan (old) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Hmph. Show me your hands. ...Calluses. Good. Come in.",
+				"name": "Bekkard Emberforge's Smithy",
+				"keeper": "Bekkard (old) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "You've come about a weapon. Or you're lost. Which?",
 				"quirks": [
-					"Tests every blade on a ham hanging from the ceiling.",
-					"Has a rival smith in town and badmouths their work constantly."
+					"Leaves a cup of ale on the anvil each night for the \"forge spirit\".",
+					"Tests every blade on a ham hanging from the ceiling."
 				],
-				"rumour": "[false] The Thornhide folk say the shipments from Coldbrook have stopped coming.",
+				"rumour": "[false] A man ordered a boar spear with a crossbar. Said it wasn't for boar.",
 				"stock": "entfto",
 				"orders": "3ggss4"
 			}
@@ -223,7 +223,7 @@
 	},
 	{
 		"seed": "golden-small-town",
-		"name": "Crowdale-on-the-River",
+		"name": "Oatdale-on-the-River",
 		"tier": "small-town",
 		"region": "heartland",
 		"population": 1112,
@@ -244,48 +244,48 @@
 		],
 		"shops": [
 			{
-				"name": "The Laughing Tankard",
+				"name": "The Toasty Tankard",
 				"keeper": "Pandjed (old) Slightly desperate for sales (−10%)",
 				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
 				"quirks": [
-					"Insists every guest signs the guest book. It goes back two hundred years.",
-					"Brews a secret family ale and will only say it contains \"a bit of dragon\"."
+					"Taps their claws on the bar in time with the music, whether or not there is any.",
+					"Can carry eight full tankards at once and will show off at the slightest excuse."
 				],
-				"rumour": "[true] The new reeve in Elderley is taxing ale by the sip.",
-				"stock": "j25qkw",
+				"rumour": "[true] A plough horse at Eldercroft cut its furrow in a perfect spiral, then lay down in the middle.",
+				"stock": "48kgav",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Hettie (middle-aged) Fair and firm (no haggling)",
-				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
+				"keeper": "Larkin (middle-aged) Fair and firm (no haggling)",
+				"greeting": "Hello, hello! Don't mind the clutter, it's all for sale. Well, most of it.",
 				"quirks": [
-					"Writes letters to every other Pennywhistle shop weekly and will happily pass messages along."
+					"Pays any child who sweeps the porch with a copper and a story."
 				],
-				"rumour": "[true] Scarecrows on the east farms are being found turned to face the road.",
+				"rumour": "[true] The harvest queen goes missing for a day each year and comes back with a basket of fruit nobody can name. It's nearly time.",
 				"stock": "1fydyqo",
 				"orders": "1bw18xg"
 			},
 			{
-				"name": "Ysolde Emberforge, Weaponsmith",
-				"keeper": "Ysolde (middle-aged) Fair and firm (no haggling)",
-				"greeting": "Emberforge steel. Best this side of the mountains. Best the other side too.",
+				"name": "Ingrith & Kin, Bladesmiths",
+				"keeper": "Ingrith (middle-aged) Fair and firm (no haggling)",
+				"greeting": "You've come about a weapon. Or you're lost. Which?",
 				"quirks": [
-					"Hums old forge-songs in a deep rumble while working."
+					"Won't let anyone touch the old hammer on the wall. It belonged to someone important."
 				],
-				"rumour": "[partly true] The harvest came in twice this year. Twice. Nobody is asking how.",
+				"rumour": "[partly true] Scarecrows on the north farms are being found turned to face the road.",
 				"stock": "sq3si7",
 				"orders": "mt9nl2"
 			},
 			{
-				"name": "Imma Thornhide's Mail & Plate",
+				"name": "The Gentle Gauntlet",
 				"keeper": "Imma (old) Drives a hard bargain (+10%)",
-				"greeting": "Arms up, please. Let's see what we're protecting.",
+				"greeting": "Oh, that buckle is crying out for help. I can hear it from here.",
 				"quirks": [
-					"Keeps a jar of honey sweets for nervous customers.",
-					"Remembers the measurements of every customer they have ever had."
+					"Once fitted barding for a carthorse and still sends it a card on its birthday.",
+					"Lines every helmet with lambswool, because \"heads are precious\"."
 				],
-				"rumour": "[false] The lord's guard came in for refitting. Every shield had the same claw marks.",
+				"rumour": "[false] A chimera tore the door off the toll-house. The guard inside lived thanks to the shield I made him.",
 				"stock": "xmvb63",
 				"orders": "uxee8w"
 			},
@@ -294,10 +294,10 @@
 				"keeper": "Mabry (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
 				"quirks": [
-					"Offers a discount if you try an experimental potion. Results vary.",
-					"Keeps a frog familiar that \"tastes-tests\" ingredients."
+					"Tastes every ingredient and describes the flavour like a fussy wine merchant.",
+					"Talks to the cauldron in a baby voice \"so it won't sulk\"."
 				],
-				"rumour": "[false] Nightcap mushrooms are fruiting early in the woods to the east. Bad sign.",
+				"rumour": "[false] A physician from Wheatmarket bought my whole stock of smelling salts. He's treating a patient who won't stay awake.",
 				"stock": "190655h",
 				"orders": "aiautt"
 			}
@@ -305,7 +305,7 @@
 	},
 	{
 		"seed": "golden-small-town-b",
-		"name": "Mirageridge-on-the-River",
+		"name": "Palmridge-on-the-River",
 		"tier": "small-town",
 		"region": "desert",
 		"population": 954,
@@ -327,31 +327,31 @@
 		],
 		"shops": [
 			{
-				"name": "Surina's Rest",
-				"keeper": "Surina (ancient) Fair and firm (no haggling)",
-				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
+				"name": "The Amber Ember",
+				"keeper": "Qerrin (ancient) Fair and firm (no haggling)",
+				"greeting": "Quiet, everyone! New guests! ...Right, that's the quiet over. Welcome, friends!",
 				"quirks": [
-					"Writes to the other Hearthscale inns, so they often know the party is coming."
+					"Feeds peppercorns to a little fire lizard called Kindling that lives in the hearth."
 				],
-				"rumour": "[true] A minstrel came through singing a song about a hoard in Old Aldridge. The song names the guards.",
-				"stock": "1samofu",
+				"rumour": "[true] Market day's been half empty. Everyone from Old Aldridge has stayed home, and nobody there answers letters.",
+				"stock": "vkh7qx",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Posy (old) Drives a hard bargain (+10%)",
-				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
+				"keeper": "Bramble (old) Drives a hard bargain (+10%)",
+				"greeting": "Bell's broken, so I'll ring it myself. *ding!* Welcome, welcome!",
 				"quirks": [
-					"Keeps a ledger of every traveller who has ever passed through."
+					"Haggles enthusiastically, even when the customer is offering more than the price."
 				],
-				"rumour": "[true] An oasis has appeared where none should be. Caravans that stop there don't leave.",
+				"rumour": "[true] Nomads sold a scroll they found in a jar under a fallen pillar. Half the town is bidding for it.",
 				"stock": "urtu00",
 				"orders": "yiwskx"
 			},
 			{
-				"name": "Bardek's Forge",
-				"keeper": "Bardek (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Hold it like you mean it, or don't hold it at all.",
+				"name": "The Emberforge Grindstone",
+				"keeper": "Gisla (middle-aged) Soft-hearted (−5% for a sad story)",
+				"greeting": "Mm. Adventurers. Wipe your boots. Steel hates mud.",
 				"quirks": [
 					"Insists on a firm handshake to seal every sale."
 				],
@@ -360,35 +360,35 @@
 				"orders": "bchb1l"
 			},
 			{
-				"name": "Thornhide Armory",
-				"keeper": "Dask (middle-aged) Slightly desperate for sales (−10%)",
-				"greeting": "Arms up, please. Let's see what we're protecting.",
+				"name": "The Hearty Helm",
+				"keeper": "Oska (middle-aged) Slightly desperate for sales (−10%)",
+				"greeting": "Oh, you've been walking lopsided. That's the pauldron. Come, let me fix it.",
 				"quirks": [
 					"Talks to the armor stands as if they were old friends."
 				],
-				"rumour": "[true] The lord's guard came in for refitting. Every shield had the same claw marks.",
+				"rumour": "[true] A squire had his master's shield repainted. New crest, new colours, and he begged me not to tell anyone the old ones.",
 				"stock": "1izh7dh",
 				"orders": "d8iz5h"
 			},
 			{
-				"name": "Quillon Mosswick's Tonics & Tinctures",
-				"keeper": "Quillon (middle-aged) Drives a hard bargain (+10%)",
-				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
+				"name": "Pottle Mosswick's Tonics & Tinctures",
+				"keeper": "Pottle (middle-aged) Drives a hard bargain (+10%)",
+				"greeting": "Welcome to Mosswick's! If anything starts singing, tell me immediately.",
 				"quirks": [
-					"Gets distracted mid-sentence by a new idea and scribbles it down."
+					"Hands every customer a feedback card that begins \"Any new tails? (Y/N)\"."
 				],
-				"rumour": "[false] There is a cough going round Old Lowreach. Not natural. Smells of copper.",
+				"rumour": "[false] A trader in Old Lowreach sells a 'giant's strength tonic'. Three customers have grown hair on their palms and nothing else.",
 				"stock": "r2n42r",
 				"orders": "1usa4d0"
 			},
 			{
-				"name": "Liriel's Emporium of the Arcane",
-				"keeper": "Liriel (older) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Ah. The bell did not ring, and yet here you are.",
+				"name": "Vessaline's Emporium of the Arcane",
+				"keeper": "Vessaline (older) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Welcome back. No, you have not been here before. Not yet.",
 				"quirks": [
-					"Always seems to know the party members' names already."
+					"Is never seen arriving or leaving. They are simply behind the counter."
 				],
-				"rumour": "[true] An heirloom of our house went missing a century ago. It has been seen again, near Ryesands.",
+				"rumour": "[true] Every candle in my shop guttered at the same moment last night. All of them leaned east.",
 				"stock": "1wsad5x",
 				"orders": "1nj9l69"
 			}
@@ -419,105 +419,105 @@
 		"shops": [
 			{
 				"name": "The Golden Flagon",
-				"keeper": "Uadjit (young) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Friends! Come in out of the cold. Sit, sit, I'll light the fire. *puff*",
+				"keeper": "Seshka (young) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Mind the step, it's older than me! Now, who's hungry? Everyone? Good answer!",
 				"quirks": [
-					"Keeps a wall of tankards for regulars, and one hook that is always left empty.",
-					"Has a bard-in-residence who is terrible, and is fiercely loyal to them."
+					"Counts heads at breakfast and frets aloud if any guest is missing.",
+					"Hangs a sword over the fireplace that is \"purely decorative\". It is very sharp."
 				],
-				"rumour": "[true] The harvest came in twice this year. Twice. Nobody is asking how.",
-				"stock": "1ek23rd",
+				"rumour": "[true] Agatha the blind fiddler ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
+				"stock": "113yutu",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Laughing Wyrm",
-				"keeper": "Mishann (young) Fair and firm (no haggling)",
+				"name": "The Thirsty Wyrm",
+				"keeper": "Jhessa (young) Fair and firm (no haggling)",
 				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
 				"quirks": [
-					"Runs a betting book on local events and will take bets on the party."
+					"Keeps a wall of tankards for regulars, and one hook that is always left empty."
 				],
-				"rumour": "[partly true] Scarecrows on the south farms are being found turned to face the road.",
-				"stock": "1xj5f9f",
+				"rumour": "[partly true] Hay carts coming from Cherrymere are being stopped and searched by men who don't wear the lord's colours.",
+				"stock": "1rymp4c",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Provisions",
-				"keeper": "Cobb (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
+				"name": "The Cluttered Pocket",
+				"keeper": "Biddy (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Look at the state of those boots! Sit down, I've got just the thing. Probably.",
 				"quirks": [
-					"Writes letters to every other Pennywhistle shop weekly and will happily pass messages along."
+					"Gets the hiccups when telling a fib, which is why they're so honest."
 				],
-				"rumour": "[true] The old well behind the chapel has started whispering. Only at noon, mind.",
+				"rumour": "[true] Godric the eel-catcher swears the scales in the market are weighted. They want someone to prove it before the fair.",
 				"stock": "1and0n0",
 				"orders": "4c9j0l"
 			},
 			{
 				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Barnaby (ancient) Gives regulars a discount (−10% on return visits)",
+				"keeper": "Wynn (ancient) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
 				"quirks": [
 					"Hums the same tune constantly and does not realise it."
 				],
-				"rumour": "[true] There's a reward posted for a lost dog. Fifty gold! For a dog!",
+				"rumour": "[true] The chapel bell rang thirteen times at midnight. The bell-rope was cut years ago.",
 				"stock": "mp1cmw",
 				"orders": "17addib"
 			},
 			{
-				"name": "Emberforge Blades & Bows",
-				"keeper": "Holt (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"name": "The Emberforge Grindstone",
+				"keeper": "Ketilda (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Emberforge steel. Best this side of the mountains. Best the other side too.",
 				"quirks": [
-					"Names every weapon they forge and is sad to see them go.",
-					"Is secretly a soft touch for children and gives them wooden swords."
+					"Lectures on oiling your blade with every sale, then throws in a free rag.",
+					"Leaves a cup of ale on the anvil each night for the \"forge spirit\"."
 				],
-				"rumour": "[partly true] A noble's hunting party went into the west woods four days ago and hasn't come out.",
+				"rumour": "[partly true] The harvest queen goes missing for a day each year and comes back with a basket of fruit nobody can name. It's nearly time.",
 				"stock": "1xcjlb8",
 				"orders": "2o9qzc"
 			},
 			{
-				"name": "Thornhide & Kin, Armorers",
-				"keeper": "Brek (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"name": "Thornhide Fitting House",
+				"keeper": "Drogga (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Every dent tells a story. I'd rather you had fewer stories.",
 				"quirks": [
-					"Gets teary when someone comes back with armor that saved their life.",
-					"Is surprisingly good at poetry and recites some during fittings."
+					"Has never lost a staring contest, mostly because they forget they are in one.",
+					"Saves a button from every coat they have ever mended and can name each owner."
 				],
-				"rumour": "[false] Mercenaries are hiring in Little Foxby. Good pay, no questions, short lives.",
+				"rumour": "[false] New orders from the watch: helmets with visors that shut all the way. Whatever's out there, they don't want the men looking at it.",
 				"stock": "jlqgza",
 				"orders": "4ggqc7"
 			},
 			{
-				"name": "Nimsy Mosswick's Tonics & Tinctures",
+				"name": "Nimsy's Draughts & Doses",
 				"keeper": "Nimsy (older) Fair and firm (no haggling)",
-				"greeting": "Customers! Wonderful! Any allergies? Any extra limbs? No? Pity.",
+				"greeting": "Welcome to Mosswick's! If anything starts singing, tell me immediately.",
 				"quirks": [
 					"Is missing an eyebrow. Do not ask about the eyebrow.",
-					"Their hair is currently bright sky blue and they don't know why."
+					"Will trade potions for interesting rocks, beetles or gossip about rival alchemists."
 				],
-				"rumour": "[true] Nightcap mushrooms are fruiting early in the woods to the north. Bad sign.",
+				"rumour": "[true] Someone stole my recipe book. The only page they kept was the one on sleeping sickness.",
 				"stock": "bl41e0",
 				"orders": "k2x17j"
 			},
 			{
-				"name": "Nock Mosswick's Tonics & Tinctures",
-				"keeper": "Nock (young) Drives a hard bargain (+10%)",
-				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
+				"name": "Pottle Mosswick's Tonics & Tinctures",
+				"keeper": "Pottle (young) Drives a hard bargain (+10%)",
+				"greeting": "Mind the floor, it had a spill and it's still deciding what it is.",
 				"quirks": [
-					"Has a small explosion every hour or so and does not react to it."
+					"Keeps two fire buckets by the door, one labelled \"CUSTOMERS\" and one labelled \"ME\"."
 				],
-				"rumour": "[false] Someone ordered enough sleeping draught to fell a giant. Paid in very old coins.",
+				"rumour": "[false] Willow bark's running short. Every fever in Upper Higham is the same fever, and it isn't breaking.",
 				"stock": "15wavv8",
 				"orders": "xiqzzo"
 			},
 			{
-				"name": "The Last Key",
-				"keeper": "Thessaly (ancient) Slightly desperate for sales (−10%)",
-				"greeting": "Welcome. Please do not make eye contact with the mirror.",
+				"name": "The Moonlit Key",
+				"keeper": "Maerith (ancient) Slightly desperate for sales (−10%)",
+				"greeting": "You have a question. Keep it. It is worth more unasked.",
 				"quirks": [
-					"Sometimes asks for a memory, a secret or a favour instead of coin.",
-					"Never seems to blink."
+					"Keeps a locked door at the back that no Veyl will admit to having opened.",
+					"Their key earring hums softly whenever someone in the shop tells a lie."
 				],
-				"rumour": "[true] The tower at Old Redale has been dark for a month. Its wizard owes me a book.",
+				"rumour": "[true] Every clock in town stopped at the same minute yesterday. Mine started again an hour later. The others haven't.",
 				"stock": "1tfql42",
 				"orders": "1l9xn3a"
 			}
@@ -525,7 +525,7 @@
 	},
 	{
 		"seed": "golden-large-town-b",
-		"name": "Greenstow",
+		"name": "Yewstow",
 		"tier": "large-town",
 		"region": "forest",
 		"population": 2564,
@@ -547,91 +547,91 @@
 		],
 		"shops": [
 			{
-				"name": "The Sleeping Tankard",
-				"keeper": "Medrash (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"name": "The Amber Goose",
+				"keeper": "Vexmira (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Cold hands? Hold this mug a moment. *puff* There, mulled. You're welcome!",
 				"quirks": [
-					"Has a bard-in-residence who is terrible, and is fiercely loyal to them."
+					"Warms each guest's bedsheets with a careful breath before they turn in."
 				],
-				"rumour": "[true] The woodcutters won't go past the standing stones any more.",
-				"stock": "5zlplm",
+				"rumour": "[true] The Thornhide family's woodpile walked off in the night, logs and kindling, in a trail towards the old hollow.",
+				"stock": "1abmlcf",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Farideh's Rest",
-				"keeper": "Farideh (young) Soft-hearted (−5% for a sad story)",
-				"greeting": "Friends! Come in out of the cold. Sit, sit, I'll light the fire. *puff*",
+				"name": "The Roaring Kettle",
+				"keeper": "Kesh (young) Soft-hearted (−5% for a sad story)",
+				"greeting": "Mud on the floor? Pah! Mud's good luck in a Hearthscale house. Come in, come in!",
 				"quirks": [
-					"Runs a betting book on local events and will take bets on the party."
+					"Lets anyone sleep by the hearth for free on stormy nights, no questions asked."
 				],
-				"rumour": "[true] There's a cellar under the old mill with a door that wasn't there last year.",
-				"stock": "3ocmag",
+				"rumour": "[true] Drovers coming down from the north hills say their herd counts one more head every morning.",
+				"stock": "1cug3in",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle & Kin Trading Post",
-				"keeper": "Orrin (ancient) Soft-hearted (−5% for a sad story)",
-				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
+				"name": "The Plump Larder",
+				"keeper": "Rosamund (ancient) Soft-hearted (−5% for a sad story)",
+				"greeting": "Come in, dears! Have you eaten? You look like you haven't eaten. Biscuit?",
 				"quirks": [
-					"Hums the same tune constantly and does not realise it.",
-					"Is convinced one of the adventurers is secretly royalty."
+					"Wears their sky blue curls pinned up with a pencil and loses the pencil hourly.",
+					"Gives directions by gossip: \"Left at the house where the miller's wife left him.\""
 				],
-				"rumour": "[true] Someone is leaving carved wooden dolls on doorsteps. They look like the people inside.",
+				"rumour": "[true] Honey from the wild hives to the north makes folk fall asleep where they stand. The bees seem fine.",
 				"stock": "1xdgkym",
 				"orders": "kw96d7"
 			},
 			{
-				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Marigold (young) Drives a hard bargain (+10%)",
+				"name": "Lettice Pennywhistle's Emporium",
+				"keeper": "Lettice (young) Drives a hard bargain (+10%)",
 				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
 				"quirks": [
-					"Has a \"lucky\" item they refuse to sell at any price."
+					"Runs a noticeboard of lost pets, odd jobs and strange sightings."
 				],
-				"rumour": "[true] Nell the shepherd hasn't paid their tab in three months, and nobody knows where their money went.",
+				"rumour": "[true] The market cross has started leaning. Old folk say it marks where something's buried, and now it's pointing.",
 				"stock": "f75peq",
 				"orders": "1x0oxqq"
 			},
 			{
-				"name": "Emberforge Blades & Bows",
-				"keeper": "Tormund (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Hmph. Show me your hands. ...Calluses. Good. Come in.",
+				"name": "Emberforge Forgeworks",
+				"keeper": "Eskja (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Give that axe here. ...Who's been chopping firewood with this? Shame on you.",
 				"quirks": [
-					"Has a rival smith in town and badmouths their work constantly."
+					"Bangs the anvil once to close each sale, loud enough to rattle the windows."
 				],
-				"rumour": "[true] A dire wolf took three sheep near Goldholt. Bit clean through a pitchfork.",
+				"rumour": "[true] A sellsword bought every crossbow bolt I had and asked the way to the old quarry.",
 				"stock": "1twxalo",
 				"orders": "gwf8j8"
 			},
 			{
-				"name": "Oona Thornhide's Mail & Plate",
-				"keeper": "Oona (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Welcome, little one. ...Yes, you're all little ones to me.",
+				"name": "Hagga Thornhide's Mail & Plate",
+				"keeper": "Hagga (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Welcome to Thornhide's. Take your time. Armour should never be rushed, and neither should you.",
 				"quirks": [
-					"Remembers the measurements of every customer they have ever had."
+					"Keeps a rag doll in full plate on the counter. The doll's fit is flawless."
 				],
-				"rumour": "[partly true] Mercenaries are hiring in Elmgrove. Good pay, no questions, short lives.",
+				"rumour": "[partly true] Someone in Elmgrove is selling shoddy armour stamped with my family's mark. I'd like a word with them.",
 				"stock": "scy9sm",
 				"orders": "1w2lmox"
 			},
 			{
-				"name": "Dabble Mosswick's Tonics & Tinctures",
-				"keeper": "Dabble (middle-aged) Slightly desperate for sales (−10%)",
+				"name": "Doddle Mosswick's Tonics & Tinctures",
+				"keeper": "Doddle (middle-aged) Slightly desperate for sales (−10%)",
 				"greeting": "Customers! Wonderful! Any allergies? Any extra limbs? No? Pity.",
 				"quirks": [
-					"Constantly corrects the spelling on their own labels.",
-					"Keeps a frog familiar that \"tastes-tests\" ingredients."
+					"Will brew anything once, \"for science\", if the party fetches the ingredients.",
+					"Constantly corrects the spelling on their own labels."
 				],
-				"rumour": "[partly true] An elk with silver antlers was seen at dusk. That always means fey trouble.",
+				"rumour": "[partly true] Someone is leaving carved wooden dolls on doorsteps. They look like the people inside.",
 				"stock": "1cfknfc",
 				"orders": "1ufm4jj"
 			},
 			{
-				"name": "The Silver Key",
+				"name": "The Crescent Door",
 				"keeper": "Caelum (ancient) Drives a hard bargain (+10%)",
 				"greeting": "Welcome. Please do not make eye contact with the mirror.",
 				"quirks": [
-					"Their shop is bigger on the inside, and they won't discuss it.",
-					"Tells each customer a cryptic fortune at checkout. It is always true, eventually."
+					"Sorts the stock by mood rather than type, and the moods change daily.",
+					"Hums an old tune that every customer half-remembers from childhood."
 				],
 				"rumour": "[true] The tower at Thornshaw End has been dark for a month. Its wizard owes me a book.",
 				"stock": "1k7wdg8",
@@ -664,136 +664,136 @@
 		"shops": [
 			{
 				"name": "The Smoking Tankard",
-				"keeper": "Arjhan (middle-aged) Soft-hearted (−5% for a sad story)",
+				"keeper": "Garrun (middle-aged) Soft-hearted (−5% for a sad story)",
 				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
 				"quirks": [
-					"Remembers every guest's drink order, even from years ago.",
-					"Insists every guest signs the guest book. It goes back two hundred years."
+					"Ends each night with a toast \"to the ones still on the road\", and everyone must stand.",
+					"Has a framed, scorched menu from \"the night of the incident\" and won't say more."
 				],
-				"rumour": "[false] A noble's hunting party went into the south woods four days ago and hasn't come out.",
-				"stock": "1gub12u",
+				"rumour": "[false] The cows in the south pasture are giving blue milk. Tastes fine, they say. I'm not trying it.",
+				"stock": "11xs8ls",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "The Crooked Hearth",
-				"keeper": "Surina (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
+				"keeper": "Torrash (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Cold hands? Hold this mug a moment. *puff* There, mulled. You're welcome!",
 				"quirks": [
 					"Writes to the other Hearthscale inns, so they often know the party is coming."
 				],
-				"rumour": "[true] The tower at Wolfmoor has been dark for a month. Its wizard owes me a book.",
+				"rumour": "[true] A child in Wolfhay draws pictures of things before they happen. Her latest is a bridge on fire.",
 				"stock": "e4mdge",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Patchwork Basket",
-				"keeper": "Marigold (old) Drives a hard bargain (+10%)",
-				"greeting": "Come in, come in! Mind the cat. Now, what's the news from the road?",
+				"name": "The Thrifty Basket",
+				"keeper": "Ottilie (old) Drives a hard bargain (+10%)",
+				"greeting": "Welcome to Pennywhistle's! Rope, lanterns, string and gossip. Mostly gossip.",
 				"quirks": [
-					"Is feuding (politely) with the baker next door."
+					"Hangs a \"Back Soon\" sign in the window and has never once taken it down."
 				],
-				"rumour": "[false] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[false] A wealthy stranger is buying up the debts of every shop on the high street. Mine included.",
 				"stock": "b0v8bw",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Provisions",
-				"keeper": "Fenwick (young) Soft-hearted (−5% for a sad story)",
-				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
+				"name": "The Lucky Larder",
+				"keeper": "Larkin (young) Soft-hearted (−5% for a sad story)",
+				"greeting": "Hello, hello! Don't mind the clutter, it's all for sale. Well, most of it.",
 				"quirks": [
-					"Insists on wrapping every purchase in brown paper and string.",
-					"Offers everyone a sticky homemade toffee."
+					"Sneaks a boiled sweet into every parcel and denies all knowledge.",
+					"Saves string. Every bit of string. There is a ball of it the size of a pony."
 				],
-				"rumour": "[true] Rafe the cooper is selling off family heirlooms in a hurry. Debts, or something worse.",
+				"rumour": "[true] Lettice the thatcher is selling off family heirlooms in a hurry. Debts, or something worse.",
 				"stock": "1d5k7ub",
 				"orders": "1vaii48"
 			},
 			{
-				"name": "Emberforge Arms",
-				"keeper": "Dagna (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Hold it like you mean it, or don't hold it at all.",
+				"name": "The Ringing Bellows",
+				"keeper": "Eskja (middle-aged) Soft-hearted (−5% for a sad story)",
+				"greeting": "Give that axe here. ...Who's been chopping firewood with this? Shame on you.",
 				"quirks": [
-					"Refuses to sell to anyone who calls a sword \"pointy\"."
+					"Engraves a motto on any blade for free, but chooses the motto themselves."
 				],
-				"rumour": "[partly true] The new reeve in Oakstead End is taxing ale by the sip.",
+				"rumour": "[partly true] A field to the east has a ring of dead wheat in the middle. Perfect circle, and it grows a little every night.",
 				"stock": "1gxu50n",
 				"orders": "17jhhxr"
 			},
 			{
-				"name": "The Sharp Anvil",
-				"keeper": "Ysolde (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Don't touch the edge. Everyone touches the edge.",
+				"name": "The Sharp Bellows",
+				"keeper": "Hrolf (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "*clang* ...*clang* ...With you in a minute. *clang*",
 				"quirks": [
-					"Has a rival smith in town and badmouths their work constantly.",
-					"Hums old forge-songs in a deep rumble while working."
+					"Lectures on oiling your blade with every sale, then throws in a free rag.",
+					"Wears a heavy leather apron older than the shop, patched with steel plates."
 				],
-				"rumour": "[true] Bandits on the west road have new steel. Good steel. Someone's arming them.",
+				"rumour": "[true] A sellsword sold me her blade for half its worth. Said she won't need it where she's going.",
 				"stock": "id6aoz",
 				"orders": "jfxumg"
 			},
 			{
 				"name": "Thornhide Armory",
-				"keeper": "Dolla (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"keeper": "Mabbet (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Every dent tells a story. I'd rather you had fewer stories.",
 				"quirks": [
-					"Is surprisingly good at poetry and recites some during fittings."
+					"Cannot abide a squeak and oils every hinge in the room, including yours if you stand still."
 				],
-				"rumour": "[true] Edith the widow up the hill ordered child-sized armor. Twelve sets. Paid in advance.",
+				"rumour": "[true] Someone in Plumridge is selling shoddy armour stamped with my family's mark. I'd like a word with them.",
 				"stock": "6mbxcc",
 				"orders": "tgi78i"
 			},
 			{
-				"name": "The Steadfast Shield",
+				"name": "The Snug Bulwark",
 				"keeper": "Mott (older) Fair and firm (no haggling)",
-				"greeting": "Arms up, please. Let's see what we're protecting.",
+				"greeting": "Come in, come in. Breathe in for me. And out. Hmm. We can work with that.",
 				"quirks": [
-					"Offers a free repair if you bring back a dented piece with a good story."
+					"Hums lullabies while hammering out dents, and never misses a beat."
 				],
-				"rumour": "[false] The harvest came in twice this year. Twice. Nobody is asking how.",
+				"rumour": "[false] A shepherd swears one ram leads his whole flock up to the old hill fort at night.",
 				"stock": "tw36cc",
 				"orders": "372i31"
 			},
 			{
-				"name": "The Peculiar Cauldron",
-				"keeper": "Ebba (older) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"name": "Pockle's Brews & Blunders",
+				"keeper": "Pockle (older) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Customers! Wonderful! Any allergies? Any extra limbs? No? Pity.",
 				"quirks": [
-					"Gets distracted mid-sentence by a new idea and scribbles it down."
+					"Writes recipes in rhyme to make them easier to remember. They are not easier to remember."
 				],
-				"rumour": "[true] There is a cough going round Upper Thornham. Not natural. Smells of copper.",
+				"rumour": "[true] The Hearthscale family keep buying my strongest headache cure. Their whole house hums, they say, a low note day and night.",
 				"stock": "nfuhr2",
 				"orders": "rmnsbv"
 			},
 			{
-				"name": "Wizzle Mosswick's Tonics & Tinctures",
-				"keeper": "Wizzle (young) Slightly desperate for sales (−10%)",
-				"greeting": "Ah! You look tired. And injured. And slightly cursed? Let me see...",
+				"name": "Mosswick Elixirs (Mostly Safe)",
+				"keeper": "Clatter (young) Slightly desperate for sales (−10%)",
+				"greeting": "Oh good, a volunteer! Sorry, a customer. Same thing, really.",
 				"quirks": [
-					"Offers a discount if you try an experimental potion. Results vary."
+					"Believes the toad in the corner is a cursed cousin and serves it tea every afternoon."
 				],
-				"rumour": "[true] I'll pay well for gelatinous cube parts. A colleague says one was seen near Kingsgreenvale.",
+				"rumour": "[true] Willow bark's running short. Every fever in Greenvale is the same fever, and it isn't breaking.",
 				"stock": "g1d4om",
 				"orders": "1123yk6"
 			},
 			{
-				"name": "Orrel Veyl's Wonders",
-				"keeper": "Orrel (middle-aged) Fair and firm (no haggling)",
+				"name": "The Starlit Lantern",
+				"keeper": "Corynth (middle-aged) Fair and firm (no haggling)",
 				"greeting": "Ah. The bell did not ring, and yet here you are.",
 				"quirks": [
-					"Always seems to know the party members' names already."
+					"Collects lost things, and may have something a party member lost years ago."
 				],
-				"rumour": "[false] Hal the cooper came in asking how to break a curse. They would not say whose.",
+				"rumour": "[false] A book in my back room has been warm to the touch since the new moon. I'd sell it cheap to someone who won't ask.",
 				"stock": "ef93c9",
 				"orders": "1h9hebi"
 			},
 			{
-				"name": "Myrael Veyl's Wonders",
-				"keeper": "Myrael (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Ah. The bell did not ring, and yet here you are.",
+				"name": "The Seventh Lantern",
+				"keeper": "Ellisande (middle-aged) Soft-hearted (−5% for a sad story)",
+				"greeting": "Close the door softly. Some of the stock is sleeping.",
 				"quirks": [
-					"Their shop is bigger on the inside, and they won't discuss it."
+					"Asks each customer for a single hair \"for the records\", and never says which records."
 				],
-				"rumour": "[partly true] Scarecrows on the east farms are being found turned to face the road.",
+				"rumour": "[partly true] The scarecrow on the Emberforge family's plot wears a different hat every morning. Nobody's lending it hats.",
 				"stock": "frj07t",
 				"orders": "t557hk"
 			}
@@ -823,139 +823,139 @@
 		],
 		"shops": [
 			{
-				"name": "The Merry Hearth",
+				"name": "The Drowsy Hearth",
 				"keeper": "Farideh (young) Fair and firm (no haggling)",
-				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
+				"greeting": "Welcome, friend! You'll want the stew. Everyone wants the stew. *slaps the bar*",
 				"quirks": [
-					"Brews a secret family ale and will only say it contains \"a bit of dragon\"."
+					"Pours the first drink from every new barrel onto the hearth \"for the ancestors\"."
 				],
 				"rumour": "[true] A cloaked stranger paid for a room for a week and hasn't once come out of it.",
-				"stock": "1fo57uk",
+				"stock": "1c4q35t",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Sleeping Tankard",
+				"name": "The Wandering Ember",
 				"keeper": "Ghesh (middle-aged) Drives a hard bargain (+10%)",
-				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
+				"greeting": "Ha! Back from the wilds with all your fingers? That calls for a round!",
 				"quirks": [
-					"Has a bard-in-residence who is terrible, and is fiercely loyal to them."
+					"Hangs a sword over the fireplace that is \"purely decorative\". It is very sharp."
 				],
-				"rumour": "[partly true] A knight in mourning black passed through asking the way to Whitepool.",
-				"stock": "12gbej2",
+				"rumour": "[partly true] A knight in mourning black passed through asking the way to Whitewash.",
+				"stock": "loemjt",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Provisions",
+				"name": "Orrin Pennywhistle's Emporium",
 				"keeper": "Orrin (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
+				"greeting": "Back again? Oh, no, that was the other lot. You all look alike under the mud.",
 				"quirks": [
 					"Is convinced one of the adventurers is secretly royalty."
 				],
-				"rumour": "[false] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[false] Somebody's been paying for flour with coins from a mint that closed before my grandmother was born.",
 				"stock": "6mogr1",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Mabel Pennywhistle's General Goods",
-				"keeper": "Mabel (ancient) Slightly desperate for sales (−10%)",
-				"greeting": "Come in, come in! Mind the cat. Now, what's the news from the road?",
+				"name": "Rufus Pennywhistle's General Goods",
+				"keeper": "Rufus (ancient) Slightly desperate for sales (−10%)",
+				"greeting": "Ooh, adventurers! Are you here about the business at the mill? No? You will be.",
 				"quirks": [
 					"Is feuding (politely) with the baker next door.",
-					"Hums the same tune constantly and does not realise it."
+					"Can't resist reading a customer's shopping list aloud to the whole shop."
 				],
-				"rumour": "[true] Piers the miller is sweet on a stranger who only comes into town on moonless nights.",
+				"rumour": "[true] The market cross has started leaning. Old folk say it marks where something's buried, and now it's pointing.",
 				"stock": "jlkhly",
 				"orders": "hk2g85"
 			},
 			{
-				"name": "Holt's Forge",
-				"keeper": "Holt (ancient) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Don't touch the edge. Everyone touches the edge.",
+				"name": "Oskeld & Kin, Bladesmiths",
+				"keeper": "Oskeld (ancient) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Shop's open. Forge is hot. Don't just stand there.",
 				"quirks": [
-					"Insists on a firm handshake to seal every sale."
+					"Fixes dented pots for the neighbours for free, grumbling the whole time."
 				],
-				"rumour": "[partly true] The Hearthscale folk say the shipments from Old Bogbottom have stopped coming.",
+				"rumour": "[partly true] Highwaymen to the north wear painted wooden masks. Folk say they never speak a word.",
 				"stock": "1ff9mpu",
 				"orders": "jfxumg"
 			},
 			{
-				"name": "The Hammered Anvil",
+				"name": "The Grim Bellows",
 				"keeper": "Ilsa (older) Drives a hard bargain (+10%)",
-				"greeting": "Hold it like you mean it, or don't hold it at all.",
+				"greeting": "Mm. Tall ones. Mind your heads. Ceilings are built for proper folk.",
 				"quirks": [
-					"Tests every blade on a ham hanging from the ceiling.",
-					"Keeps a grudge list nailed to the wall. It's very long."
+					"Accepts payment in coin or good ale. Nothing else. Not even gems.",
+					"Is dreadfully allergic to cats, and every cat in town knows it."
 				],
-				"rumour": "[true] Someone has been buying silvered blades. Lots of them. Ask yourself why.",
+				"rumour": "[true] A hunter brought in a broken wereboar claw to be set as a knife handle. Said there were more where that came from.",
 				"stock": "k757ti",
 				"orders": "1s9bzhj"
 			},
 			{
-				"name": "Imma's Fittings",
-				"keeper": "Imma (ancient) Slightly desperate for sales (−10%)",
-				"greeting": "Oh dear, who fitted that for you? Come here, come here.",
+				"name": "Burla Thornhide, Mailwright",
+				"keeper": "Burla (ancient) Slightly desperate for sales (−10%)",
+				"greeting": "Ah, adventurers. I can tell by the dents. And the smell. Mostly the dents.",
 				"quirks": [
-					"Has a pet tortoise named after a famous general."
+					"A sparrow nests in the visor of a display helm, and nobody is allowed to close it."
 				],
-				"rumour": "[partly true] The lord's guard came in for refitting. Every shield had the same claw marks.",
+				"rumour": "[partly true] A werewolf tore the door off the toll-house. The guard inside lived thanks to the shield I made him.",
 				"stock": "198jcdi",
 				"orders": "153goo7"
 			},
 			{
-				"name": "The Unbroken Shield",
-				"keeper": "Karsh (young) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Welcome, little one. ...Yes, you're all little ones to me.",
+				"name": "The Riveted Gauntlet",
+				"keeper": "Bodge (young) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "There you are. I had a feeling someone would need me today.",
 				"quirks": [
-					"Keeps a jar of honey sweets for nervous customers."
+					"Hums lullabies while hammering out dents, and never misses a beat."
 				],
-				"rumour": "[true] Mercenaries are hiring in Mossmire-on-the-River. Good pay, no questions, short lives.",
+				"rumour": "[true] Three mercenaries came back from Wrenflats-on-the-River with their mail rusted orange overnight. Rain doesn't do that.",
 				"stock": "77lv70",
 				"orders": "1t15akv"
 			},
 			{
-				"name": "Nock Mosswick's Tonics & Tinctures",
-				"keeper": "Nock (middle-aged) Slightly desperate for sales (−10%)",
-				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
+				"name": "The Bubbling Beaker",
+				"keeper": "Quibble (middle-aged) Slightly desperate for sales (−10%)",
+				"greeting": "Don't mind the hair, it was a different colour this morning. What brings you in?",
 				"quirks": [
 					"Gets distracted mid-sentence by a new idea and scribbles it down.",
-					"Labels everything with dates in a calendar nobody else uses."
+					"Talks to the cauldron in a baby voice \"so it won't sulk\"."
 				],
-				"rumour": "[partly true] There is a cough going round Heronbottom. Not natural. Smells of copper.",
+				"rumour": "[partly true] Foxglove's gone from every hedge for a mile. Somebody's picking it by night, and foxglove's no toy.",
 				"stock": "8ebdct",
 				"orders": "emhxx7"
 			},
 			{
 				"name": "Quillon Mosswick's Tonics & Tinctures",
 				"keeper": "Quillon (ancient) Fair and firm (no haggling)",
-				"greeting": "Welcome! Ignore the smoke, that's normal. Mostly normal.",
+				"greeting": "Come in! Mind the cat. That's not a cat. Mind it anyway.",
 				"quirks": [
-					"Keeps a frog familiar that \"tastes-tests\" ingredients.",
-					"Has a small explosion every hour or so and does not react to it."
+					"Lets customers choose the colour of their potion. It does not affect the potion. Probably.",
+					"Keeps a frog familiar that \"tastes-tests\" ingredients."
 				],
-				"rumour": "[true] I'll pay well for hag parts. A colleague says one was seen near Highmire-on-the-River.",
+				"rumour": "[true] There's a mushroom in the churchyard that wasn't there yesterday. Bright blue, and it smells of cinnamon.",
 				"stock": "12brl1j",
 				"orders": "4ji3gv"
 			},
 			{
-				"name": "Sorrel's Emporium of the Arcane",
-				"keeper": "Sorrel (older) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"name": "Aurevel's Cabinet of Unlikely Things",
+				"keeper": "Aurevel (older) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Everything here has a price. Not everything has a price in gold.",
 				"quirks": [
-					"Speaks of the other Veyls as if they were all the same person.",
-					"Tells each customer a cryptic fortune at checkout. It is always true, eventually."
+					"Keeps a bowl of unmarked keys and invites each customer to take one. Nobody knows what they open.",
+					"Speaks of the other Veyls as if they were all the same person."
 				],
-				"rumour": "[true] Rafe the tanner came in asking how to break a curse. They would not say whose.",
+				"rumour": "[true] A travelling scholar paid in advance for any book bound with a black ribbon. Any at all.",
 				"stock": "1hcs9wf",
 				"orders": "ppf8pk"
 			},
 			{
-				"name": "The Locked Key",
-				"keeper": "Corvin (older) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Ah. The bell did not ring, and yet here you are.",
+				"name": "The Locked Lantern",
+				"keeper": "Selvarin (older) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Welcome to House Veyl. The door will let you leave when it is ready.",
 				"quirks": [
-					"Keeps a cat that is definitely a polymorphed something."
+					"Offers haggling customers a riddle: solve it and the price drops, fail and it rises."
 				],
-				"rumour": "[true] A star fell to the north three nights ago. Something walked away from it.",
+				"rumour": "[true] A harpy has been seen wearing a silver collar. Someone, somewhere, thinks it belongs to them.",
 				"stock": "1agae96",
 				"orders": "isnain"
 			}
@@ -963,7 +963,7 @@
 	},
 	{
 		"seed": "golden-large-city",
-		"name": "Kingsstonecrown",
+		"name": "Cherryspire",
 		"tier": "large-city",
 		"region": "heartland",
 		"population": 13675,
@@ -985,92 +985,92 @@
 		],
 		"shops": [
 			{
-				"name": "The Smoking Hearth",
+				"name": "The Toasty Ember",
 				"keeper": "Ghesh (ancient) Slightly desperate for sales (−10%)",
-				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
+				"greeting": "Rooms upstairs, food at the bar, gossip anywhere you like. What'll it be, friends?",
 				"quirks": [
-					"Writes to the other Hearthscale inns, so they often know the party is coming.",
-					"Sneezes sparks when they laugh too hard. There's a scorch mark on the ceiling."
+					"Counts heads at breakfast and frets aloud if any guest is missing.",
+					"Remembers everyone's name except the person they've known the longest."
 				],
-				"rumour": "[false] Smugglers use the east road after dark. Pay them no mind and they'll pay you none.",
+				"rumour": "[false] A lad comes in every evening asking if his father's back from Brackham. His father left three years ago.",
 				"stock": "pkmj1h",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Merry Tankard",
-				"keeper": "Pandjed (middle-aged) Slightly desperate for sales (−10%)",
+				"name": "The Merry Ox",
+				"keeper": "Azhani (middle-aged) Slightly desperate for sales (−10%)",
 				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
 				"quirks": [
-					"Runs a betting book on local events and will take bets on the party."
+					"Has a framed, scorched menu from \"the night of the incident\" and won't say more."
 				],
-				"rumour": "[false] The harvest came in twice this year. Twice. Nobody is asking how.",
-				"stock": "1m0xkjb",
+				"rumour": "[false] The cows in the north pasture are giving blue milk. Tastes fine, they say. I'm not trying it.",
+				"stock": "1lj1xun",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Laughing Tankard",
+				"name": "The Hungry Tankard",
 				"keeper": "Rhogar (ancient) Gives regulars a discount (−10% on return visits)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"greeting": "Mind the step, it's older than me! Now, who's hungry? Everyone? Good answer!",
 				"quirks": [
-					"Keeps a \"trouble jar\" of coins: anyone who starts a brawl pays into it.",
-					"Insists every guest signs the guest book. It goes back two hundred years."
+					"Is teaching the inn cat to fetch, and it is going badly.",
+					"Taps their claws on the bar in time with the music, whether or not there is any."
 				],
-				"rumour": "[false] Someone has been buying silvered blades. Lots of them. Ask yourself why.",
-				"stock": "1pck5ad",
+				"rumour": "[false] Someone dug up the soldiers' graves on the old battlefield. Only the weapons are gone.",
+				"stock": "9r2xcn",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Cobb (old) Slightly desperate for sales (−10%)",
-				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
+				"name": "Pennywhistle's Everything Shop",
+				"keeper": "Gertie (old) Slightly desperate for sales (−10%)",
+				"greeting": "Bell's broken, so I'll ring it myself. *ding!* Welcome, welcome!",
 				"quirks": [
 					"Has an ancient, enormous cat that sleeps on the counter."
 				],
-				"rumour": "[false] The new reeve in Old Elderford is taxing ale by the sip.",
+				"rumour": "[false] Hew the baker ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
 				"stock": "syvclt",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Cosy Basket",
-				"keeper": "Posy (young) Slightly desperate for sales (−10%)",
-				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
+				"name": "The Bottomless Pocket",
+				"keeper": "Cobb (young) Slightly desperate for sales (−10%)",
+				"greeting": "Well! Strangers! Where are you from, where are you going, and who's paying?",
 				"quirks": [
-					"Is feuding (politely) with the baker next door."
+					"Asks the party for their birthdays and writes them down \"for later\"."
 				],
-				"rumour": "[false] Scarecrows on the north farms are being found turned to face the road.",
+				"rumour": "[false] The lord's steward has been measuring fields with a rope and a strange brass gauge. Nobody asked him to.",
 				"stock": "1gtbv0j",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle & Kin Trading Post",
-				"keeper": "Clover (young) Drives a hard bargain (+10%)",
-				"greeting": "Come in, come in! Mind the cat. Now, what's the news from the road?",
+				"name": "The Patchwork Larder",
+				"keeper": "Kit (young) Drives a hard bargain (+10%)",
+				"greeting": "Hello, hello! Don't mind the clutter, it's all for sale. Well, most of it.",
 				"quirks": [
-					"Insists on wrapping every purchase in brown paper and string.",
-					"Offers everyone a sticky homemade toffee."
+					"Gives directions by gossip: \"Left at the house where the miller's wife left him.\"",
+					"Has a crate of \"things adventurers left behind\" and wants help returning them."
 				],
-				"rumour": "[false] Cecily the ferryman hasn't paid their tab in three months, and nobody knows where their money went.",
+				"rumour": "[false] The pedlar who comes every spring hasn't turned up. Twenty years, and he's never once been late.",
 				"stock": "1wsfjyz",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Ringing Anvil",
-				"keeper": "Korrin (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Don't touch the edge. Everyone touches the edge.",
+				"name": "The Sooty Anvil",
+				"keeper": "Halvor (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Ask the price, I'll tell you. Haggle, and I'll double it.",
 				"quirks": [
-					"Will sharpen your current weapon for free if you tell a good battle story."
+					"Won't set jewels in a hilt: \"Jewels are for folk who can't fight.\""
 				],
-				"rumour": "[true] A noble's hunting party went into the north woods four days ago and hasn't come out.",
+				"rumour": "[true] The new reeve in Applestead is taxing ale by the sip.",
 				"stock": "1xg94we",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Rurik Emberforge, Weaponsmith",
-				"keeper": "Rurik (young) Slightly desperate for sales (−10%)",
+				"name": "Durgra's Smithy",
+				"keeper": "Durgra (young) Slightly desperate for sales (−10%)",
 				"greeting": "Don't touch the edge. Everyone touches the edge.",
 				"quirks": [
-					"Tests every blade on a ham hanging from the ceiling.",
-					"Keeps a grudge list nailed to the wall. It's very long."
+					"Keeps the ashes of their very first forge fire in a little urn on the mantel.",
+					"Spots a left-handed customer instantly and rebalances their blade for free."
 				],
 				"rumour": "[true] The garrison captain ordered fifty spears and won't say what for.",
 				"stock": "f54peq",
@@ -1078,87 +1078,87 @@
 			},
 			{
 				"name": "Emberforge Arms",
-				"keeper": "Sigrun (old) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Emberforge steel. Best this side of the mountains. Best the other side too.",
+				"keeper": "Druvik (old) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Ask the price, I'll tell you. Haggle, and I'll double it.",
 				"quirks": [
-					"Insists on a firm handshake to seal every sale."
+					"Distrusts elven blades on principle, but secretly owns one to study."
 				],
-				"rumour": "[true] An old battlefield to the south turned up a sword that won't rust.",
+				"rumour": "[true] Three swords came in for sharpening, all with the same black stain that won't scour off.",
 				"stock": "keq531",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Thornhide Armory",
+				"name": "The Steadfast Gauntlet",
 				"keeper": "Vella (young) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Every dent tells a story. I'd rather you had fewer stories.",
+				"greeting": "Is anybody hurt? Truly? Then let's keep it that way.",
 				"quirks": [
-					"Talks to the armor stands as if they were old friends.",
-					"Offers a free repair if you bring back a dented piece with a good story."
+					"Cannot refuse a child who wants to try on a helmet, so a box of tiny ones sits by the door.",
+					"Speaks so softly that customers lean in, then apologises for making them lean."
 				],
-				"rumour": "[true] The harvest came in twice this year. Twice. Nobody is asking how.",
+				"rumour": "[true] The hedges along the west lane grew a foot overnight, and they're thickest on the side facing the manor.",
 				"stock": "1nu57hp",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Thornhide & Kin, Armorers",
-				"keeper": "Sorsha (older) Soft-hearted (−5% for a sad story)",
-				"greeting": "Every dent tells a story. I'd rather you had fewer stories.",
+				"name": "Thornhide Mending & Mail",
+				"keeper": "Brakka (older) Soft-hearted (−5% for a sad story)",
+				"greeting": "Oh, that buckle is crying out for help. I can hear it from here.",
 				"quirks": [
-					"Will not let a customer leave in badly fitted armor, even if they bought it elsewhere.",
-					"Remembers the measurements of every customer they have ever had."
+					"Worries aloud about the party's sleep, diet and choice of friends.",
+					"Grows prize marrows behind the forge and will discuss them at great length."
 				],
-				"rumour": "[true] Mercenaries are hiring in Upper Whiteley. Good pay, no questions, short lives.",
+				"rumour": "[true] Every helmet that comes back from the old fort has scratches on the inside.",
 				"stock": "s98zma",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Ruga Thornhide's Mail & Plate",
-				"keeper": "Ruga (young) Drives a hard bargain (+10%)",
-				"greeting": "Oh dear, who fitted that for you? Come here, come here.",
+				"name": "The Kindly Helm",
+				"keeper": "Zurra (young) Drives a hard bargain (+10%)",
+				"greeting": "Welcome to Thornhide's. Take your time. Armour should never be rushed, and neither should you.",
 				"quirks": [
-					"Is surprisingly good at poetry and recites some during fittings."
+					"Asks who you are coming home to, and engraves the name inside your breastplate for free."
 				],
-				"rumour": "[false] Scarecrows on the north farms are being found turned to face the road.",
+				"rumour": "[false] A plough horse at Elmchurch-on-the-River cut its furrow in a perfect spiral, then lay down in the middle.",
 				"stock": "13xys7j",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Mosswick & Mosswick, Apothecaries",
-				"keeper": "Sprocket (young) Slightly desperate for sales (−10%)",
+				"name": "The Curious Alembic",
+				"keeper": "Fliss (young) Slightly desperate for sales (−10%)",
 				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
 				"quirks": [
-					"Labels everything with dates in a calendar nobody else uses."
+					"Glows faintly in the dark after a lab accident and uses it to save on candles."
 				],
-				"rumour": "[true] There is a cough going round Ironwick. Not natural. Smells of copper.",
+				"rumour": "[true] I'll pay good silver for moonpetal. It only grows near the old barrow, and I'm not going there.",
 				"stock": "ve0t8v",
 				"orders": "4ncq2a"
 			},
 			{
 				"name": "Mosswick Remedies",
 				"keeper": "Mabry (young) Soft-hearted (−5% for a sad story)",
-				"greeting": "Customers! Wonderful! Any allergies? Any extra limbs? No? Pity.",
+				"greeting": "Welcome to Mosswick's! If anything starts singing, tell me immediately.",
 				"quirks": [
-					"Constantly corrects the spelling on their own labels."
+					"Offers free samples on a spoon while holding a bucket nearby, \"just in case\"."
 				],
-				"rumour": "[false] The harvest came in twice this year. Twice. Nobody is asking how.",
+				"rumour": "[false] Hay carts coming from Old Tarnbarrow are being stopped and searched by men who don't wear the lord's colours.",
 				"stock": "t4odb7",
 				"orders": "1ai9lsn"
 			},
 			{
-				"name": "Orryn Mosswick's Tonics & Tinctures",
+				"name": "The Hiccuping Beaker",
 				"keeper": "Orryn (young) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
+				"greeting": "Oh good, a volunteer! Sorry, a customer. Same thing, really.",
 				"quirks": [
-					"Pays well for rare monster parts. Very well. Suspiciously well."
+					"Labels everything with dates in a calendar nobody else uses."
 				],
-				"rumour": "[false] Nightcap mushrooms are fruiting early in the woods to the north. Bad sign.",
+				"rumour": "[false] A healer came through offering to buy memories. Small ones. Said it was for a tonic.",
 				"stock": "5j2dxh",
 				"orders": "1dpr8gt"
 			},
 			{
-				"name": "Ilyra's Emporium of the Arcane",
-				"keeper": "Ilyra (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Ah. The bell did not ring, and yet here you are.",
+				"name": "The Veyl Reliquary",
+				"keeper": "Seraveth (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Ah. You are earlier than I foresaw. Or I am later. Sit.",
 				"quirks": [
 					"Speaks of the other Veyls as if they were all the same person."
 				],
@@ -1167,25 +1167,25 @@
 				"orders": "1dyafti"
 			},
 			{
-				"name": "Liriel's Emporium of the Arcane",
-				"keeper": "Liriel (young) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "You were expected. Well... someone was.",
+				"name": "The Hidden Mirror",
+				"keeper": "Isvaine (young) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Hush. The candles are listening, and they gossip terribly.",
 				"quirks": [
-					"Keeps a cat that is definitely a polymorphed something."
+					"Owns a quill that writes on its own, and it is taking notes on the party."
 				],
 				"rumour": "[partly true] The harvest came in twice this year. Twice. Nobody is asking how.",
 				"stock": "wh3rxm",
 				"orders": "o6h0u0"
 			},
 			{
-				"name": "Saevel Veyl's Wonders",
+				"name": "Saevel's Shelf of Quiet Marvels",
 				"keeper": "Saevel (older) Slightly desperate for sales (−10%)",
-				"greeting": "Ah. The bell did not ring, and yet here you are.",
+				"greeting": "Touch nothing that hums. Everything else may be touched, briefly.",
 				"quirks": [
-					"Wraps every item in black silk and a sprig of rosemary.",
-					"Sometimes asks for a memory, a secret or a favour instead of coin."
+					"Is exquisitely polite to the furniture.",
+					"Keeps a bowl of unmarked keys and invites each customer to take one. Nobody knows what they open."
 				],
-				"rumour": "[false] A star fell to the east three nights ago. Something walked away from it.",
+				"rumour": "[false] Ellen the widow up the hill has been sleepwalking to the standing stones and drawing circles in the dirt. Perfect circles.",
 				"stock": "xhwxrb",
 				"orders": "1re471h"
 			}
@@ -1193,7 +1193,7 @@
 	},
 	{
 		"seed": "golden-large-city-b",
-		"name": "Hollycrown",
+		"name": "Hollycester",
 		"tier": "large-city",
 		"region": "coastal",
 		"population": 15811,
@@ -1215,125 +1215,125 @@
 		],
 		"shops": [
 			{
-				"name": "The Sleeping Wyrm",
+				"name": "The Amber Wyrm",
 				"keeper": "Arjhan (ancient) Soft-hearted (−5% for a sad story)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"greeting": "Mind the step, it's older than me! Now, who's hungry? Everyone? Good answer!",
 				"quirks": [
-					"Runs a betting book on local events and will take bets on the party."
+					"Collects odd coins from far-off lands and will swap a hot meal for a new one."
 				],
-				"rumour": "[true] The fishing fleet came back with nets full of black pearls, and one boat came back empty.",
+				"rumour": "[true] There are lanterns in the caves under the cliffs again, but nobody's landed any goods in months.",
 				"stock": "1xnlgp4",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Copper Wyrm",
-				"keeper": "Biri (older) Fair and firm (no haggling)",
-				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
+				"name": "The Amber Goose",
+				"keeper": "Nimvar (older) Fair and firm (no haggling)",
+				"greeting": "Rooms upstairs, food at the bar, gossip anywhere you like. What'll it be, friends?",
 				"quirks": [
-					"Brews a secret family ale and will only say it contains \"a bit of dragon\"."
+					"Wears tiny spectacles perched on their snout, purely for reading the tab."
 				],
-				"rumour": "[true] Two merchants nearly came to blows over a map last night. One left without his hat. Or the map.",
-				"stock": "nodkyd",
+				"rumour": "[true] The Pennywhistle family booked my whole upstairs for a wedding. There's no bride that anyone's met.",
+				"stock": "heyt89",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pandjed's Rest",
-				"keeper": "Pandjed (young) Gives regulars a discount (−10% on return visits)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"name": "Hazrith's Hearthside",
+				"keeper": "Hazrith (young) Gives regulars a discount (−10% on return visits)",
+				"greeting": "In you come! Grab a stool quick, before the bard spots you and starts a ballad.",
 				"quirks": [
-					"Will give a free room for a song, a story or a good fight story (no actual fighting)."
+					"Judges a guest's character by how they eat their porridge, and is rarely wrong."
 				],
-				"rumour": "[true] A cloaked stranger paid for a room for a week and hasn't once come out of it.",
-				"stock": "15ic4su",
+				"rumour": "[true] Pilgrims bound for the shrine at Upper Ashquay keep turning back halfway. They say the road gets longer the further you walk.",
+				"stock": "1y1xk4p",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Sundries & Supplies",
+				"name": "Tamsin's Odds & Ends",
 				"keeper": "Tamsin (older) Drives a hard bargain (+10%)",
-				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
+				"greeting": "Don't tell me, let me guess. Rope, rations and a tinderbox? Thought so!",
 				"quirks": [
-					"Keeps a ledger of every traveller who has ever passed through.",
-					"Is convinced one of the adventurers is secretly royalty."
+					"Swaps goods for stories, recipes or seeds, but never, ever for an IOU.",
+					"Counts change aloud in a sing-song, and starts over if interrupted."
 				],
-				"rumour": "[true] Gil the shepherd is selling off family heirlooms in a hurry. Debts, or something worse.",
+				"rumour": "[true] There's a patch on the green where the grass won't grow, shaped exactly like a door.",
 				"stock": "1xmsigd",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Cosy Basket",
-				"keeper": "Pip (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Come in, come in! Mind the cat. Now, what's the news from the road?",
+				"name": "The Lucky Basket",
+				"keeper": "Quenby (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Back again? Oh, no, that was the other lot. You all look alike under the mud.",
 				"quirks": [
-					"Writes letters to every other Pennywhistle shop weekly and will happily pass messages along.",
-					"Hums the same tune constantly and does not realise it."
+					"Has three apprentice nieces and nephews and mixes up all their names.",
+					"Sorts the coins in the till by how shiny they are."
 				],
-				"rumour": "[true] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[true] Somebody paid me to stop selling lamp oil to the Hearthscale family. I took the money. I still sell them the oil.",
 				"stock": "18ct5oy",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Handy Basket",
-				"keeper": "Lula (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
+				"name": "Perpetua's Odds & Ends",
+				"keeper": "Perpetua (middle-aged) Soft-hearted (−5% for a sad story)",
+				"greeting": "Ooh, adventurers! Are you here about the business at the mill? No? You will be.",
 				"quirks": [
-					"Offers everyone a sticky homemade toffee.",
-					"Has an ancient, enormous cat that sleeps on the counter."
+					"Writes letters to every other Pennywhistle shop weekly and will happily pass messages along.",
+					"Talks to the stock, apologising to the tins as they are moved."
 				],
-				"rumour": "[true] The old well behind the chapel has started whispering. Only at noon, mind.",
+				"rumour": "[true] The mill wheel turned all night with the sluice shut. There wasn't a drop in the race.",
 				"stock": "drghln",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Emberforge Arms",
-				"keeper": "Rurik (ancient) Slightly desperate for sales (−10%)",
-				"greeting": "Hold it like you mean it, or don't hold it at all.",
+				"keeper": "Brisa (ancient) Slightly desperate for sales (−10%)",
+				"greeting": "Shop's open. Forge is hot. Don't just stand there.",
 				"quirks": [
-					"Has never once smiled in front of a customer. Probably."
+					"Grumbles about \"young folk these days\" and their flimsy rapiers."
 				],
-				"rumour": "[true] A wyvern took three sheep near Little Seaport. Bit clean through a pitchfork.",
+				"rumour": "[true] There's a duel set for dawn on the green. Both sides have been in here asking for a second.",
 				"stock": "3op1pp",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Tormund Emberforge, Weaponsmith",
-				"keeper": "Tormund (older) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Don't touch the edge. Everyone touches the edge.",
+				"name": "Dunmar's Smithy",
+				"keeper": "Dunmar (older) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Don't lean on that. Or that. Just stand in the middle. Good.",
 				"quirks": [
-					"Names every weapon they forge and is sad to see them go."
+					"Is dreadfully allergic to cats, and every cat in town knows it."
 				],
-				"rumour": "[false] Something big has been bumping the hulls in the harbour at night.",
+				"rumour": "[false] Gulls won't land on the east jetty. Not one, not even for bread.",
 				"stock": "l3acva",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Emberforge Blades & Bows",
-				"keeper": "Bardek (older) Drives a hard bargain (+10%)",
-				"greeting": "Hold it like you mean it, or don't hold it at all.",
+				"keeper": "Haldrek (older) Drives a hard bargain (+10%)",
+				"greeting": "Emberforge made it, Emberforge stands by it. What d'you need?",
 				"quirks": [
-					"Hums old forge-songs in a deep rumble while working."
+					"Wears a leather eyepatch over a perfectly good eye, \"to rest it for fine work\"."
 				],
-				"rumour": "[true] The Mosswick folk say the shipments from Seahaven have stopped coming.",
+				"rumour": "[true] Bandits to the north have a new leader. They've stopped robbing travellers and started robbing tax wagons.",
 				"stock": "1psw7ns",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Faithful Shield",
-				"keeper": "Dolla (old) Slightly desperate for sales (−10%)",
-				"greeting": "Welcome, little one. ...Yes, you're all little ones to me.",
+				"name": "Thornhide Mending & Mail",
+				"keeper": "Nagra (old) Slightly desperate for sales (−10%)",
+				"greeting": "There you are. I had a feeling someone would need me today.",
 				"quirks": [
-					"Has a pet tortoise named after a famous general.",
-					"Will not let a customer leave in badly fitted armor, even if they bought it elsewhere."
+					"Has never lost a staring contest, mostly because they forget they are in one.",
+					"Ties back their braid with a rose gold ribbon a grateful customer gave them years ago."
 				],
-				"rumour": "[true] Mercenaries are hiring in Kingscranhaven. Good pay, no questions, short lives.",
+				"rumour": "[true] A knight came in with dents in her breastplate shaped like a hand. A very large hand.",
 				"stock": "jmpxn4",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Thornhide & Kin, Armorers",
-				"keeper": "Sorsha (ancient) Gives regulars a discount (−10% on return visits)",
+				"keeper": "Bodge (ancient) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Arms up, please. Let's see what we're protecting.",
 				"quirks": [
-					"Gets teary when someone comes back with armor that saved their life."
+					"Reads aloud to the forge fire every evening, \"to keep it company\"."
 				],
 				"rumour": "[false] Somebody fished a breastplate out of the river with a hole punched right through it. From the inside.",
 				"stock": "1sqacao",
@@ -1342,80 +1342,80 @@
 			{
 				"name": "Thornhide Armory",
 				"keeper": "Imma (old) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Every dent tells a story. I'd rather you had fewer stories.",
+				"greeting": "Gently with the door, please, it's had a long week. Now then, who needs fitting?",
 				"quirks": [
-					"Remembers the measurements of every customer they have ever had."
+					"Has snapped three counters by leaning on them and now leans on an anvil instead."
 				],
-				"rumour": "[true] Hob the widow up the hill ordered child-sized armor. Twelve sets. Paid in advance.",
+				"rumour": "[true] New orders from the watch: helmets with visors that shut all the way. Whatever's out there, they don't want the men looking at it.",
 				"stock": "qj00o",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Tibbet Mosswick's Tonics & Tinctures",
-				"keeper": "Tibbet (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Ah! You look tired. And injured. And slightly cursed? Let me see...",
+				"name": "Pimm's Draughts & Doses",
+				"keeper": "Pimm (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Hello hello hello! Sit anywhere except the chair. The chair is new.",
 				"quirks": [
-					"Labels everything with dates in a calendar nobody else uses.",
-					"Is missing an eyebrow. Do not ask about the eyebrow."
+					"Is mid-feud with a Mosswick cousin over who really invented the hiccup cure.",
+					"Hiccups little bubbles whenever they get nervous."
 				],
-				"rumour": "[partly true] The temple healer is buying every antitoxin I make. Every single one.",
+				"rumour": "[partly true] Children in Kelpbrook keep dozing off in the middle of the day, smiling. You can't wake them for an hour.",
 				"stock": "13apyfw",
 				"orders": "1sq04wv"
 			},
 			{
-				"name": "Mosswick Remedies",
-				"keeper": "Ebba (ancient) Slightly desperate for sales (−10%)",
-				"greeting": "Customers! Wonderful! Any allergies? Any extra limbs? No? Pity.",
+				"name": "The Wobbly Beaker",
+				"keeper": "Tilda (ancient) Slightly desperate for sales (−10%)",
+				"greeting": "Welcome to Mosswick's! If anything starts singing, tell me immediately.",
 				"quirks": [
 					"Sends letters to the other Mosswicks comparing notes on customers.",
-					"Has a small explosion every hour or so and does not react to it."
+					"Has worn oven gloves on their feet ever since \"the boot incident\"."
 				],
-				"rumour": "[true] Someone ordered enough sleeping draught to fell a giant. Paid in very old coins.",
+				"rumour": "[true] The midwife's run out of feverfew. If someone would gather it from the old abbey garden, I'd pay well.",
 				"stock": "1g9rpuc",
 				"orders": "o9e0d4"
 			},
 			{
-				"name": "Dabble's Curious Concoctions",
-				"keeper": "Dabble (middle-aged) Drives a hard bargain (+10%)",
-				"greeting": "Welcome! Ignore the smoke, that's normal. Mostly normal.",
+				"name": "Pipsy's Curious Concoctions",
+				"keeper": "Pipsy (middle-aged) Drives a hard bargain (+10%)",
+				"greeting": "Hold this. No, with both hands. And don't breathe on it.",
 				"quirks": [
-					"Gets distracted mid-sentence by a new idea and scribbles it down.",
-					"Their hair is currently bright pink and they don't know why."
+					"Decides one party member has rare blood and keeps politely asking for \"just a thimble\".",
+					"Has not worn a matching pair of socks in years, on principle."
 				],
-				"rumour": "[true] The Thornhide family have been asking me for something to stop bad dreams. All of them.",
+				"rumour": "[true] A traveller left a bottle for me to identify. Whatever's in it, the cork keeps pushing itself out.",
 				"stock": "1h4ouih",
 				"orders": "hkiu0s"
 			},
 			{
-				"name": "Aelith's Emporium of the Arcane",
-				"keeper": "Aelith (young) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Everything here has a price. Not everything has a price in gold.",
+				"name": "Myrrin's Emporium of the Arcane",
+				"keeper": "Myrrin (young) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Welcome to House Veyl. The door will let you leave when it is ready.",
 				"quirks": [
-					"Will only sell certain items to people they find \"interesting\"."
+					"Never gives change, only a small odd trinket of exactly equal value."
 				],
-				"rumour": "[partly true] The harbourmaster has been taking bribes to let a certain ship dock after dark.",
+				"rumour": "[partly true] Something big has been bumping the hulls in the harbour at night.",
 				"stock": "1e4m8k8",
 				"orders": "1fyne97"
 			},
 			{
-				"name": "The Whispering Key",
-				"keeper": "Ilyra (middle-aged) Fair and firm (no haggling)",
-				"greeting": "Everything here has a price. Not everything has a price in gold.",
+				"name": "The Veiled Door",
+				"keeper": "Yvrenne (middle-aged) Fair and firm (no haggling)",
+				"greeting": "Welcome to House Veyl. The door will let you leave when it is ready.",
 				"quirks": [
-					"Sometimes asks for a memory, a secret or a favour instead of coin."
+					"Drinks tea that never cools, from a cup that never empties."
 				],
-				"rumour": "[true] The dead in the old barrow have started keeping time. Listen for the drums.",
+				"rumour": "[true] Hodge the goose-girl brought me a letter from the old wizard on the hill. It's dated next spring.",
 				"stock": "164hldq",
 				"orders": "1n3pr76"
 			},
 			{
-				"name": "Vaelan Veyl's Wonders",
-				"keeper": "Vaelan (middle-aged) Soft-hearted (−5% for a sad story)",
+				"name": "The Veyl Reliquary",
+				"keeper": "Aurevel (middle-aged) Soft-hearted (−5% for a sad story)",
 				"greeting": "You were expected. Well... someone was.",
 				"quirks": [
-					"Speaks of the other Veyls as if they were all the same person."
+					"Keeps a small hourglass on the counter in which the sand runs upwards."
 				],
-				"rumour": "[true] A ghost ship was seen off the point last night, sails full in no wind.",
+				"rumour": "[true] The harbourmaster has been taking bribes to let a certain ship dock after dark.",
 				"stock": "mxc5f3",
 				"orders": "xaiz8w"
 			}
@@ -1445,199 +1445,199 @@
 		],
 		"shops": [
 			{
-				"name": "The Roaring Hearth",
-				"keeper": "Balasar (young) Drives a hard bargain (+10%)",
-				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
+				"name": "The Roaring Ox",
+				"keeper": "Ashkarr (young) Drives a hard bargain (+10%)",
+				"greeting": "Cold hands? Hold this mug a moment. *puff* There, mulled. You're welcome!",
 				"quirks": [
-					"Runs a betting book on local events and will take bets on the party."
+					"Gets misty-eyed about \"the old country\" but can never quite say where it was."
 				],
-				"rumour": "[true] Scarecrows on the east farms are being found turned to face the road.",
-				"stock": "nvjzvn",
+				"rumour": "[true] Every sheep at Longleigh was shorn overnight. The wool's gone, and so is whoever sheared them.",
+				"stock": "m96lcz",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Medrash's Rest",
-				"keeper": "Medrash (young) Drives a hard bargain (+10%)",
-				"greeting": "Welcome to the finest hall in town! Also the only hall in town. Ha!",
+				"name": "Ophira's Rest",
+				"keeper": "Ophira (young) Drives a hard bargain (+10%)",
+				"greeting": "You've got a story on you, I can tell. Sit down, have a pie, and spill it.",
 				"quirks": [
-					"Writes to the other Hearthscale inns, so they often know the party is coming."
+					"Hums old dragon lullabies while sweeping, and the regulars nod off in their chairs."
 				],
-				"rumour": "[false] A cloaked stranger paid for a room for a week and hasn't once come out of it.",
+				"rumour": "[false] Avice the potter swears they saw my old cat at the north crossroads. The cat died last spring.",
 				"stock": "1p8g2ht",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Nala's Rest",
-				"keeper": "Nala (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
+				"name": "Vexmira's Rest",
+				"keeper": "Vexmira (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Mud on the floor? Pah! Mud's good luck in a Hearthscale house. Come in, come in!",
 				"quirks": [
-					"Keeps a \"trouble jar\" of coins: anyone who starts a brawl pays into it."
+					"Hangs a sword over the fireplace that is \"purely decorative\". It is very sharp."
 				],
-				"rumour": "[true] The tower at Kingsswancross has been dark for a month. Its wizard owes me a book.",
+				"rumour": "[true] The tower at Kirkcross has been dark for a month. Its wizard owes me a book.",
 				"stock": "vg4rnc",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Laughing Wyrm",
-				"keeper": "Arjhan (middle-aged) Drives a hard bargain (+10%)",
-				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
+				"name": "The Snoring Ox",
+				"keeper": "Drevik (middle-aged) Drives a hard bargain (+10%)",
+				"greeting": "Make room, everyone, we've got heroes! At least, they look like heroes. Close enough!",
 				"quirks": [
-					"Insists every guest signs the guest book. It goes back two hundred years.",
-					"Remembers every guest's drink order, even from years ago."
+					"Snores so loudly that upstairs guests are handed cotton for their ears at check-in.",
+					"Cannot whisper. Every secret told to them is overheard by the whole common room."
 				],
-				"rumour": "[true] Piers the widow up the hill bet the whole room they could spend a night in the old chapel. They haven't come back to collect.",
-				"stock": "14r2my",
+				"rumour": "[true] The Pennywhistle family threw a feast here and paid with a bag of pearls. Where does a shopkeeper get pearls?",
+				"stock": "1cvvc2k",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Provisions",
-				"keeper": "Jory (young) Soft-hearted (−5% for a sad story)",
+				"name": "Bunty Pennywhistle's Emporium",
+				"keeper": "Bunty (young) Soft-hearted (−5% for a sad story)",
 				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
 				"quirks": [
 					"Hums the same tune constantly and does not realise it."
 				],
-				"rumour": "[partly true] The harvest came in twice this year. Twice. Nobody is asking how.",
+				"rumour": "[partly true] A field to the south has a ring of dead wheat in the middle. Perfect circle, and it grows a little every night.",
 				"stock": "kq60mp",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Mabel (middle-aged) Soft-hearted (−5% for a sad story)",
-				"greeting": "Come in, come in! Mind the cat. Now, what's the news from the road?",
+				"keeper": "Perpetua (middle-aged) Soft-hearted (−5% for a sad story)",
+				"greeting": "Welcome to Pennywhistle's! Rope, lanterns, string and gossip. Mostly gossip.",
 				"quirks": [
-					"Writes letters to every other Pennywhistle shop weekly and will happily pass messages along."
+					"Has a pocket for everything and takes ages finding the right one."
 				],
-				"rumour": "[partly true] Tam the reeve is sweet on a stranger who only comes into town on moonless nights.",
+				"rumour": "[partly true] The new family at the end of the lane buy food for ten. There are only three of them.",
 				"stock": "f5i531",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Marigold Pennywhistle's General Goods",
+				"name": "The Cosy Counter",
 				"keeper": "Marigold (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
 				"quirks": [
-					"Is convinced one of the adventurers is secretly royalty."
+					"Weighs everything on brass scales they claim have never told a lie."
 				],
-				"rumour": "[partly true] A noble's hunting party went into the east woods four days ago and hasn't come out.",
+				"rumour": "[partly true] Beatrix the beadle ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
 				"stock": "leucnl",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Wendel Pennywhistle's General Goods",
-				"keeper": "Wendel (ancient) Drives a hard bargain (+10%)",
-				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
+				"name": "Pennywhistle's Everything Shop",
+				"keeper": "Tuck (ancient) Drives a hard bargain (+10%)",
+				"greeting": "Bell's broken, so I'll ring it myself. *ding!* Welcome, welcome!",
 				"quirks": [
-					"Has a \"lucky\" item they refuse to sell at any price."
+					"Hangs a \"Back Soon\" sign in the window and has never once taken it down."
 				],
-				"rumour": "[false] Simkin the reeve hasn't paid their tab in three months, and nobody knows where their money went.",
+				"rumour": "[false] Perkin the rat-catcher hasn't paid their tab in three months, and nobody knows where their money went.",
 				"stock": "1tjmu08",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Emberforge Arms",
-				"keeper": "Barra (young) Drives a hard bargain (+10%)",
-				"greeting": "Hold it like you mean it, or don't hold it at all.",
+				"keeper": "Eskja (young) Drives a hard bargain (+10%)",
+				"greeting": "Mm. Adventurers. Wipe your boots. Steel hates mud.",
 				"quirks": [
-					"Hums old forge-songs in a deep rumble while working.",
-					"Keeps a grudge list nailed to the wall. It's very long."
+					"Is dreadfully allergic to cats, and every cat in town knows it.",
+					"Fixes dented pots for the neighbours for free, grumbling the whole time."
 				],
-				"rumour": "[partly true] The garrison captain ordered fifty spears and won't say what for.",
+				"rumour": "[partly true] Three swords came in for sharpening, all with the same black stain that won't scour off.",
 				"stock": "1y40z3a",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Ysolde Emberforge, Weaponsmith",
-				"keeper": "Ysolde (middle-aged) Fair and firm (no haggling)",
+				"name": "Kolbrand Emberforge, Weaponsmith",
+				"keeper": "Kolbrand (middle-aged) Fair and firm (no haggling)",
 				"greeting": "Hmph. Show me your hands. ...Calluses. Good. Come in.",
 				"quirks": [
-					"Refuses to sell to anyone who calls a sword \"pointy\"."
+					"Makes customers name their new weapon before they can leave with it."
 				],
-				"rumour": "[false] A ogre took three sheep near Mossmere. Bit clean through a pitchfork.",
+				"rumour": "[false] Will the swineherd ordered a heavy crossbow and a hundred bolts. Says it's for rats.",
 				"stock": "j8661o",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Dagna's Forge",
 				"keeper": "Dagna (older) Soft-hearted (−5% for a sad story)",
-				"greeting": "Hmph. Show me your hands. ...Calluses. Good. Come in.",
+				"greeting": "Mm. Adventurers. Wipe your boots. Steel hates mud.",
 				"quirks": [
-					"Has never once smiled in front of a customer. Probably."
+					"Jots each customer's measurements on a slate, in case they come back."
 				],
-				"rumour": "[true] The Thornhide folk say the shipments from Bramwick have stopped coming.",
+				"rumour": "[true] Raiders hit a farmstead to the north and left a spear in the door with a ribbon tied round it.",
 				"stock": "siof2a",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Emberforge Blades & Bows",
-				"keeper": "Dorgan (old) Slightly desperate for sales (−10%)",
+				"keeper": "Haldrek (old) Slightly desperate for sales (−10%)",
 				"greeting": "Don't touch the edge. Everyone touches the edge.",
 				"quirks": [
-					"Will sharpen your current weapon for free if you tell a good battle story."
+					"Won't name a price until the customer has held the weapon for a full minute."
 				],
-				"rumour": "[true] An old battlefield to the north turned up a sword that won't rust.",
+				"rumour": "[true] Bring me the claws of a giant boar and I'll make arrowheads that bite through anything.",
 				"stock": "16w7zxo",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Hessa's Fittings",
-				"keeper": "Hessa (old) Drives a hard bargain (+10%)",
-				"greeting": "Every dent tells a story. I'd rather you had fewer stories.",
+				"name": "Wurma's Fittings",
+				"keeper": "Wurma (old) Drives a hard bargain (+10%)",
+				"greeting": "There you are. I had a feeling someone would need me today.",
 				"quirks": [
-					"Has a pet tortoise named after a famous general."
+					"Has never lost a staring contest, mostly because they forget they are in one."
 				],
-				"rumour": "[true] The new reeve in Kingsashvale is taxing ale by the sip.",
+				"rumour": "[true] The scarecrow on the Pennywhistle family's plot wears a different hat every morning. Nobody's lending it hats.",
 				"stock": "1s69xdp",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Ruga's Fittings",
-				"keeper": "Ruga (middle-aged) Fair and firm (no haggling)",
-				"greeting": "Oh dear, who fitted that for you? Come here, come here.",
+				"name": "Narrek's Fittings",
+				"keeper": "Narrek (middle-aged) Fair and firm (no haggling)",
+				"greeting": "There you are. I had a feeling someone would need me today.",
 				"quirks": [
-					"Offers a free repair if you bring back a dented piece with a good story."
+					"Hands each customer a care guide for their armour, illustrated with little drawings."
 				],
-				"rumour": "[partly true] The new reeve in Redridge is taxing ale by the sip.",
+				"rumour": "[partly true] The lord's steward has been measuring fields with a rope and a strange brass gauge. Nobody asked him to.",
 				"stock": "1526hua",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Gant Thornhide's Mail & Plate",
-				"keeper": "Gant (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Welcome, little one. ...Yes, you're all little ones to me.",
+				"name": "Orvik Thornhide's Mail & Plate",
+				"keeper": "Orvik (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Hello, hello. Stand on the little box, please, so I don't have to kneel.",
 				"quirks": [
 					"Knits chainmail-patterned scarves in their spare time.",
-					"Remembers the measurements of every customer they have ever had."
+					"Asks who you are coming home to, and engraves the name inside your breastplate for free."
 				],
-				"rumour": "[false] Tam the cooper ordered child-sized armor. Twelve sets. Paid in advance.",
+				"rumour": "[false] Sybil the cooper ordered child-sized armor. Twelve sets. Paid in advance.",
 				"stock": "164lek0",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Oona Thornhide's Mail & Plate",
-				"keeper": "Oona (ancient) Gives regulars a discount (−10% on return visits)",
+				"name": "The Dented Helm",
+				"keeper": "Durn (ancient) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Oh dear, who fitted that for you? Come here, come here.",
 				"quirks": [
-					"Talks to the armor stands as if they were old friends."
+					"Weighs each customer \"for the fitting\", then asks very gently if they are eating enough."
 				],
-				"rumour": "[partly true] Somebody fished a breastplate out of the river with a hole punched right through it. From the inside.",
+				"rumour": "[partly true] A company of sellswords has camped to the west with no banner. They paid me in foreign silver.",
 				"stock": "p5126j",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Tibbet Mosswick's Tonics & Tinctures",
+				"name": "Tibbet's Brews & Blunders",
 				"keeper": "Tibbet (older) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
 				"quirks": [
-					"Their hair is currently bright violet and they don't know why."
+					"Wears a necklace of tiny vials and sips one whenever the conversation gets dull."
 				],
-				"rumour": "[true] The harvest came in twice this year. Twice. Nobody is asking how.",
+				"rumour": "[true] Someone is buying up the old orchards and felling every tree but one in each.",
 				"stock": "1rq8jyd",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Mosswick Remedies",
-				"keeper": "Ebba (middle-aged) Drives a hard bargain (+10%)",
-				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
+				"keeper": "Clatter (middle-aged) Drives a hard bargain (+10%)",
+				"greeting": "Come in! Mind the cat. That's not a cat. Mind it anyway.",
 				"quirks": [
 					"Offers a discount if you try an experimental potion. Results vary."
 				],
@@ -1648,70 +1648,70 @@
 			{
 				"name": "Mosswick & Mosswick, Apothecaries",
 				"keeper": "Nock (middle-aged) Drives a hard bargain (+10%)",
-				"greeting": "Ah! You look tired. And injured. And slightly cursed? Let me see...",
+				"greeting": "Don't mind the hair, it was a different colour this morning. What brings you in?",
 				"quirks": [
-					"Labels everything with dates in a calendar nobody else uses."
+					"Cranks a big fan that blows the fumes out of the window and into the neighbour's shop."
 				],
 				"rumour": "[true] Someone ordered enough sleeping draught to fell a giant. Paid in very old coins.",
 				"stock": "zlmzp4",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Wobbly Cauldron",
-				"keeper": "Fenna (middle-aged) Slightly desperate for sales (−10%)",
-				"greeting": "Customers! Wonderful! Any allergies? Any extra limbs? No? Pity.",
+				"name": "The Frothing Cauldron",
+				"keeper": "Pockle (middle-aged) Slightly desperate for sales (−10%)",
+				"greeting": "Don't mind the hair, it was a different colour this morning. What brings you in?",
 				"quirks": [
-					"Gets distracted mid-sentence by a new idea and scribbles it down.",
-					"Keeps a frog familiar that \"tastes-tests\" ingredients."
+					"Charges by the gulp, and watches very closely.",
+					"Keeps two fire buckets by the door, one labelled \"CUSTOMERS\" and one labelled \"ME\"."
 				],
-				"rumour": "[true] The new reeve in Dunvale-on-the-River is taxing ale by the sip.",
+				"rumour": "[true] The new reeve in Cressleigh-on-the-River is taxing ale by the sip.",
 				"stock": "rl15wr",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Veyl Antiquities",
+				"name": "House Veyl, Purveyors of Portents",
 				"keeper": "Myrael (middle-aged) Fair and firm (no haggling)",
-				"greeting": "Everything here has a price. Not everything has a price in gold.",
+				"greeting": "Mm. You smell of rain from a town you have not visited yet.",
 				"quirks": [
-					"Their shop is bigger on the inside, and they won't discuss it."
+					"Their shadow moves a moment after they do."
 				],
-				"rumour": "[partly true] A star fell to the south three nights ago. Something walked away from it.",
+				"rumour": "[partly true] An apprentice came in asking how to unsummon something. Very politely. Very pale.",
 				"stock": "qzdpmx",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Eredan's Emporium of the Arcane",
+				"name": "Eredan's Cabinet of Unlikely Things",
 				"keeper": "Eredan (ancient) Fair and firm (no haggling)",
 				"greeting": "Ah. The bell did not ring, and yet here you are.",
 				"quirks": [
-					"Will only sell certain items to people they find \"interesting\".",
-					"Never seems to blink."
+					"Owns a quill that writes on its own, and it is taking notes on the party.",
+					"Presses flowers from long-forgotten battlefields and knows the story of each."
 				],
-				"rumour": "[false] Someone has been selling maps that redraw themselves. Do not buy one.",
+				"rumour": "[false] A moth the size of my hand circles my shop sign every night and always lands on the same letter.",
 				"stock": "kdoilc",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "House Veyl Curios",
-				"keeper": "Caelum (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Everything here has a price. Not everything has a price in gold.",
+				"name": "The Veyl Reliquary",
+				"keeper": "Cyrandel (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Close the door softly. Some of the stock is sleeping.",
 				"quirks": [
-					"Speaks of the other Veyls as if they were all the same person.",
-					"Has a raven that repeats the last thing a customer said."
+					"Asks each customer for a single hair \"for the records\", and never says which records.",
+					"Has a single midnight blue streak in their silver hair that shifts shade when the weather turns."
 				],
 				"rumour": "[false] The harvest came in twice this year. Twice. Nobody is asking how.",
 				"stock": "xhedeb",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Corvin's Emporium of the Arcane",
-				"keeper": "Corvin (young) Soft-hearted (−5% for a sad story)",
-				"greeting": "Everything here has a price. Not everything has a price in gold.",
+				"name": "Veyl Antiquities",
+				"keeper": "Oressa (young) Soft-hearted (−5% for a sad story)",
+				"greeting": "Close the door softly. Some of the stock is sleeping.",
 				"quirks": [
-					"Keeps a cat that is definitely a polymorphed something.",
-					"Wraps every item in black silk and a sprig of rosemary."
+					"Lights candles with a whisper rather than a flame.",
+					"Finishes customers' sentences, sometimes before they have started them."
 				],
-				"rumour": "[true] The dead in the old barrow have started keeping time. Listen for the drums.",
+				"rumour": "[true] Scrolls bought at the last fair are going blank in folks' hands. Someone's selling faded magic.",
 				"stock": "13y7gmn",
 				"orders": "1axn3y4"
 			}
@@ -1741,273 +1741,273 @@
 		],
 		"shops": [
 			{
-				"name": "The Sleeping Tankard",
+				"name": "The Hungry Tankard",
 				"keeper": "Torinn (middle-aged) Slightly desperate for sales (−10%)",
 				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
 				"quirks": [
-					"Brews a secret family ale and will only say it contains \"a bit of dragon\".",
-					"Keeps a \"trouble jar\" of coins: anyone who starts a brawl pays into it."
+					"Hums old dragon lullabies while sweeping, and the regulars nod off in their chairs.",
+					"Brews a secret family ale and will only say it contains \"a bit of dragon\"."
 				],
-				"rumour": "[true] A cloaked stranger paid for a room for a week and hasn't once come out of it.",
+				"rumour": "[true] The coach from Little Briartor arrived with no driver. The horses knew the way.",
 				"stock": "8j2djt",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Laughing Flagon",
-				"keeper": "Nala (young) Slightly desperate for sales (−10%)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"name": "The Snoring Ox",
+				"keeper": "Gorvesh (young) Slightly desperate for sales (−10%)",
+				"greeting": "Cold hands? Hold this mug a moment. *puff* There, mulled. You're welcome!",
 				"quirks": [
-					"Will give a free room for a song, a story or a good fight story (no actual fighting)."
+					"Polishes the same tankard all day and gets twitchy if anyone else touches the cloth."
 				],
-				"rumour": "[false] The temple healer is buying every antitoxin I make. Every single one.",
+				"rumour": "[false] Dunstan the woodward has had hiccups for nine days. Nothing I give works. Started after they drank from the north spring.",
 				"stock": "1973j0",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Smoking Hearth",
-				"keeper": "Arjhan (older) Soft-hearted (−5% for a sad story)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"name": "The Hearthscale Arms",
+				"keeper": "Kethra (older) Soft-hearted (−5% for a sad story)",
+				"greeting": "Ah, adventurers! I can smell the road on you. Baths are extra, and worth every copper.",
 				"quirks": [
-					"Remembers every guest's drink order, even from years ago.",
-					"Keeps a wall of tankards for regulars, and one hook that is always left empty."
+					"Gives every regular a nickname, and will have one for each of the party by closing time.",
+					"Wears tiny spectacles perched on their snout, purely for reading the tab."
 				],
-				"rumour": "[false] Someone has been buying silvered blades. Lots of them. Ask yourself why.",
-				"stock": "hiqjqe",
+				"rumour": "[false] A blade came in for repair with a hilt shaped like a coiled serpent. Its owner never came back for it.",
+				"stock": "1bim4xj",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Golden Tankard",
+				"name": "The Snoring Tankard",
 				"keeper": "Ghesh (young) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Boots off the table, weapons by the door, and tell me everything.",
 				"quirks": [
-					"Sneezes sparks when they laugh too hard. There's a scorch mark on the ceiling."
+					"Hires out the back room for private meetings, then listens at the door with a cup."
 				],
-				"rumour": "[partly true] That avalanche at the pass was started on purpose. I heard the horn.",
-				"stock": "1hjy2a1",
+				"rumour": "[partly true] Rockslides keep blocking the same stretch of road, always at night, always just after the ore wagons pass.",
+				"stock": "1gyhto8",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle & Kin Trading Post",
-				"keeper": "Posy (young) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
+				"name": "Bramble Pennywhistle's Emporium",
+				"keeper": "Bramble (young) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Come in before the rain does! Shopping or chatting? Both? Lovely.",
 				"quirks": [
-					"Has an ancient, enormous cat that sleeps on the counter."
+					"Is certain the shop is haunted by a very tidy ghost who folds the linens."
 				],
-				"rumour": "[true] Edith the widow up the hill is sweet on a stranger who only comes into town on moonless nights.",
+				"rumour": "[true] A traveller paid me to keep a parcel behind the counter until someone says the word 'lantern'. It's heavy for its size.",
 				"stock": "1ukmoae",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Marigold (young) Fair and firm (no haggling)",
+				"name": "Pennywhistle's Everything Shop",
+				"keeper": "Huckle (young) Fair and firm (no haggling)",
 				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
 				"quirks": [
 					"Is convinced one of the adventurers is secretly royalty."
 				],
-				"rumour": "[true] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[true] Our bridge to the south washed out, and someone rebuilt it in a single night. Better than before.",
 				"stock": "1oiz10x",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Pennywhistle's Provisions",
-				"keeper": "Tamsin (young) Slightly desperate for sales (−10%)",
-				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
+				"keeper": "Elsbeth (young) Slightly desperate for sales (−10%)",
+				"greeting": "Don't tell me, let me guess. Rope, rations and a tinderbox? Thought so!",
 				"quirks": [
-					"Hums the same tune constantly and does not realise it."
+					"Tucks a sprig of lavender behind each customer's ear, whether they like it or not."
 				],
-				"rumour": "[true] A wagon came in from Stoneden End with every crate empty, and the driver won't say a word.",
+				"rumour": "[true] Somebody's been paying for flour with coins from a mint that closed before my grandmother was born.",
 				"stock": "zlqsux",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Osgood Pennywhistle's General Goods",
 				"keeper": "Osgood (old) Drives a hard bargain (+10%)",
-				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
+				"greeting": "Well! Strangers! Where are you from, where are you going, and who's paying?",
 				"quirks": [
-					"Keeps a ledger of every traveller who has ever passed through."
+					"Swears the doorbell rings a different note when a stranger walks in."
 				],
-				"rumour": "[true] The miners broke into a hall that isn't on any map. They've sealed it up again.",
+				"rumour": "[true] Goats from Old Slatepike came down the mountain with gold dust caught in their coats.",
 				"stock": "2m3c51",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Emberforge Blades & Bows",
-				"keeper": "Dorgan (young) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"keeper": "Torvi (young) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Hold it like you mean it, or don't hold it at all.",
 				"quirks": [
 					"Will sharpen your current weapon for free if you tell a good battle story.",
-					"Has a rival smith in town and badmouths their work constantly."
+					"Hums so low while working that customers feel it in their teeth."
 				],
-				"rumour": "[false] A owlbear took three sheep near Upper Stonescar. Bit clean through a pitchfork.",
+				"rumour": "[false] The lord has banned blades longer than a hand at market. People say it's because of what happened at the last fair.",
 				"stock": "16us3k2",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Red Anvil",
+				"name": "The Red Hammer",
 				"keeper": "Barra (young) Fair and firm (no haggling)",
 				"greeting": "Hmph. Show me your hands. ...Calluses. Good. Come in.",
 				"quirks": [
-					"Hums old forge-songs in a deep rumble while working."
+					"Can tell what metal anything is made of by tapping it with a fingernail."
 				],
 				"rumour": "[true] The garrison captain ordered fifty spears and won't say what for.",
 				"stock": "1q55w8",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Hilde's Forge",
-				"keeper": "Hilde (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Hmph. Show me your hands. ...Calluses. Good. Come in.",
+				"name": "Stigrun's Forge",
+				"keeper": "Stigrun (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "You've come about a weapon. Or you're lost. Which?",
 				"quirks": [
-					"Names every weapon they forge and is sad to see them go."
+					"Checks the balance of every weapon on one finger before handing it over."
 				],
-				"rumour": "[true] Lights have been seen on the peak where nobody has lived for a hundred years.",
+				"rumour": "[true] Petronel the gravedigger heard hammering behind solid rock in the deep shaft. Next morning their pick was gone.",
 				"stock": "1s2mtpf",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Emberforge Arms",
-				"keeper": "Vonna (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Emberforge steel. Best this side of the mountains. Best the other side too.",
+				"keeper": "Gisla (middle-aged) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Shop's open. Forge is hot. Don't just stand there.",
 				"quirks": [
-					"Has never once smiled in front of a customer. Probably."
+					"Bangs the anvil once to close each sale, loud enough to rattle the windows."
 				],
-				"rumour": "[partly true] Bandits on the west road have new steel. Good steel. Someone's arming them.",
+				"rumour": "[partly true] A hunter brought in a broken owlbear claw to be set as a knife handle. Said there were more where that came from.",
 				"stock": "13n4sap",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Imma Thornhide's Mail & Plate",
-				"keeper": "Imma (old) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Welcome, little one. ...Yes, you're all little ones to me.",
+				"name": "The Patient Bulwark",
+				"keeper": "Yorna (old) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Good morning. Or afternoon. I lose track when I'm riveting. What needs mending?",
 				"quirks": [
-					"Keeps a jar of honey sweets for nervous customers."
+					"Their tiny spectacles are always fogged from the forge, so they squint at everyone fondly."
 				],
-				"rumour": "[true] The silver seam ran out, but the mine owner is still hiring. For what?",
+				"rumour": "[true] The miners broke into a hall that isn't on any map. They've sealed it up again.",
 				"stock": "eexd5i",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Unbroken Shield",
-				"keeper": "Sorsha (ancient) Fair and firm (no haggling)",
-				"greeting": "Oh dear, who fitted that for you? Come here, come here.",
+				"name": "Thornhide Mending & Mail",
+				"keeper": "Agga (ancient) Fair and firm (no haggling)",
+				"greeting": "Oh, that buckle is crying out for help. I can hear it from here.",
 				"quirks": [
-					"Tests shields by having customers hit them as hard as they can. Is never impressed.",
-					"Offers a free repair if you bring back a dented piece with a good story."
+					"Sews a tiny pocket inside every gambeson, \"for a lucky charm, or a sweet\".",
+					"Tests shields by having customers hit them as hard as they can. Is never impressed."
 				],
-				"rumour": "[partly true] Simkin the tanner ordered child-sized armor. Twelve sets. Paid in advance.",
+				"rumour": "[partly true] The lord wants every guard in a padded jack by winter. Says arrows are coming. From where?",
 				"stock": "qmz5jg",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "The Patient Shield",
-				"keeper": "Oona (young) Fair and firm (no haggling)",
-				"greeting": "Oh dear, who fitted that for you? Come here, come here.",
+				"keeper": "Grobb (young) Fair and firm (no haggling)",
+				"greeting": "Oh, you've been walking lopsided. That's the pauldron. Come, let me fix it.",
 				"quirks": [
-					"Will not let a customer leave in badly fitted armor, even if they bought it elsewhere."
+					"Offers a free repair if you bring back a dented piece with a good story."
 				],
-				"rumour": "[true] Somebody fished a breastplate out of the river with a hole punched right through it. From the inside.",
+				"rumour": "[true] Will the tinker ordered child-sized armor. Twelve sets. Paid in advance.",
 				"stock": "axjwcw",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Thornhide Armory",
-				"keeper": "Dolla (middle-aged) Soft-hearted (−5% for a sad story)",
+				"name": "The Hearty Helm",
+				"keeper": "Rokka (middle-aged) Soft-hearted (−5% for a sad story)",
 				"greeting": "Welcome, little one. ...Yes, you're all little ones to me.",
 				"quirks": [
-					"Talks to the armor stands as if they were old friends.",
-					"Has a pet tortoise named after a famous general."
+					"Practises calligraphy on leather offcuts and gives them away as bookmarks.",
+					"Cries at weddings, funerals and particularly well-made rivets."
 				],
-				"rumour": "[true] The lord's guard came in for refitting. Every shield had the same claw marks.",
+				"rumour": "[true] Someone in Upper Eaglecroft is selling shoddy armour stamped with my family's mark. I'd like a word with them.",
 				"stock": "12jbm6b",
 				"orders": "1axn3y4"
 			},
 			{
 				"name": "Mosswick Remedies",
-				"keeper": "Fenna (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"keeper": "Tumble (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Welcome! Ignore the smoke, that's normal. Mostly normal.",
 				"quirks": [
-					"Is missing an eyebrow. Do not ask about the eyebrow."
+					"Smells strongly of something different every day: lemons, wet dog, thunder."
 				],
-				"rumour": "[true] Nightcap mushrooms are fruiting early in the woods to the east. Bad sign.",
+				"rumour": "[true] The river's tasting of iron. Folk downstream are sickening, and upstream is where the new diggings opened.",
 				"stock": "wes8yz",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Mosswick & Mosswick, Apothecaries",
+				"name": "Mosswick Elixirs (Mostly Safe)",
 				"keeper": "Mabry (young) Slightly desperate for sales (−10%)",
-				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
+				"greeting": "Come in! Mind the cat. That's not a cat. Mind it anyway.",
 				"quirks": [
-					"Offers a discount if you try an experimental potion. Results vary.",
-					"Gets distracted mid-sentence by a new idea and scribbles it down."
+					"Tells long stories about cousins who exploded, but swears every one of them is fine now.",
+					"Measures ingredients in pinches, smidges and \"oh, that's too much\"."
 				],
-				"rumour": "[false] Someone ordered enough sleeping draught to fell a giant. Paid in very old coins.",
+				"rumour": "[false] The Pennywhistle family's youngest has a rash shaped like a key. Third child this month with the same mark.",
 				"stock": "x33v40",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Bubbling Cauldron",
-				"keeper": "Orryn (older) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Ah! You look tired. And injured. And slightly cursed? Let me see...",
+				"name": "The Hiccuping Flask",
+				"keeper": "Zibb (older) Gives regulars a discount (−10% on return visits)",
+				"greeting": "Oh good, a volunteer! Sorry, a customer. Same thing, really.",
 				"quirks": [
 					"Keeps a frog familiar that \"tastes-tests\" ingredients."
 				],
-				"rumour": "[false] There is a cough going round Eaglecrag. Not natural. Smells of copper.",
+				"rumour": "[false] A woman in a grey hood bought all my mandrake root and asked if I knew where to find more.",
 				"stock": "19f0wyj",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Smoking Cauldron",
+				"name": "The Curious Flask",
 				"keeper": "Wizzle (middle-aged) Gives regulars a discount (−10% on return visits)",
-				"greeting": "Welcome! Ignore the smoke, that's normal. Mostly normal.",
+				"greeting": "Quick question before you buy anything: how do you feel about feathers?",
 				"quirks": [
-					"Sends letters to the other Mosswicks comparing notes on customers."
+					"Uses a brass ear trumpet to listen to potions \"settling\"."
 				],
-				"rumour": "[true] I'll pay well for wraith parts. A colleague says one was seen near Kingseaglestow.",
+				"rumour": "[true] Robin the alewife brought me a sick crow that talked in its fever. It kept saying one name, over and over: Eaglestow.",
 				"stock": "3ikmr7",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "The Seventh Key",
-				"keeper": "Vaelan (ancient) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Ah. The bell did not ring, and yet here you are.",
+				"name": "The Eldest Key",
+				"keeper": "Lunavel (ancient) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Welcome back. No, you have not been here before. Not yet.",
 				"quirks": [
 					"Wraps every item in black silk and a sprig of rosemary."
 				],
-				"rumour": "[false] An heirloom of our house went missing a century ago. It has been seen again, near Kingswickcrag.",
+				"rumour": "[false] Somebody buried a box of wands under the crossroads. I found two. There were slots for six.",
 				"stock": "m1zco9",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Veyl Antiquities",
-				"keeper": "Myrael (ancient) Fair and firm (no haggling)",
-				"greeting": "Welcome. Please do not make eye contact with the mirror.",
+				"name": "The Last Mirror",
+				"keeper": "Peryndel (ancient) Fair and firm (no haggling)",
+				"greeting": "Welcome back. No, you have not been here before. Not yet.",
 				"quirks": [
-					"Sometimes asks for a memory, a secret or a favour instead of coin."
+					"Writes price tags in a script that only the right buyer can read."
 				],
-				"rumour": "[false] Lights have been seen on the peak where nobody has lived for a hundred years.",
+				"rumour": "[false] A miner came up holding a gem he says was handed to him in the dark, by a hand smaller than a child's.",
 				"stock": "13tr7u",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "House Veyl Curios",
-				"keeper": "Nyxa (young) Gives regulars a discount (−10% on return visits)",
+				"name": "The Veyl Reliquary",
+				"keeper": "Ashvael (young) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Ah. The bell did not ring, and yet here you are.",
 				"quirks": [
-					"Never seems to blink."
+					"Refers to the moon by a pet name."
 				],
-				"rumour": "[false] That avalanche at the pass was started on purpose. I heard the horn.",
+				"rumour": "[false] The mine owner's hired a dowser from Old Thornworth. She walks the tunnels with a hazel rod and won't say what she's after.",
 				"stock": "ost27d",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Ysmae Veyl's Wonders",
-				"keeper": "Ysmae (middle-aged) Slightly desperate for sales (−10%)",
-				"greeting": "You were expected. Well... someone was.",
+				"name": "Thorivel's Shelf of Quiet Marvels",
+				"keeper": "Thorivel (middle-aged) Slightly desperate for sales (−10%)",
+				"greeting": "Do come in. You already have, of course, but it is polite to say so.",
 				"quirks": [
-					"Has a raven that repeats the last thing a customer said.",
-					"Their shop is bigger on the inside, and they won't discuss it."
+					"Sorts the stock by mood rather than type, and the moods change daily.",
+					"Answers every question with another question, except about prices, which are oddly precise."
 				],
-				"rumour": "[true] Joan the widow up the hill came in asking how to break a curse. They would not say whose.",
+				"rumour": "[true] The old wizard's apprentice in Granitewell has been selling off the tower's contents by the crate. I doubt the wizard knows.",
 				"stock": "1jgvqb",
 				"orders": "1axn3y4"
 			}
@@ -2015,7 +2015,7 @@
 	},
 	{
 		"seed": "golden-random-1",
-		"name": "Fernholt",
+		"name": "Fernbrake",
 		"tier": "hamlet",
 		"region": "forest",
 		"population": 233,
@@ -2027,13 +2027,13 @@
 		],
 		"shops": [
 			{
-				"name": "Pennywhistle & Kin Trading Post",
-				"keeper": "Dilly (young) Gives regulars a discount (−10% on return visits)",
+				"name": "Tilly's Odds & Ends",
+				"keeper": "Tilly (young) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
 				"quirks": [
-					"Has a \"lucky\" item they refuse to sell at any price."
+					"Presses flowers from every traveller's homeland and would love one from the party."
 				],
-				"rumour": "[false] Someone is leaving carved wooden dolls on doorsteps. They look like the people inside.",
+				"rumour": "[false] Honey from the wild hives to the west makes folk fall asleep where they stand. The bees seem fine.",
 				"stock": "zgn45t",
 				"orders": "12d5bij"
 			}
@@ -2041,7 +2041,7 @@
 	},
 	{
 		"seed": "golden-random-2",
-		"name": "Ironley",
+		"name": "Cairnley",
 		"tier": "village",
 		"region": "mountain",
 		"population": 402,
@@ -2058,37 +2058,37 @@
 		],
 		"shops": [
 			{
-				"name": "Hearthscale Hall",
-				"keeper": "Uadjit (young) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "You look like you've walked a long road. First drink's on the Hearthscales.",
+				"name": "Belvarr's Hearthside",
+				"keeper": "Belvarr (young) Loves to haggle (DC 12 Persuasion for 10% off)",
+				"greeting": "Welcome, friend! You'll want the stew. Everyone wants the stew. *slaps the bar*",
 				"quirks": [
-					"Brews a secret family ale and will only say it contains \"a bit of dragon\".",
-					"Keeps a \"trouble jar\" of coins: anyone who starts a brawl pays into it."
+					"Ties a gold ribbon round their tail tip and asks every guest to guess what it's for.",
+					"Lets anyone sleep by the hearth for free on stormy nights, no questions asked."
 				],
-				"rumour": "[true] There's a cellar under the old mill with a door that wasn't there last year.",
-				"stock": "ox18lk",
+				"rumour": "[true] A tax assessor stayed three nights and left without assessing a thing. He took plenty of notes about the chapel, though.",
+				"stock": "1yjjlhn",
 				"orders": "1axn3y4"
 			},
 			{
-				"name": "Pennywhistle's Sundries & Supplies",
-				"keeper": "Tamsin (middle-aged) Slightly desperate for sales (−10%)",
+				"name": "Pennywhistle's Everything Shop",
+				"keeper": "Perpetua (middle-aged) Slightly desperate for sales (−10%)",
 				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
 				"quirks": [
 					"Writes letters to every other Pennywhistle shop weekly and will happily pass messages along.",
-					"Has a \"lucky\" item they refuse to sell at any price."
+					"Has a pocket for everything and takes ages finding the right one."
 				],
-				"rumour": "[false] The tax collector is a week late. Nobody's complaining, but everyone's nervous.",
+				"rumour": "[false] A rich trader from Old Flintshaft wants the old schoolhouse. Offered three times what it's worth, no haggling.",
 				"stock": "bqsvgd",
 				"orders": "1iguc2u"
 			},
 			{
-				"name": "Rurik Emberforge's Smithy",
-				"keeper": "Rurik (old) Fair and firm (no haggling)",
-				"greeting": "Hold it like you mean it, or don't hold it at all.",
+				"name": "Morrin Emberforge's Smithy",
+				"keeper": "Morrin (old) Fair and firm (no haggling)",
+				"greeting": "Hrm. You're letting the heat out. In or out.",
 				"quirks": [
-					"Tests every blade on a ham hanging from the ceiling."
+					"Wears a heavy leather apron older than the shop, patched with steel plates."
 				],
-				"rumour": "[true] The Thornhide folk say the shipments from Copperdelve have stopped coming.",
+				"rumour": "[true] The Thornhide folk say the shipments from Coppertor have stopped coming.",
 				"stock": "fz3y3a",
 				"orders": "xirnau"
 			}

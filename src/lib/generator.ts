@@ -125,7 +125,18 @@ function makeRumour(ctx: Ctx, rng: Rng, family: Family): Rumour {
 		pool = at(ROLE_RUMOURS[pools.pick(ROLES)], v);
 	}
 
-	const template = rng.fork('line').pick(pool, (t) => ctx.taken.has(contentKey.rumour(t)));
+	// If a campaign has used every line in that pool, borrow from the
+	// shopkeeper's own pool, then the region's, then any shop's, before
+	// repeating anything.
+	const isTaken = (t: string) => ctx.taken.has(contentKey.rumour(t));
+	const fallbacks = [
+		pool,
+		at(ROLE_RUMOURS[family.id] ?? ROLE_RUMOURS.general, v),
+		regional,
+		ROLES.flatMap((r) => at(ROLE_RUMOURS[r], v))
+	];
+	const source = fallbacks.find((p) => p.some((t) => !isTaken(t))) ?? pool;
+	const template = rng.fork('line').pick(source, isTaken);
 	const key = contentKey.rumour(template);
 	ctx.taken.add(key);
 
