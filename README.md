@@ -30,11 +30,14 @@ A settlement and shopkeeper generator for tabletop RPGs (built with D&D 5e in mi
   places (a desert village smith sells scimitars), adds local goods (fur cloaks, oilskin coats,
   seasickness tonic), and flavours town names, the inn's house special and rumours. The app
   remembers your last region.
-- **Seeds.** The same seed + size + region always rebuilds the same town, and the URL holds the seed, so you
-  can bookmark or share a town.
+- **Seeds that keep working.** The same seed + size + region always rebuilds the same town. The URL
+  holds the seed and the content version, so bookmarks and shared links keep working as new names,
+  quirks and rumours are added. See [CONTENT.md](CONTENT.md) for how to add content safely.
+- **Campaigns.** Each campaign has its own saved towns and families, and avoids reusing town names,
+  shopkeepers, quirks and rumours from its saved towns until nothing fresh is left.
 - **Saved towns.** Save towns in your browser, reroll individual shops, keep DM notes, and see which
-  relatives of a shopkeeper the party has already met ("Kin the party has met: Brunna (Oakford)").
-  Export/import a JSON backup to move between devices.
+  relatives of a shopkeeper the party has already met in this campaign ("Kin the party has met:
+  Brunna (Oakford)"). Export/import a JSON backup (all campaigns) to move between devices.
 - **Print-friendly**, mobile-friendly, light and dark mode. No server and no account needed.
 
 Item names and prices come from the D&D 5e SRD 5.1 (CC-BY-4.0), plus a few homebrew items marked as
@@ -86,5 +89,6 @@ Connect the repo in Cloudflare Pages with:
 | `src/lib/data/regions.ts`    | Regions: prices, local goods, names, rumours    |
 | `src/lib/data/rumours.ts`    | Rumour tables for each family                   |
 | `src/lib/generator.ts`       | Builds a settlement from a seed                 |
-| `src/lib/stores/*.svelte.ts` | Saved towns and edited families (localStorage)  |
-| `src/routes/`                | Pages: generate (`/`), saved towns, families    |
+| `src/lib/content/`           | Versioned tables, content keys, golden tests    |
+| `src/lib/stores/*.svelte.ts` | Campaigns, saved towns, families (localStorage) |
+| `src/routes/`                | Pages: generate, towns, families, campaigns     |

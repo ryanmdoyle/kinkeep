@@ -2,11 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import SettlementView from '#lib/components/SettlementView.svelte';
+	import { CONTENT_VERSION, normalizeVersion } from '#lib/content/versioned.ts';
 	import { REGIONS } from '#lib/data/regions.ts';
 	import { TIERS } from '#lib/data/tiers.ts';
 	import { generateSettlement } from '#lib/generator.ts';
 	import { randomSeed } from '#lib/rng.ts';
-	import { families } from '#lib/stores/families.svelte.ts';
+	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import { load, save } from '#lib/stores/storage.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
 	import type { RegionId, Settlement, TierId } from '#lib/types.ts';
@@ -20,23 +21,33 @@
 	);
 	let name = $state(params.get('name') ?? '');
 	let seed = $state(params.get('seed') ?? '');
+	// Links carry the content version they were made with, so they keep
+	// rebuilding the same town after new names, quirks and rumours are added.
+	let version = $state(params.get('v') ? normalizeVersion(params.get('v')) : CONTENT_VERSION);
 	let settlement = $state<Settlement | null>(null);
 	let copied = $state(false);
 
 	const saved = $derived(settlement ? towns.has(settlement.id) : false);
 
 	function generate(newSeed: boolean) {
-		if (newSeed || !seed.trim()) seed = randomSeed();
+		if (newSeed || !seed.trim()) {
+			seed = randomSeed();
+			version = CONTENT_VERSION;
+		}
+		const campaign = campaigns.active;
 		const fresh = generateSettlement({
 			seed,
 			tier: size || undefined,
 			region: region === 'random' ? undefined : region,
 			name,
-			families: families.list
+			contentVersion: version,
+			campaignId: campaign.id,
+			families: campaigns.familiesFor(campaign, version),
+			avoid: towns.avoidFor()
 		});
 		// If this town is saved, show the saved copy (keeps rerolls and notes).
 		settlement = towns.get(fresh.id) ?? fresh;
-		const query = new URLSearchParams({ seed });
+		const query = new URLSearchParams({ seed, v: String(version) });
 		if (size) query.set('size', size);
 		query.set('region', region);
 		save('kinkeep:region', region);
@@ -121,8 +132,26 @@
 		</button>
 		<button class="btn" type="button" onclick={copyLink}>{copied ? 'Copied!' : 'Copy link'}</button>
 		<button class="btn" type="button" onclick={() => window.print()}>Print</button>
-		<span class="muted seed">Seed: <code>{settlement.seed}</code></span>
+		<span class="muted seed">
+			Seed: <code>{settlement.seed}</code> · content v{settlement.contentVersion ?? 1}
+		</span>
 	</div>
+	{#if version < CONTENT_VERSION && settlement.seed === seed}
+		<p class="card notice no-print">
+			This link was made with content version {version}, so it uses only the names, quirks and
+			rumours that existed then.
+			<button
+				class="link"
+				type="button"
+				onclick={() => {
+					version = CONTENT_VERSION;
+					generate(false);
+				}}
+			>
+				Rebuild with the newest content
+			</button>
+		</p>
+	{/if}
 	<SettlementView {settlement} onChange={update} />
 {:else}
 	<section class="empty">
@@ -168,6 +197,20 @@
 	.seed {
 		font-size: 0.85rem;
 		margin-left: auto;
+	}
+	.notice {
+		padding: 0.6rem 0.9rem;
+		margin: 0 0 1rem;
+		font-size: 0.92rem;
+	}
+	.link {
+		background: none;
+		border: 0;
+		padding: 0;
+		color: var(--accent);
+		text-decoration: underline;
+		cursor: pointer;
+		font: inherit;
 	}
 	.empty {
 		text-align: center;

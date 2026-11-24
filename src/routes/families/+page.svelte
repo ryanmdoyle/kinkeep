@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { FAMILY_ROLE_LABELS } from '#lib/data/families.ts';
+	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
 	import type { Family } from '#lib/types.ts';
 
@@ -44,11 +45,12 @@
 
 <header class="head">
 	<div>
-		<h1>Shopkeeping families</h1>
+		<h1>Families in {campaigns.active.name}</h1>
 		<p class="muted">
-			Each kind of shop is run by the same family everywhere in your world. Change anything here and
-			every town (including saved ones) shows the new details. Changes save automatically in this
-			browser.
+			Each kind of shop is run by the same family everywhere in this campaign. Change anything here
+			and every town in the campaign (including saved ones) shows the new details. Unchanged
+			families keep picking up new built-in names and quirks; reset a family to get them back after
+			editing it. Changes save automatically in this browser.
 		</p>
 	</div>
 	<button
@@ -67,7 +69,10 @@
 				<span class="emblem" aria-hidden="true">{family.emblem}</span>
 				<span class="titles">
 					<span class="role">{FAMILY_ROLE_LABELS[family.id]}</span>
-					<strong>{family.groupName}</strong>
+					<strong>
+						{family.groupName}
+						{#if families.isCustom(family.id)}<span class="custom">customised</span>{/if}
+					</strong>
 					<span class="muted">{family.race} · {family.personality}</span>
 				</span>
 			</summary>
@@ -176,6 +181,16 @@
 	}
 	.titles .muted {
 		font-size: 0.9rem;
+	}
+	.custom {
+		font-family: var(--sans, inherit);
+		font-size: 0.7rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--accent);
+		margin-left: 0.35rem;
+		vertical-align: middle;
 	}
 	.role {
 		font-size: 0.75rem;
