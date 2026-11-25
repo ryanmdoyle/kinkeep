@@ -161,10 +161,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.6rem;
-		border-left: 5px solid var(--line);
+		--frame: var(--line);
 	}
 	.campaign.active {
-		border-left-color: var(--accent);
+		--frame: var(--accent);
 	}
 	.row {
 		display: flex;

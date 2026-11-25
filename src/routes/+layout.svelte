@@ -85,12 +85,11 @@
 	}
 	.campaign select {
 		max-width: 14rem;
-		padding: 0.3rem 0.5rem;
+		padding: 0.3rem 2.25rem 0.3rem 0.5rem;
 		font-size: 0.9rem;
 	}
 	nav a {
 		padding: 0.4rem 0.7rem;
-		border-radius: 8px;
 		color: var(--muted);
 		text-decoration: none;
 	}

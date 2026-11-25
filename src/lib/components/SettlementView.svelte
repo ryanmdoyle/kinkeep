@@ -6,10 +6,21 @@
 	import { families } from '#lib/stores/families.svelte.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
 	import type { Settlement } from '#lib/types.ts';
+	import type { Snippet } from 'svelte';
 
-	/** Pass `onChange` to allow rerolling shops and rumours. */
-	let { settlement, onChange }: { settlement: Settlement; onChange?: (next: Settlement) => void } =
-		$props();
+	/**
+	 * Pass `onChange` to allow rerolling shops and rumours, and `actions` to put
+	 * buttons in a column to the right of the town's name and description.
+	 */
+	let {
+		settlement,
+		onChange,
+		actions
+	}: {
+		settlement: Settlement;
+		onChange?: (next: Settlement) => void;
+		actions?: Snippet;
+	} = $props();
 
 	const tier = $derived(getTier(settlement.tier));
 	const region = $derived(getRegion(settlement.region));
@@ -24,14 +35,19 @@
 </script>
 
 <section class="settlement">
-	<header class="head">
-		<p class="tier">
-			{tier.label} · {region.label} · population {settlement.population.toLocaleString('en-US')}
-		</p>
-		<h1>{settlement.name}</h1>
-		<p class="muted blurb">{tier.blurb} {region.blurb}</p>
-		<p class="known-for"><strong>Known for:</strong> {region.specialities.join(', ')}</p>
-	</header>
+	<div class="top">
+		<header class="head">
+			<p class="tier">
+				{tier.label} · {region.label} · population {settlement.population.toLocaleString('en-US')}
+			</p>
+			<h1>{settlement.name}</h1>
+			<p class="muted blurb">{tier.blurb} {region.blurb}</p>
+			<p class="known-for"><strong>Known for:</strong> {region.specialities.join(', ')}</p>
+		</header>
+		{#if actions}
+			<div class="actions no-print">{@render actions()}</div>
+		{/if}
+	</div>
 
 	<div class="summary">
 		<div class="card box">
@@ -93,8 +109,17 @@
 </section>
 
 <style>
-	.head {
+	.top {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: start;
+		gap: 1rem 2rem;
 		margin-bottom: 1rem;
+	}
+	@media (max-width: 700px) {
+		.top {
+			grid-template-columns: minmax(0, 1fr);
+		}
 	}
 	.tier {
 		margin: 0;
@@ -124,9 +149,6 @@
 	}
 	.box {
 		padding: 0.85rem 1rem;
-	}
-	.box h2 {
-		font-size: 1.05rem;
 	}
 	.box ul {
 		list-style: none;

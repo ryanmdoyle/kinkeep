@@ -159,17 +159,30 @@
 
 <style>
 	.shop {
-		border-top: 5px solid var(--family);
+		--frame: var(--family);
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
 		min-width: 0;
 	}
+	/* Same red small caps and fading rule as other container headings. */
+	header,
+	.stock > summary {
+		background: linear-gradient(to right, var(--frame), transparent) no-repeat left bottom / 100%
+			2px;
+	}
 	header {
 		display: flex;
 		align-items: flex-start;
 		gap: 0.75rem;
+		/*
+		 * Space the rule evenly: emblem-to-rule and rule-to-name both match the
+		 * card's 1rem top padding (the 2px rule sits inside this padding, and the
+		 * card's 0.75rem gap plus the margin make up the space below).
+		 */
+		padding-bottom: calc(1rem + 2px);
+		margin-bottom: 0.25rem;
 	}
 	.emblem {
 		font-size: 1.6rem;
@@ -193,10 +206,21 @@
 		letter-spacing: 0.06em;
 		color: var(--muted);
 	}
+	h3,
+	.stock > summary {
+		font-family: var(--serif);
+		font-variant: small-caps;
+		letter-spacing: 0.02em;
+		color: var(--accent);
+	}
 	h3 {
 		margin: 0;
-		font-size: 1.25rem;
+		font-size: 1.4rem;
 		overflow-wrap: anywhere;
+	}
+	.stock > summary {
+		padding-bottom: 0.35rem;
+		margin-bottom: 0.5rem;
 	}
 	.who {
 		margin: 0 0 0.35rem;
@@ -208,7 +232,6 @@
 		background: color-mix(in srgb, var(--family) 8%, transparent);
 		font-family: var(--serif);
 		font-style: italic;
-		border-radius: 0 6px 6px 0;
 	}
 	.quirks {
 		margin: 0;
@@ -227,7 +250,6 @@
 		margin-top: 0.6rem;
 		padding: 0.5rem 0.65rem;
 		border: 1px dashed var(--line);
-		border-radius: 8px;
 		font-size: 0.92rem;
 	}
 	.rumour p {
@@ -244,7 +266,6 @@
 		letter-spacing: 0.05em;
 		color: var(--accent);
 		border: 1px solid currentColor;
-		border-radius: 999px;
 		padding: 0 0.4rem;
 		margin-right: 0.3rem;
 		vertical-align: 1px;
@@ -259,7 +280,6 @@
 	}
 	.truth {
 		padding: 0 0.45rem;
-		border-radius: 999px;
 		border: 1px solid currentColor;
 	}
 	.truth.true {
@@ -347,7 +367,6 @@
 		font-size: 0.7rem;
 		padding: 0 0.35rem;
 		margin-left: 0.25rem;
-		border-radius: 999px;
 		border: 1px solid currentColor;
 		white-space: nowrap;
 	}

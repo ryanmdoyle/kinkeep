@@ -1,4 +1,5 @@
 <script lang="ts">
+	import EmojiPicker from '#lib/components/EmojiPicker.svelte';
 	import { FAMILY_ROLE_LABELS } from '#lib/data/families.ts';
 	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
@@ -12,7 +13,7 @@
 		{ key: 'surname', label: 'Family name' },
 		{ key: 'groupName', label: 'What folk call them' },
 		{ key: 'race', label: 'Race / people' },
-		{ key: 'emblem', label: 'Emblem (emoji)' },
+		{ key: 'emblem', label: 'Emblem' },
 		{ key: 'signature', label: 'Shared look', long: true },
 		{ key: 'personality', label: 'Shared personality', long: true },
 		{ key: 'voice', label: 'Voice tip for the DM', long: true }
@@ -79,21 +80,33 @@
 
 			<div class="form">
 				{#each textFields as field (field.key)}
-					<label class:wide={field.long}>
-						<span>{field.label}</span>
-						{#if field.long}
-							<textarea
-								rows="2"
-								value={family[field.key]}
-								onchange={(e) => families.update(family.id, { [field.key]: e.currentTarget.value })}
-							></textarea>
-						{:else}
-							<input
-								value={family[field.key]}
-								onchange={(e) => families.update(family.id, { [field.key]: e.currentTarget.value })}
+					{#if field.key === 'emblem'}
+						<div class="field">
+							<span id="emblem-{family.id}">{field.label}</span>
+							<EmojiPicker
+								value={family.emblem}
+								labelledby="emblem-{family.id}"
+								onpick={(emoji) => families.update(family.id, { emblem: emoji })}
 							/>
-						{/if}
-					</label>
+						</div>
+					{:else}
+						<label class:wide={field.long}>
+							<span>{field.label}</span>
+							{#if field.long}
+								<textarea
+									rows="2"
+									value={family[field.key]}
+									onchange={(e) =>
+										families.update(family.id, { [field.key]: e.currentTarget.value })}></textarea>
+							{:else}
+								<input
+									value={family[field.key]}
+									onchange={(e) =>
+										families.update(family.id, { [field.key]: e.currentTarget.value })}
+								/>
+							{/if}
+						</label>
+					{/if}
 				{/each}
 				<label>
 					<span>Color</span>
@@ -146,7 +159,7 @@
 		gap: 0.75rem;
 	}
 	.family {
-		border-left: 5px solid var(--family);
+		--frame: var(--family);
 	}
 	summary {
 		display: flex;
@@ -204,7 +217,8 @@
 		gap: 0.75rem 1rem;
 		padding: 0 1rem 1rem;
 	}
-	.form label span {
+	.form label span,
+	.form .field > span {
 		display: block;
 		font-size: 0.85rem;
 		font-weight: 600;

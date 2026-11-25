@@ -145,7 +145,7 @@
 					<option value="random">Random</option>
 				</select>
 			</div>
-			<div class="field">
+			<div class="field wide">
 				<label for="name">Name <span class="muted">(optional)</span></label>
 				<input
 					id="name"
@@ -187,21 +187,6 @@
 </div>
 
 {#if settlement}
-	<div class="toolbar no-print">
-		<button
-			class="btn"
-			type="button"
-			onclick={() => settlement && (saved ? towns.remove(settlement.id) : towns.put(settlement))}
-			aria-pressed={saved}
-		>
-			{saved ? '★ Saved' : '☆ Save town'}
-		</button>
-		<button class="btn" type="button" onclick={copyLink}>{copied ? 'Copied!' : 'Copy link'}</button>
-		<button class="btn" type="button" onclick={() => window.print()}>Print</button>
-		<span class="muted seed">
-			Seed: <code>{settlement.seed}</code> · content v{settlement.contentVersion ?? 1}
-		</span>
-	</div>
 	{#if (settlement.contentVersion ?? 1) < CONTENT_VERSION}
 		<p class="card notice no-print">
 			This link was made with content version {settlement.contentVersion ?? 1}, so it uses only the
@@ -215,7 +200,30 @@
 			</button>
 		</p>
 	{/if}
-	<SettlementView {settlement} onChange={update} />
+	<SettlementView {settlement} onChange={update}>
+		{#snippet actions()}
+			<div class="toolbar">
+				<div class="buttons">
+					<button
+						class="btn"
+						type="button"
+						onclick={() =>
+							settlement && (saved ? towns.remove(settlement.id) : towns.put(settlement))}
+						aria-pressed={saved}
+					>
+						{saved ? '★ Saved' : '☆ Save town'}
+					</button>
+					<button class="btn" type="button" onclick={copyLink}>
+						{copied ? 'Copied!' : 'Copy link'}
+					</button>
+					<button class="btn" type="button" onclick={() => window.print()}>Print</button>
+				</div>
+				<span class="muted seed">
+					Seed: <code>{settlement?.seed}</code> · content v{settlement?.contentVersion ?? 1}
+				</span>
+			</div>
+		{/snippet}
+	</SettlementView>
 {:else}
 	<section class="empty">
 		<h1>Who keeps the shops in the next town?</h1>
@@ -247,17 +255,25 @@
 		padding: 1rem;
 	}
 	.panel h2 {
-		font-size: 1.05rem;
 		margin: 0;
 	}
 	.panel .btn {
 		align-self: flex-start;
 		margin-top: auto;
 	}
+	/* Size and region side by side, name on its own row underneath. */
 	.fields {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 0.75rem 1rem;
+	}
+	.field.wide {
+		grid-column: 1 / -1;
+	}
+	@media (max-width: 420px) {
+		.fields {
+			grid-template-columns: minmax(0, 1fr);
+		}
 	}
 	.field label {
 		display: block;
@@ -274,16 +290,34 @@
 		color: var(--danger);
 		font-size: 0.9rem;
 	}
+	/* Sits in the column to the right of the town's name (stacks below on phones). */
 	.toolbar {
 		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 0.6rem;
+		padding-top: 0.25rem;
+	}
+	.buttons {
+		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
+		justify-content: flex-end;
 		gap: 0.5rem;
-		margin-bottom: 1rem;
 	}
 	.seed {
 		font-size: 0.85rem;
-		margin-left: auto;
+		text-align: right;
+	}
+	@media (max-width: 700px) {
+		.toolbar {
+			align-items: flex-start;
+		}
+		.buttons {
+			justify-content: flex-start;
+		}
+		.seed {
+			text-align: left;
+		}
 	}
 	.notice {
 		padding: 0.6rem 0.9rem;

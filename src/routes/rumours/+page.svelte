@@ -210,7 +210,7 @@
 		max-width: 68ch;
 		margin: 0;
 	}
-	h2 {
+	.bank-title {
 		font-size: 1.1rem;
 		margin: 0 0 0.6rem;
 	}
@@ -235,7 +235,6 @@
 		align-items: flex-start;
 		padding: 0.65rem 0.75rem;
 		border: 1px solid var(--line);
-		border-radius: 8px;
 		cursor: pointer;
 	}
 	.mode.selected {
@@ -298,7 +297,6 @@
 		gap: 0.3rem;
 		padding: 0.25rem 0.6rem;
 		border: 1px solid var(--line);
-		border-radius: 999px;
 		font-size: 0.85rem;
 		cursor: pointer;
 		user-select: none;
@@ -362,7 +360,10 @@
 	select.truth {
 		width: auto;
 		font-size: 0.85rem;
-		padding: 0.2rem 0.4rem;
+		padding: 0.2rem 2rem 0.2rem 0.4rem;
+		background-position:
+			right 0.85rem center,
+			right calc(0.85rem - 5px) center;
 	}
 	select.truth.true {
 		color: var(--good);

@@ -7,13 +7,15 @@
 	--line: #d9c8a6;
 	--accent: #8a3f1c;
 	--accent-ink: #fffaf0;
+	/* Third colour (verdigris), used only for things you can click. */
+	--action: #2f6b68;
 	--focus: #c26a1b;
 	--danger: #a3301f;
 	--good: #2f7a33;
 	--warn: #96650c;
 	--rare: #2f6fb5;
 	--very-rare: #8045b8;
-	--shadow: 0 1px 2px rgb(60 40 20 / 0.08), 0 4px 14px rgb(60 40 20 / 0.06);
+	--shadow: 0 2px 6px rgb(60 40 20 / 0.12);
 	--radius: 10px;
 	--serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
 	--sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -30,6 +32,7 @@
 		--line: #45392d;
 		--accent: #e0a064;
 		--accent-ink: #1b1612;
+		--action: #6cbfb3;
 		--focus: #f0b77a;
 		--danger: #f08a78;
 		--good: #7fcf83;
@@ -76,19 +79,45 @@ textarea {
 	color: inherit;
 }
 
-input,
+/* Ruled fields: a line to write on, sunk into the page. */
+input:not([type='checkbox'], [type='radio']),
 select,
 textarea {
-	background: var(--surface);
-	border: 1px solid var(--line);
-	border-radius: 8px;
-	padding: 0.5rem 0.65rem;
+	background-color: var(--bg);
+	border: 0;
+	border-bottom: 2px solid var(--muted);
+	border-radius: 0;
+	box-shadow: inset 0 1px 3px rgb(60 40 20 / 0.15);
+	padding: 0.5rem;
 	width: 100%;
 	min-height: 2.5rem;
 }
 
+input:not([type='checkbox'], [type='radio']):focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+	outline: none;
+	border-bottom-color: var(--accent);
+	background-color: color-mix(in srgb, var(--accent) 6%, var(--bg));
+}
+
 textarea {
 	resize: vertical;
+}
+
+/* Draw our own arrow so it sits clear of the right edge in every browser. */
+select {
+	appearance: none;
+	padding-right: 2.25rem;
+	background-image:
+		linear-gradient(45deg, transparent 50%, currentColor 50%),
+		linear-gradient(135deg, currentColor 50%, transparent 50%);
+	background-position:
+		right 1rem center,
+		right calc(1rem - 5px) center;
+	background-size: 5px 5px;
+	background-repeat: no-repeat;
+	cursor: pointer;
 }
 
 :focus-visible {
@@ -103,24 +132,44 @@ textarea {
 	gap: 0.4rem;
 	min-height: 2.5rem;
 	padding: 0.45rem 0.95rem;
-	border-radius: 8px;
-	border: 1px solid var(--line);
-	background: var(--surface);
+	border: 1px solid color-mix(in srgb, var(--action) 55%, transparent);
+	background: color-mix(in srgb, var(--action) 10%, var(--surface));
+	/* Stamped: a solid edge underneath that the button presses into. */
+	box-shadow: 0 2px 0 color-mix(in srgb, var(--action) 45%, var(--line));
 	cursor: pointer;
 	text-decoration: none;
-	color: var(--ink);
+	color: var(--action);
+	font-weight: 600;
 	white-space: nowrap;
+	transition:
+		transform 80ms,
+		box-shadow 80ms;
+}
+
+.btn:active:not(:disabled) {
+	transform: translateY(2px);
+	box-shadow: none;
+}
+
+.btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
 }
 
 .btn:hover {
-	background: var(--surface-2);
+	background: color-mix(in srgb, var(--action) 18%, var(--surface));
 }
 
 .btn.primary {
 	background: var(--accent);
 	border-color: var(--accent);
 	color: var(--accent-ink);
+	font-family: var(--serif);
 	font-weight: 600;
+	font-size: 0.9rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 60%, black);
 }
 
 .btn.primary:hover {
@@ -128,7 +177,7 @@ textarea {
 }
 
 .btn.danger {
-	color: var(--danger);
+	--action: var(--danger);
 }
 
 .btn.small {
@@ -137,11 +186,42 @@ textarea {
 	font-size: 0.875rem;
 }
 
+/*
+ * Stat-block containers: thick bars top and bottom, no sides, with square
+ * caps on the ends of the top bar. Set --frame to recolour the bars.
+ */
 .card {
+	--frame: var(--accent);
+	position: relative;
 	background: var(--surface);
-	border: 1px solid var(--line);
-	border-radius: var(--radius);
+	border: 0;
+	border-top: 4px solid var(--frame);
+	border-bottom: 4px solid var(--frame);
 	box-shadow: var(--shadow);
+}
+
+.card::before {
+	content: '';
+	position: absolute;
+	top: -6px;
+	left: -5px;
+	right: -5px;
+	height: 8px;
+	pointer-events: none;
+	background:
+		linear-gradient(var(--frame), var(--frame)) left / 7px 100% no-repeat,
+		linear-gradient(var(--frame), var(--frame)) right / 7px 100% no-repeat;
+}
+
+/* Headings inside a container: red small caps over a rule that fades out. */
+.card h2 {
+	font-family: var(--serif);
+	font-variant: small-caps;
+	letter-spacing: 0.02em;
+	color: var(--accent);
+	font-size: 1.2rem;
+	padding-bottom: 0.35rem;
+	background: linear-gradient(to right, var(--frame), transparent) no-repeat left bottom / 100% 2px;
 }
 
 .muted {

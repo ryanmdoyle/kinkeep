@@ -164,9 +164,6 @@
 		margin-top: 1.25rem;
 		padding: 1rem;
 	}
-	.notes h2 {
-		font-size: 1.1rem;
-	}
 	.list-head {
 		display: flex;
 		flex-wrap: wrap;
@@ -205,7 +202,6 @@
 		padding: 0.9rem 1rem;
 		color: var(--ink);
 		text-decoration: none;
-		border-radius: var(--radius);
 	}
 	.town-list a:hover {
 		background: var(--surface-2);
