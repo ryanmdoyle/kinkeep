@@ -1,47 +1,35 @@
 :root {
-	--bg: #f6efe0;
-	--surface: #fffaf0;
-	--surface-2: #efe4cc;
-	--ink: #2b2118;
-	--muted: #6e5d4b;
-	--line: #d9c8a6;
-	--accent: #8a3f1c;
-	--accent-ink: #fffaf0;
+	/* Each colour is light-dark(light, dark). The page follows the system
+	   setting unless the header toggle pins one (data-theme on <html>). */
+	--bg: light-dark(#f6efe0, #14100c);
+	--surface: light-dark(#fffaf0, #2a221b);
+	--surface-2: light-dark(#efe4cc, #362c23);
+	--ink: light-dark(#2b2118, #f3e9d8);
+	--muted: light-dark(#6e5d4b, #bfae98);
+	--line: light-dark(#d9c8a6, #4b3e31);
+	--accent: light-dark(#8a3f1c, #e0a064);
+	--accent-ink: light-dark(#fffaf0, #14100c);
 	/* Third colour (verdigris), used only for things you can click. */
-	--action: #2f6b68;
-	--focus: #c26a1b;
-	--danger: #a3301f;
-	--good: #2f7a33;
-	--warn: #96650c;
-	--rare: #2f6fb5;
-	--very-rare: #8045b8;
-	--shadow: 0 2px 6px rgb(60 40 20 / 0.12);
+	--action: light-dark(#2f6b68, #6cbfb3);
+	--focus: light-dark(#c26a1b, #f0b77a);
+	--danger: light-dark(#a3301f, #f08a78);
+	--good: light-dark(#2f7a33, #7fcf83);
+	--warn: light-dark(#96650c, #e6b45a);
+	--rare: light-dark(#2f6fb5, #7fb0ee);
+	--very-rare: light-dark(#8045b8, #c49af0);
+	--shadow: 0 2px 6px light-dark(rgb(60 40 20 / 0.12), rgb(0 0 0 / 0.5));
 	--radius: 10px;
 	--serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
 	--sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	color-scheme: light dark;
+}
+
+:root[data-theme='light'] {
 	color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--bg: #1b1612;
-		--surface: #251e18;
-		--surface-2: #30271f;
-		--ink: #efe4d2;
-		--muted: #b3a28c;
-		--line: #45392d;
-		--accent: #e0a064;
-		--accent-ink: #1b1612;
-		--action: #6cbfb3;
-		--focus: #f0b77a;
-		--danger: #f08a78;
-		--good: #7fcf83;
-		--warn: #e6b45a;
-		--rare: #7fb0ee;
-		--very-rare: #c49af0;
-		--shadow: 0 1px 2px rgb(0 0 0 / 0.4);
-		color-scheme: dark;
-	}
+:root[data-theme='dark'] {
+	color-scheme: dark;
 }
 
 * {
@@ -244,6 +232,11 @@ select {
 }
 
 @media print {
+	/* Handouts always print on the light palette, whatever the screen shows. */
+	:root,
+	:root[data-theme] {
+		color-scheme: light;
+	}
 	.no-print {
 		display: none !important;
 	}
