@@ -21,3 +21,6 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Prisma client (npm run prepare / prisma generate writes it)
+/src/lib/server/prisma

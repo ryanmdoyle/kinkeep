@@ -1,0 +1,436 @@
+// Wares & Whispers: what a DM made and what their parties did.
+//
+// Content (items, sizes, regions, built-in families, rumour tables) lives in
+// code as versioned tables, not here. Sizes, regions, shop types and family
+// roles are stored as text and checked by the app, so adding one to the
+// content needs no migration.
+//
+// Generated text stores family surnames as placeholders ({fam_weapons}) and
+// fills them in for display (src/lib/render.ts). Prices are whole copper
+// pieces. Every table has row-level security on with no policies: only the
+// server, through Prisma, can read or write (see the first migration).
+
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/lib/server/prisma"
+  runtime         = "workerd"
+  moduleFormat    = "esm"
+  previewFeatures = ["partialIndexes"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Accounts ────────────────────────────────────────────────────────────────
+
+/// One row per person who has signed in. `id` is their Supabase auth user id.
+model Profile {
+  id          String   @id @db.Uuid
+  displayName String
+  /// Theme, last region picked, and other small preferences.
+  prefs       Json     @default("{}")
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+
+  memberships CampaignMember[]
+}
+
+enum MemberRole {
+  owner
+  dm
+  player
+}
+
+// ── The campaign (the world) ────────────────────────────────────────────────
+
+enum RumourMode {
+  /// Tell each of the DM's rumours once before any built-in ones.
+  first
+  /// About half the DM's, half built-in.
+  mix
+  /// Never use built-in rumours.
+  only
+}
+
+/// A campaign is the world: its towns, families, rumour bank and must-haves.
+/// One or more parties play in it.
+model Campaign {
+  id             String     @id @default(uuid(7)) @db.Uuid
+  name           String
+  /// Skip names, quirks and rumours already used in the campaign's towns.
+  avoidRepeats   Boolean    @default(true)
+  rumourMode     RumourMode @default(first)
+  /// Whether a party's standing with a keeper changes their prices.
+  standingPrices Boolean    @default(true)
+  createdAt      DateTime   @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime   @updatedAt @db.Timestamptz(3)
+
+  members     CampaignMember[]
+  parties     Party[]
+  families    FamilyOverride[]
+  bankRumours BankRumour[]
+  mustHaves   MustHave[]
+  towns       Town[]
+  keepers     Keeper[]
+  rumours     Rumour[]
+}
+
+model CampaignMember {
+  campaignId String     @db.Uuid
+  userId     String     @db.Uuid
+  role       MemberRole
+  createdAt  DateTime   @default(now()) @db.Timestamptz(3)
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user     Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([campaignId, userId])
+  @@index([userId])
+}
+
+/// A family the campaign has changed. No row means the built-in family, which
+/// keeps picking up new names, quirks and greetings as content is added.
+model FamilyOverride {
+  campaignId String   @db.Uuid
+  /// inn | general | weapons | armor | potions | magic
+  role       String
+  /// The campaign's copy of the family, surnames as placeholders (render.ts).
+  data       Json
+  updatedAt  DateTime @updatedAt @db.Timestamptz(3)
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@id([campaignId, role])
+}
+
+enum Truth {
+  yes    @map("true")
+  partly @map("partly true")
+  no     @map("false")
+}
+
+/// The DM's own rumours, spread through the campaign's shops.
+model BankRumour {
+  id         String   @id @default(uuid(7)) @db.Uuid
+  campaignId String   @db.Uuid
+  /// May use {place}, {person}, {monster}, {direction} and {kin}.
+  text       String
+  truth      Truth
+  /// Families that may tell it. Empty means any keeper.
+  roles      String[]
+  position   Int      @default(0)
+  createdAt  DateTime @default(now()) @db.Timestamptz(3)
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  placed   Rumour[]
+
+  @@index([campaignId])
+}
+
+/// Something every town in the campaign keeps somewhere.
+model MustHave {
+  id         String @id @default(uuid(7)) @db.Uuid
+  campaignId String @db.Uuid
+  /// A catalog item's name, or the DM's own item.
+  name       String
+  qty        Int
+  /// The DM's own item's base price. Catalog items use the catalog's.
+  priceCp    Int?
+  position   Int    @default(0)
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+}
+
+// ── Towns, shops and keepers ────────────────────────────────────────────────
+
+enum TownOrigin {
+  /// Built from a seed (and can be rebuilt from its link).
+  seed
+  /// Set up by hand from a published adventure.
+  book
+}
+
+model Town {
+  id             String     @id @default(uuid(7)) @db.Uuid
+  campaignId     String     @db.Uuid
+  /// hash(campaign|seed|version|size|region|typed name), so opening a seed
+  /// link again finds the saved copy instead of a new town.
+  lookupKey      String
+  origin         TownOrigin
+  seed           String
+  contentVersion Int
+  name           String
+  /// thorp | hamlet | village | small-town | large-town | small-city | large-city | metropolis
+  tier           String
+  /// heartland | coastal | mountain | northern | desert | forest | swamp
+  region         String
+  population     Int
+  /// The DM's own description, shown instead of the size and region blurbs.
+  description    String?
+  /// How many of each shop type really exist: { "weapons": 12 }.
+  shopTotals     Json
+  /// Other trades, for flavour: [{ "label": "Bakers", "count": 3 }].
+  trades         Json
+  dmNotes        String?
+  /// Names, quirks and rumours the town uses, so new towns can avoid them.
+  contentKeys    String[]
+  createdAt      DateTime   @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime   @updatedAt @db.Timestamptz(3)
+
+  campaign    Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  shops       Shop[]
+  partiesHere Party[]     @relation("PartyLocation")
+  knownBy     PartyTown[]
+
+  @@unique([campaignId, lookupKey])
+}
+
+model Shop {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  townId      String   @db.Uuid
+  /// inn | general | smithy | weapons | armor | potions | magic
+  type        String
+  /// The random stream that built it (shop:weapons:2), so "Detail one"
+  /// always writes up the same next shop.
+  slot        Int
+  /// Order on the page.
+  position    Int
+  name        String
+  /// The DM (or a book) named it, so rerolls keep the name.
+  nameFixed   Boolean  @default(false)
+  /// What it can order in from a bigger town: [{ "name", "priceCp", "wait" }].
+  orderable   Json
+  restockedAt DateTime @default(now()) @db.Timestamptz(3)
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+
+  town      Town           @relation(fields: [townId], references: [id], onDelete: Cascade)
+  keepers   Keeper[]
+  stock     StockItem[]
+  purchases Purchase[]
+  orders    SpecialOrder[]
+
+  @@unique([townId, type, slot])
+}
+
+model Keeper {
+  id         String    @id @default(uuid(7)) @db.Uuid
+  campaignId String    @db.Uuid
+  /// Where they work, or worked if they've been replaced.
+  shopId     String    @db.Uuid
+  /// inn | general | weapons | armor | potions | magic
+  familyRole String
+  firstName  String
+  /// Their own surname, shown instead of the family's (set by the DM).
+  surname    String?
+  age        String
+  greeting   String
+  quirks     String[]
+  /// Content keys of the quirk lines used, for avoid-repeats.
+  quirkKeys  String[]
+  /// Haggling stance shown to the DM.
+  bargaining String
+  /// What their bargaining does to prices: 0.1 is 10% more.
+  bargainMod Float
+  /// Set when a reroll replaced them. They're kept only if a party met them.
+  replacedAt DateTime? @db.Timestamptz(3)
+  createdAt  DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime  @updatedAt @db.Timestamptz(3)
+
+  campaign  Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  shop      Shop           @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  rumours   Rumour[]
+  parties   PartyKeeper[]
+  purchases Purchase[]
+  orders    SpecialOrder[]
+
+  /// One current keeper per shop.
+  @@unique([shopId], map: "Keeper_current_per_shop", where: raw("\"replacedAt\" IS NULL"))
+  @@index([shopId])
+  @@index([campaignId, familyRole])
+}
+
+model Rumour {
+  id           String    @id @default(uuid(7)) @db.Uuid
+  campaignId   String    @db.Uuid
+  keeperId     String    @db.Uuid
+  text         String
+  truth        Truth
+  /// The table line it came from (rumour:…), or rumour:custom:<bank id>.
+  contentKey   String?
+  /// Set when it came from the campaign's rumour bank.
+  bankRumourId String?   @db.Uuid
+  /// Towns it names: [{ "name", "tier", "townId"? }]. townId is set once the
+  /// party has gone there, so the link survives renaming the town.
+  places       Json?
+  /// The DM reworded it or changed whether it's true.
+  edited       Boolean   @default(false)
+  /// Set when "Another rumour" replaced it. Kept only if a party heard it.
+  replacedAt   DateTime? @db.Timestamptz(3)
+  createdAt    DateTime  @default(now()) @db.Timestamptz(3)
+
+  campaign   Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  keeper     Keeper        @relation(fields: [keeperId], references: [id], onDelete: Cascade)
+  bankRumour BankRumour?   @relation(fields: [bankRumourId], references: [id], onDelete: SetNull)
+  heardBy    PartyRumour[]
+
+  /// One current rumour per keeper.
+  @@unique([keeperId], map: "Rumour_current_per_keeper", where: raw("\"replacedAt\" IS NULL"))
+  @@index([keeperId])
+  @@index([campaignId])
+  @@index([bankRumourId])
+}
+
+enum StockSource {
+  /// Rolled by the generator; replaced on restock.
+  generated
+  /// Put there because it's on the campaign's must-have list.
+  must_have
+  /// The DM added it by hand; stays through restocks and rerolls.
+  added
+}
+
+model StockItem {
+  id       String      @id @default(uuid(7)) @db.Uuid
+  shopId   String      @db.Uuid
+  position Int
+  name     String
+  category String
+  /// Listed price in copper, the town's and keeper's mark-up included.
+  priceCp  Int
+  /// How many they had at the last restock. Null: sold by the serving.
+  qty      Int?
+  /// How many have been bought since the last restock, by any party.
+  sold     Int         @default(0)
+  /// Short rules note, e.g. damage or AC.
+  note     String?
+  /// common | uncommon | rare | very rare
+  rarity   String?
+  source   StockSource @default(generated)
+
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId])
+}
+
+// ── Parties: what each group of adventurers has done ────────────────────────
+
+/// A group of adventurers in the campaign. Most campaigns have one.
+model Party {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  campaignId    String   @db.Uuid
+  name          String
+  /// The town the party is in right now.
+  currentTownId String?  @db.Uuid
+  /// The read-only player link (/play/<token>). Null when it's turned off.
+  playerToken   String?  @unique
+  createdAt     DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @db.Timestamptz(3)
+
+  campaign    Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  currentTown Town?          @relation("PartyLocation", fields: [currentTownId], references: [id], onDelete: SetNull)
+  towns       PartyTown[]
+  keepers     PartyKeeper[]
+  rumours     PartyRumour[]
+  purchases   Purchase[]
+  orders      SpecialOrder[]
+
+  @@index([campaignId])
+}
+
+/// A town the party knows about. Players can see it.
+model PartyTown {
+  partyId    String   @db.Uuid
+  townId     String   @db.Uuid
+  revealedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  party Party @relation(fields: [partyId], references: [id], onDelete: Cascade)
+  town  Town  @relation(fields: [townId], references: [id], onDelete: Cascade)
+
+  @@id([partyId, townId])
+  @@index([townId])
+}
+
+enum Standing {
+  positive
+  neutral
+  negative
+}
+
+/// The party and one keeper: whether they've met, how things stand, and the
+/// DM's note.
+model PartyKeeper {
+  partyId  String    @db.Uuid
+  keeperId String    @db.Uuid
+  /// When the party first visited. Null: not met yet (the DM may still have a note).
+  metAt    DateTime? @db.Timestamptz(3)
+  standing Standing  @default(neutral)
+  note     String?
+
+  party  Party  @relation(fields: [partyId], references: [id], onDelete: Cascade)
+  keeper Keeper @relation(fields: [keeperId], references: [id], onDelete: Cascade)
+
+  @@id([partyId, keeperId])
+  @@index([keeperId])
+}
+
+/// A rumour the party has heard.
+model PartyRumour {
+  partyId  String   @db.Uuid
+  rumourId String   @db.Uuid
+  heardAt  DateTime @default(now()) @db.Timestamptz(3)
+
+  party  Party  @relation(fields: [partyId], references: [id], onDelete: Cascade)
+  rumour Rumour @relation(fields: [rumourId], references: [id], onDelete: Cascade)
+
+  @@id([partyId, rumourId])
+  @@index([rumourId])
+}
+
+/// Something the party bought.
+model Purchase {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  partyId     String   @db.Uuid
+  shopId      String   @db.Uuid
+  keeperId    String   @db.Uuid
+  itemName    String
+  qty         Int      @default(1)
+  /// What they paid for each, in copper, standing and discounts included.
+  unitPriceCp Int
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+
+  party  Party  @relation(fields: [partyId], references: [id], onDelete: Cascade)
+  shop   Shop   @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  keeper Keeper @relation(fields: [keeperId], references: [id], onDelete: Cascade)
+
+  @@index([partyId])
+  @@index([shopId])
+  @@index([keeperId])
+}
+
+/// Something the party ordered in. Cancelling deletes it.
+model SpecialOrder {
+  id          String    @id @default(uuid(7)) @db.Uuid
+  partyId     String    @db.Uuid
+  shopId      String    @db.Uuid
+  keeperId    String    @db.Uuid
+  itemName    String
+  /// The listed price in copper. The party's standing is applied when shown.
+  priceCp     Int
+  /// "3–4 weeks"
+  wait        String
+  placedAt    DateTime  @default(now()) @db.Timestamptz(3)
+  /// Null until the party picks it up.
+  collectedAt DateTime? @db.Timestamptz(3)
+
+  party  Party  @relation(fields: [partyId], references: [id], onDelete: Cascade)
+  shop   Shop   @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  keeper Keeper @relation(fields: [keeperId], references: [id], onDelete: Cascade)
+
+  @@index([partyId])
+  @@index([shopId])
+  @@index([keeperId])
+}

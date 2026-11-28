@@ -11,25 +11,35 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"prepare": "svelte-kit sync && prisma generate || echo \"\"",
+		"check": "svelte-kit sync && prisma generate && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
 		"lint": "prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"db:generate": "prisma generate",
+		"db:migrate": "prisma migrate deploy",
+		"db:status": "prisma migrate status"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^4.0.1",
 		"@sveltejs/kit": "^3.2.0",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@types/node": "^22.20.5",
+		"@types/pg": "8.23.1",
 		"prettier": "^3.10.1",
 		"prettier-plugin-svelte": "^4.1.1",
+		"prisma": "7.10.1",
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.8",
 		"typescript": "^6.0.3",
 		"vite": "^8.3.8",
 		"vitest": "^5.1.0"
+	},
+	"dependencies": {
+		"@prisma/adapter-pg": "7.10.1",
+		"@prisma/client": "7.10.1",
+		"pg": "8.23.1"
 	}
 }
