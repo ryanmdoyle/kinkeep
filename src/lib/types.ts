@@ -106,6 +106,23 @@ export interface StockItem {
 	sold?: number;
 	note?: string;
 	rarity?: CatalogItem['rarity'];
+	/** Put here because it's on the campaign's must-have list (kept in the back). */
+	mustHave?: boolean;
+	/** The DM put it here by hand: it stays through restocks and rerolls. */
+	added?: boolean;
+}
+
+/**
+ * Something the DM wants every town in a campaign to have somewhere, even a
+ * village too small to sell it (a healing potion in the back of the store).
+ */
+export interface MustHave {
+	/** A catalog item's name, or the DM's own item. */
+	name: string;
+	/** How many a town keeps. */
+	qty: number;
+	/** Base price in gp, for the DM's own items (catalog items use their own). */
+	price?: number;
 }
 
 export interface Shopkeeper {
@@ -242,4 +259,6 @@ export interface Campaign {
 	standingPrices?: boolean;
 	/** The saved town the party is in right now. */
 	partyTownId?: string;
+	/** Items every town in the campaign has somewhere. */
+	mustHaves?: MustHave[];
 }

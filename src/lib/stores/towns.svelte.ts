@@ -1,6 +1,6 @@
 import { CUSTOM_RUMOUR_PREFIX, kindOf, usedKeys, type ContentKind } from '#lib/content/keys.ts';
 import { CONTENT_VERSION } from '#lib/content/versioned.ts';
-import type { CampaignInput } from '#lib/generator.ts';
+import { stockMustHaves, type CampaignInput } from '#lib/generator.ts';
 import { renameInTown, type Rename } from '#lib/rename.ts';
 import { relationOf, type Kin } from '#lib/tracking.ts';
 import type { FamilyRole, Settlement } from '#lib/types.ts';
@@ -102,8 +102,28 @@ class TownStore {
 			families: campaigns.familiesFor(campaign, version),
 			avoid: this.avoidFor(exceptTownId),
 			customRumours: campaign.rumours ?? [],
-			rumourMode: campaign.rumourMode ?? 'first'
+			rumourMode: campaign.rumourMode ?? 'first',
+			mustHaves: campaign.mustHaves ?? []
 		};
+	}
+
+	/**
+	 * Puts the campaign's must-haves into every saved town of it that lacks
+	 * one. Returns how many towns changed.
+	 */
+	stockMustHaves(campaignId = campaigns.active.id): number {
+		const mustHaves = campaigns.get(campaignId)?.mustHaves ?? [];
+		let changed = 0;
+		const next = this.all.map((town) => {
+			if (town.campaignId !== campaignId) return town;
+			const stocked = stockMustHaves(town, mustHaves);
+			if (stocked !== town) changed++;
+			return stocked;
+		});
+		if (!changed) return 0;
+		this.all = next;
+		save(TOWNS_KEY, this.all);
+		return changed;
 	}
 
 	/** Where each of the campaign's own rumours has been placed in its saved towns. */

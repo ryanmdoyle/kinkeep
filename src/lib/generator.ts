@@ -21,6 +21,7 @@ import type {
 	CustomRumour,
 	Family,
 	FamilyRole,
+	MustHave,
 	Region,
 	RegionId,
 	Rumour,
@@ -59,6 +60,8 @@ export interface CampaignInput {
 	/** The DM's own rumours to spread through the shops. */
 	customRumours?: CustomRumour[];
 	rumourMode?: RumourMode;
+	/** Items every town in the campaign has somewhere (see `stockMustHaves`). */
+	mustHaves?: MustHave[];
 }
 
 export interface GenerateOptions extends CampaignInput {
@@ -432,7 +435,7 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 		count: Math.max(1, realisticCount(root.fork(`trade:${t.label}`), population, t.supportValue))
 	}));
 
-	return {
+	const town: Settlement = {
 		// Built from the inputs only (not from anything avoid-repeats can change),
 		// so reopening a seed in the same campaign finds the saved copy.
 		id: hashString(
@@ -450,6 +453,7 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 		shopTotals,
 		trades
 	};
+	return stockMustHaves(town, opts.mustHaves);
 }
 
 /** A thorp's "general store" is a passing peddler, unless the DM set the town up by hand. */
@@ -505,7 +509,7 @@ export function generateBookTown(opts: BookTownOptions): Settlement {
 		count: Math.max(1, realisticCount(root.fork(`trade:${t.label}`), population, t.supportValue))
 	}));
 
-	return {
+	const town: Settlement = {
 		id: hashString(`${opts.campaignId ?? ''}|book|${name}|${seed}`).toString(36),
 		seed,
 		contentVersion: version,
@@ -521,6 +525,7 @@ export function generateBookTown(opts: BookTownOptions): Settlement {
 		fromBook: true,
 		description: opts.description?.trim() || undefined
 	};
+	return stockMustHaves(town, opts.mustHaves);
 }
 
 /** Rerolls are meant to be fresh, so they use the newest content and a random stream. */
@@ -556,10 +561,18 @@ export function rerollShop(
 	const fresh = makeShop(ctx, freshRng(settlement, shopId), target.type, 0, peddler);
 	// A shop the DM named (from a book) keeps its name; only the keeper and stock change.
 	const named = target.fixedName ? { name: target.name, fixedName: true } : {};
-	return {
-		...settlement,
-		shops: settlement.shops.map((s) => (s.id === shopId ? { ...fresh, ...named, id: shopId } : s))
-	};
+	const shop = { ...fresh, ...named, id: shopId, stock: keepAdded(target.stock, fresh.stock) };
+	return stockMustHaves(
+		{ ...settlement, shops: settlement.shops.map((s) => (s.id === shopId ? shop : s)) },
+		input.mustHaves
+	);
+}
+
+/** New stock with the items the DM added by hand put back (back to full). */
+function keepAdded(old: StockItem[], fresh: StockItem[]): StockItem[] {
+	const kept = old.filter((i) => i.added).map(({ sold: _sold, ...item }) => item);
+	const names = new Set(kept.map((i) => i.name.toLowerCase()));
+	return [...fresh.filter((i) => !names.has(i.name.toLowerCase())), ...kept];
 }
 
 /**
@@ -569,16 +582,151 @@ export function rerollShop(
  */
 export function restock(settlement: Settlement, input: CampaignInput, shopId?: string): Settlement {
 	const ctx = contextFor(settlement, input);
-	return {
+	const restocked = {
 		...settlement,
 		shops: settlement.shops.map((shop) => {
 			if (shopId && shop.id !== shopId) return shop;
 			const peddler = isPeddler(settlement, ctx, shop.type);
 			const rng = freshRng(settlement, `${shop.id}:restock`);
 			const { stock } = makeStock(ctx, rng, shop.type, shop.keeper, peddler);
-			return { ...shop, stock };
+			return { ...shop, stock: keepAdded(shop.stock, stock) };
 		})
 	};
+	return stockMustHaves(restocked, input.mustHaves);
+}
+
+const SHOP_TYPES: ShopType[] = ['inn', 'general', 'smithy', 'weapons', 'armor', 'potions', 'magic'];
+
+/** Kept in stock from further afield (or above the town's size): a quarter more, like an order. */
+const FROM_AFAR = 1.25;
+
+const allItems = new Map<number, CatalogItem[]>();
+
+/**
+ * Every item any shop in any region sells, once each, for picking what to
+ * add to a shop or keep in every town.
+ */
+export function allCatalogItems(version = CONTENT_VERSION): CatalogItem[] {
+	const cached = allItems.get(version);
+	if (cached) return cached;
+	const items = new Map<string, CatalogItem>();
+	const add = (item: CatalogItem) => {
+		const key = item.name.toLowerCase();
+		if (!items.has(key)) items.set(key, item);
+	};
+	for (const type of SHOP_TYPES) catalogFor(type, version).forEach(add);
+	for (const region of regionsAt(version)) {
+		for (const extra of Object.values(region.extraItems))
+			if (extra) at(extra, version).forEach(add);
+	}
+	const list = [...items.values()];
+	allItems.set(version, list);
+	return list;
+}
+
+/** A catalog item as this region sells it, and which shop types do (none for another region's goods). */
+function findCatalogItem(name: string, region: Region, version: number) {
+	const key = name.trim().toLowerCase();
+	const types: ShopType[] = [];
+	let item: CatalogItem | undefined;
+	for (const type of SHOP_TYPES) {
+		const found = regionalCatalog(type, region, version).find((i) => i.name.toLowerCase() === key);
+		if (!found) continue;
+		types.push(type);
+		item ??= found;
+	}
+	item ??= allCatalogItems(version).find((i) => i.name.toLowerCase() === key);
+	return item && { item, types };
+}
+
+/**
+ * An item as a shop sells it: the region's price with the town's and the
+ * keeper's mark-up, and a quarter more if it comes from afar (the town is
+ * too small to stock it, or it's another region's goods).
+ */
+function toStock(
+	settlement: Settlement,
+	shop: Shop,
+	item: CatalogItem,
+	afar: boolean,
+	qty: number
+): StockItem {
+	const tier = getTier(settlement.tier);
+	const region = getRegion(settlement.region);
+	const price =
+		regionalPrice(item, region) *
+		tier.priceMod *
+		(1 + shop.keeper.bargaining.modifier) *
+		(afar ? FROM_AFAR : 1);
+	const stocked: StockItem = {
+		name: item.name,
+		category: item.category,
+		price: roundPrice(price),
+		qty: item.unlimited ? -1 : Math.max(1, Math.round(qty) || 1)
+	};
+	if (item.note) stocked.note = item.note;
+	if (item.rarity) stocked.rarity = item.rarity;
+	return stocked;
+}
+
+/** A catalog item as this shop would sell it, or undefined if it isn't in the catalog. */
+export function itemForShop(
+	settlement: Settlement,
+	shop: Shop,
+	name: string,
+	qty = 1
+): StockItem | undefined {
+	const tier = getTier(settlement.tier);
+	const found = findCatalogItem(name, getRegion(settlement.region), CONTENT_VERSION);
+	if (!found) return undefined;
+	const afar = !found.types.length || found.item.minTier > tier.index;
+	return toStock(settlement, shop, found.item, afar, qty);
+}
+
+/** A shop that normally sells it, else the back of the general store, else any shop. */
+function mustHaveShop(shops: Shop[], types: ShopType[]): Shop | undefined {
+	return (
+		shops.find((s) => types.includes(s.type)) ??
+		shops.find((s) => s.type === 'general') ??
+		shops.find((s) => s.type !== 'inn') ??
+		shops[0]
+	);
+}
+
+/** The must-haves a town has on none of its shelves. */
+export function missingMustHaves(settlement: Settlement, mustHaves: MustHave[] = []): MustHave[] {
+	const have = new Set(settlement.shops.flatMap((s) => s.stock.map((i) => i.name.toLowerCase())));
+	return mustHaves.filter((m) => m.name.trim() && !have.has(m.name.trim().toLowerCase()));
+}
+
+/**
+ * Makes sure a town has each of the campaign's must-haves somewhere. One
+ * already on a shelf counts (even if the party bought them all). A missing
+ * one goes to a shop that would sell it, or the back of the general store,
+ * at that keeper's prices: a quarter more if the town is too small to stock
+ * it. Returns the same town when nothing was missing.
+ */
+export function stockMustHaves(settlement: Settlement, mustHaves: MustHave[] = []): Settlement {
+	const missing = missingMustHaves(settlement, mustHaves);
+	if (!missing.length || !settlement.shops.length) return settlement;
+	const tier = getTier(settlement.tier);
+	const region = getRegion(settlement.region);
+	let shops = settlement.shops;
+	for (const mustHave of missing) {
+		const found = findCatalogItem(mustHave.name, region, CONTENT_VERSION);
+		// The DM's own item, at the DM's price.
+		const own: CatalogItem | undefined =
+			mustHave.price === undefined
+				? undefined
+				: { name: mustHave.name.trim(), price: mustHave.price, minTier: 0, category: 'Other' };
+		const item = found?.item ?? own;
+		const shop = item && mustHaveShop(shops, found?.types ?? []);
+		if (!item || !shop) continue;
+		const afar = !!found && (!found.types.length || found.item.minTier > tier.index);
+		const stocked = { ...toStock(settlement, shop, item, afar, mustHave.qty), mustHave: true };
+		shops = shops.map((s) => (s.id === shop.id ? { ...s, stock: [...s.stock, stocked] } : s));
+	}
+	return shops === settlement.shops ? settlement : { ...settlement, shops };
 }
 
 /**
