@@ -9,4 +9,5 @@ bun.lockb
 /static/
 src/lib/content/__golden__/
 /src/lib/server/prisma
+/src/lib/server/prisma-node
 prisma/migrations

@@ -18,6 +18,15 @@ generator client {
   previewFeatures = ["partialIndexes"]
 }
 
+/// The same client built for Node, for the database tests (src/lib/server/db.spec.ts).
+generator nodeClient {
+  provider        = "prisma-client"
+  output          = "../src/lib/server/prisma-node"
+  runtime         = "nodejs"
+  moduleFormat    = "esm"
+  previewFeatures = ["partialIndexes"]
+}
+
 datasource db {
   provider = "postgresql"
 }
@@ -367,7 +376,8 @@ model PartyKeeper {
   keeperId String    @db.Uuid
   /// When the party first visited. Null: not met yet (the DM may still have a note).
   metAt    DateTime? @db.Timestamptz(3)
-  standing Standing  @default(neutral)
+  /// Null: never set, which counts as neutral.
+  standing Standing?
   note     String?
 
   party  Party  @relation(fields: [partyId], references: [id], onDelete: Cascade)

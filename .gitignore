@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 
 # Prisma client (npm run prepare / prisma generate writes it)
 /src/lib/server/prisma
+/src/lib/server/prisma-node

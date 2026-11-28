@@ -210,7 +210,7 @@ CREATE TABLE "PartyKeeper" (
     "partyId" UUID NOT NULL,
     "keeperId" UUID NOT NULL,
     "metAt" TIMESTAMPTZ(3),
-    "standing" "Standing" NOT NULL DEFAULT 'neutral',
+    "standing" "Standing",
     "note" TEXT,
 
     CONSTRAINT "PartyKeeper_pkey" PRIMARY KEY ("partyId","keeperId")
