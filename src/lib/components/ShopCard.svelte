@@ -246,72 +246,87 @@
 	{/if}
 
 	<section class="keeper">
-		<p class="who">
-			<strong>{keeperName(shop.keeper, family)}</strong>
-			<span class="muted">
-				· {shop.keeper.age}
-				{family.race.toLowerCase()} of {family.groupName}
-			</span>
-		</p>
-		{#if relation}
-			{#if onRelation}
-				<div
-					class="standing no-print"
-					role="radiogroup"
-					aria-label="How the party stands with them"
-				>
+		<div class="identity">
+			<p class="who">
+				<strong>{keeperName(shop.keeper, family)}</strong>
+				<span class="muted">
+					· {shop.keeper.age}
+					{family.race.toLowerCase()} of {family.groupName}
+				</span>
+			</p>
+			{#if relation}
+				{#if onRelation}
+					<div
+						class="standing no-print"
+						role="radiogroup"
+						aria-label="How the party stands with them"
+					>
+						<span class="muted">Party standing:</span>
+						{#each RELATIONS as r (r.value)}
+							<label class="pill {r.value}" class:on={relation === r.value}>
+								<input
+									type="radio"
+									name="relation-{shop.id}"
+									value={r.value}
+									checked={relation === r.value}
+									onchange={() => onRelation(r.value)}
+								/>
+								<span aria-hidden="true">{r.symbol}</span>
+								{r.label}
+							</label>
+						{/each}
+					</div>
+				{/if}
+				<p class="standing-print dm-only" class:print-only={!!onRelation}>
 					<span class="muted">Party standing:</span>
-					{#each RELATIONS as r (r.value)}
-						<label class="pill {r.value}" class:on={relation === r.value}>
-							<input
-								type="radio"
-								name="relation-{shop.id}"
-								value={r.value}
-								checked={relation === r.value}
-								onchange={() => onRelation(r.value)}
-							/>
-							<span aria-hidden="true">{r.symbol}</span>
-							{r.label}
-						</label>
-					{/each}
+					<span class="rel {relation}">{relationLabel(relation)}</span>
+				</p>
+			{/if}
+		</div>
+		{#if (returning && relation) || shop.keeper.greeting || word}
+			<div class="voice dm-only">
+				{#if returning && relation}
+					<blockquote class="said {relation}">
+						<span class="said-label">Returning</span>
+						“{returning}”
+					</blockquote>
+					{#if shop.keeper.greeting}
+						<p class="first-greeting muted">First visit: “{shop.keeper.greeting}”</p>
+					{/if}
+				{:else}
+					{#if shop.keeper.greeting}
+						<blockquote>“{shop.keeper.greeting}”</blockquote>
+					{/if}
+					{#if word}
+						<blockquote class="said {word.relation}">
+							<span class="said-label">Has heard of the party</span>
+							“{word.text}”
+						</blockquote>
+					{/if}
+				{/if}
+			</div>
+		{/if}
+		{#if shop.keeper.quirks.length}
+			<ul class="quirks dm-only">
+				{#each shop.keeper.quirks as quirk (quirk)}
+					<li>{quirk}</li>
+				{/each}
+			</ul>
+		{/if}
+		<dl class="terms dm-only">
+			<div>
+				<dt>Bargaining</dt>
+				<dd>{shop.keeper.bargaining.label}</dd>
+			</div>
+			{#if prices.reasons.length}
+				<div>
+					<dt>Prices for the party</dt>
+					<dd>
+						{prices.reasons.join(', ')} <span class="muted">(already in the prices below)</span>
+					</dd>
 				</div>
 			{/if}
-			<p class="standing-print dm-only" class:print-only={!!onRelation}>
-				<span class="muted">Party standing:</span>
-				<span class="rel {relation}">{relationLabel(relation)}</span>
-			</p>
-		{/if}
-		{#if returning && relation}
-			<blockquote class="said dm-only {relation}">
-				<span class="said-label">Returning</span>
-				“{returning}”
-			</blockquote>
-			{#if shop.keeper.greeting}
-				<p class="first-greeting muted dm-only">First visit: “{shop.keeper.greeting}”</p>
-			{/if}
-		{:else}
-			{#if shop.keeper.greeting}
-				<blockquote class="dm-only">“{shop.keeper.greeting}”</blockquote>
-			{/if}
-			{#if word}
-				<blockquote class="said dm-only {word.relation}">
-					<span class="said-label">Has heard of the party</span>
-					“{word.text}”
-				</blockquote>
-			{/if}
-		{/if}
-		<ul class="quirks dm-only">
-			{#each shop.keeper.quirks as quirk (quirk)}
-				<li>{quirk}</li>
-			{/each}
-			<li class="bargain"><span class="muted">Bargaining:</span> {shop.keeper.bargaining.label}</li>
-			{#if prices.reasons.length}
-				<li class="bargain party-price">
-					<span class="muted">Prices for the party:</span>
-					{prices.reasons.join(', ')} <span class="muted">(already in the prices below)</span>
-				</li>
-			{/if}
-		</ul>
+		</dl>
 		{#if shop.keeper.rumour}
 			<div class="rumour dm-only" class:told={shop.keeper.rumour.told}>
 				{#if editingRumour && onEditRumour}
@@ -395,36 +410,40 @@
 				{/each}
 			</p>
 		{/if}
-		{#if onNote && (shop.keeper.note || noteOpen)}
-			<label class="note-field no-print">
-				<span class="muted">DM note</span>
-				<textarea
-					rows="2"
-					value={shop.keeper.note ?? ''}
-					placeholder="Promised to bring back the hammer. Owes them 5 gp."
-					onchange={(e) => onNote(e.currentTarget.value)}
-					{@attach focusIfOpened}></textarea>
-			</label>
-		{:else if onNote}
-			<button class="link add-note no-print" type="button" onclick={openNote}>+ Add a note</button>
-		{/if}
-		{#if shop.keeper.note}
-			<p class="keeper-note dm-only" class:print-only={!!onNote}>
-				<span class="muted">DM note:</span>
-				{shop.keeper.note}
-			</p>
-		{/if}
-		<details class="family-traits dm-only">
-			<summary>Family traits: {family.groupName}</summary>
-			<dl>
-				<dt>Look</dt>
-				<dd>{family.signature}</dd>
-				<dt>Personality</dt>
-				<dd>{family.personality}</dd>
-				<dt>Voice tip</dt>
-				<dd>{family.voice}</dd>
-			</dl>
-		</details>
+		<div class="extras">
+			{#if onNote && (shop.keeper.note || noteOpen)}
+				<label class="note-field no-print">
+					<span class="muted">DM note</span>
+					<textarea
+						rows="2"
+						value={shop.keeper.note ?? ''}
+						placeholder="Promised to bring back the hammer. Owes them 5 gp."
+						onchange={(e) => onNote(e.currentTarget.value)}
+						{@attach focusIfOpened}></textarea>
+				</label>
+			{:else if onNote}
+				<button class="link add-note no-print" type="button" onclick={openNote}>
+					+ Add a note
+				</button>
+			{/if}
+			{#if shop.keeper.note}
+				<p class="keeper-note dm-only" class:print-only={!!onNote}>
+					<span class="muted">DM note:</span>
+					{shop.keeper.note}
+				</p>
+			{/if}
+			<details class="family-traits dm-only">
+				<summary>Family traits: {family.groupName}</summary>
+				<dl>
+					<dt>Look</dt>
+					<dd>{family.signature}</dd>
+					<dt>Personality</dt>
+					<dd>{family.personality}</dd>
+					<dt>Voice tip</dt>
+					<dd>{family.voice}</dd>
+				</dl>
+			</details>
+		</div>
 	</section>
 
 	<details class="stock" open>
@@ -645,6 +664,7 @@
 		flex-direction: column;
 		gap: 0.75rem;
 		min-width: 0;
+		container-type: inline-size;
 	}
 	/* Same red small caps and fading rule as other container headings. */
 	header,
@@ -673,6 +693,18 @@
 	.row-actions {
 		display: flex;
 		gap: 0.35rem;
+	}
+	/* On a narrow card the buttons get their own row, so the name has room. */
+	@container (max-width: 30rem) {
+		header {
+			flex-wrap: wrap;
+		}
+		.head-actions {
+			flex: 1 0 100%;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
 	}
 	.edit-names {
 		display: grid;
@@ -723,7 +755,7 @@
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 0.3rem;
-		margin: 0 0 0.5rem;
+		margin: 0;
 		font-size: 0.85rem;
 	}
 	.pill {
@@ -766,7 +798,7 @@
 		background: color-mix(in srgb, var(--danger) 10%, transparent);
 	}
 	.standing-print {
-		margin: 0 0 0.5rem;
+		margin: 0;
 		font-size: 0.9rem;
 	}
 	.rel {
@@ -812,17 +844,41 @@
 	h3 {
 		margin: 0;
 		font-size: 1.4rem;
-		overflow-wrap: anywhere;
+		overflow-wrap: break-word;
+		hyphens: auto;
 	}
 	.stock > summary {
 		padding-bottom: 0.35rem;
 		margin-bottom: 0.5rem;
 	}
+	.stock {
+		margin-top: 0.5rem;
+	}
+	/*
+	 * The keeper's details come in separate blocks (who they are, what they
+	 * say, their manner, terms, rumor, notes) with clear space between them,
+	 * and tighter spacing inside each.
+	 */
+	.keeper {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	.identity,
+	.voice,
+	.extras {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+	.extras {
+		gap: 0.25rem;
+	}
 	.who {
-		margin: 0 0 0.35rem;
+		margin: 0;
 	}
 	blockquote {
-		margin: 0 0 0.5rem;
+		margin: 0;
 		padding: 0.4rem 0.75rem;
 		border-left: 3px solid var(--family);
 		background: color-mix(in srgb, var(--family) 8%, transparent);
@@ -840,7 +896,9 @@
 		border-left-color: var(--danger);
 		background: color-mix(in srgb, var(--danger) 8%, transparent);
 	}
-	.said-label {
+	.said-label,
+	.terms dt,
+	.rumour .label {
 		display: block;
 		font-family: var(--sans);
 		font-style: normal;
@@ -851,18 +909,26 @@
 		color: var(--muted);
 	}
 	.first-greeting {
-		margin: -0.25rem 0 0.5rem;
+		margin: 0;
 		font-size: 0.85rem;
 		font-style: italic;
 	}
-	.party-price {
-		margin-top: 0.1rem;
+	.terms {
+		display: grid;
+		gap: 0.5rem;
+		margin: 0;
+		font-size: 0.92rem;
+	}
+	.terms dt {
+		margin: 0 0 0.1rem;
+	}
+	.terms dd {
+		margin: 0;
 	}
 	.note-field {
 		display: flex;
 		flex-direction: column;
 		gap: 0.2rem;
-		margin-top: 0.5rem;
 		font-size: 0.85rem;
 	}
 	.note-field textarea {
@@ -870,30 +936,22 @@
 		resize: vertical;
 	}
 	.add-note {
-		display: block;
-		margin-top: 0.35rem;
+		align-self: flex-start;
 		padding-left: 0;
 	}
 	.keeper-note {
-		margin: 0.5rem 0 0;
+		margin: 0;
 		font-size: 0.9rem;
 	}
 	.quirks {
 		margin: 0;
 		padding-left: 1.1rem;
 	}
-	.quirks li {
-		margin-bottom: 0.15rem;
-	}
-	.bargain {
-		list-style: none;
-		margin-left: -1.1rem;
-		margin-top: 0.3rem;
-		font-size: 0.9rem;
+	.quirks li + li {
+		margin-top: 0.25rem;
 	}
 	.rumour {
-		margin-top: 0.6rem;
-		padding: 0.5rem 0.65rem;
+		padding: 0.75rem 0.85rem;
 		border: 1px dashed var(--line);
 		font-size: 0.92rem;
 	}
@@ -921,8 +979,11 @@
 	}
 	.rumour-actions {
 		display: inline-flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.5rem;
+		justify-content: flex-end;
+		gap: 0.25rem 0.6rem;
+		white-space: nowrap;
 	}
 	.told-toggle {
 		display: inline-flex;
@@ -936,8 +997,7 @@
 		margin: 0;
 	}
 	.rumour .label {
-		font-weight: 700;
-		margin-right: 0.25rem;
+		margin-bottom: 0.2rem;
 	}
 	.mine {
 		font-size: 0.7rem;
@@ -953,12 +1013,14 @@
 	.truth-row {
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		justify-content: space-between;
-		gap: 0.5rem;
-		margin-top: 0.3rem !important;
+		gap: 0.4rem 0.75rem;
+		margin-top: 0.65rem !important;
 		font-size: 0.8rem;
 	}
 	.truth {
+		white-space: nowrap;
 		padding: 0 0.45rem;
 		border: 1px solid currentColor;
 	}
@@ -981,7 +1043,7 @@
 		font-size: 0.85rem;
 	}
 	.kin {
-		margin: 0.5rem 0 0;
+		margin: 0;
 		font-size: 0.9rem;
 	}
 	details summary {
@@ -990,7 +1052,6 @@
 		padding: 0.25rem 0;
 	}
 	.family-traits {
-		margin-top: 0.5rem;
 		font-size: 0.9rem;
 	}
 	.family-traits summary {
