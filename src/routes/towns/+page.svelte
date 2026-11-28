@@ -9,11 +9,22 @@
 	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
+	import { view } from '#lib/stores/view.svelte.ts';
+	import { townProgress } from '#lib/tracking.ts';
 	import type { Campaign, Family, Settlement } from '#lib/types.ts';
 
 	const selectedId = $derived(page.url.searchParams.get('id'));
 	const selected = $derived(selectedId ? towns.get(selectedId) : undefined);
 	let importError = $state('');
+
+	/** The party's current town first, then the rest as saved. */
+	const sortedTowns = $derived(
+		[...towns.list].sort(
+			(a, b) =>
+				Number(b.id === campaigns.active.partyTownId) -
+				Number(a.id === campaigns.active.partyTownId)
+		)
+	);
 
 	function open(id: string | null) {
 		goto(id ? `${resolve('/towns')}?id=${encodeURIComponent(id)}` : resolve('/towns'));
@@ -87,16 +98,36 @@
 {#if selected}
 	<div class="toolbar no-print">
 		<button class="btn" type="button" onclick={() => open(null)}>← All towns</button>
+		<button
+			class="btn"
+			type="button"
+			aria-pressed={campaigns.active.partyTownId === selected.id}
+			onclick={() =>
+				campaigns.setPartyTown(
+					campaigns.active.partyTownId === selected.id ? undefined : selected.id
+				)}
+			title="Mark this as the town the party is in now"
+		>
+			{campaigns.active.partyTownId === selected.id ? '📍 Party is here' : 'Party is here?'}
+		</button>
 		<button class="btn" type="button" onclick={() => window.print()}>Print</button>
+		<button
+			class="btn"
+			type="button"
+			onclick={() => view.toggle(true)}
+			title="Hide rumours, quirks, notes and other DM details to show or print for the players"
+		>
+			Player view
+		</button>
 		<button class="btn danger" type="button" onclick={() => remove(selected)}>Forget town</button>
 	</div>
 	<SettlementView settlement={selected} onChange={(next) => towns.put(next)} />
-	<section class="card notes">
+	<section class="card notes dm-only">
 		<label for="notes"><h2>DM notes</h2></label>
 		<textarea
 			id="notes"
 			rows="5"
-			placeholder="What did the party buy? Who did they annoy? Which rumours did they hear?"
+			placeholder="What did the party buy? Who did they annoy? What did they promise?"
 			value={selected.notes ?? ''}
 			onchange={(e) => towns.put({ ...selected, notes: e.currentTarget.value })}></textarea>
 	</section>
@@ -112,6 +143,7 @@
 			</p>
 		</div>
 		<div class="io no-print">
+			<a class="btn" href={resolve('/towns/new')}>Town from a book</a>
 			<button class="btn" type="button" onclick={exportAll}>Export backup</button>
 			<label class="btn">
 				Import backup
@@ -133,15 +165,26 @@
 		</div>
 	{:else}
 		<ul class="town-list">
-			{#each towns.list as town (town.id)}
-				<li class="card">
+			{#each sortedTowns as town (town.id)}
+				{@const progress = townProgress(town)}
+				{@const here = campaigns.active.partyTownId === town.id}
+				<li class="card" class:here>
 					<a href="{resolve('/towns')}?id={encodeURIComponent(town.id)}">
 						<span class="tier">{getTier(town.tier).label} · {getRegion(town.region).label}</span>
 						<strong>{town.name}</strong>
+						{#if here}<span class="here-badge">📍 The party is here</span>{/if}
 						<span class="muted">
 							Pop. {town.population.toLocaleString('en-US')} · {town.shops.length}
 							{town.shops.length === 1 ? 'shop' : 'shops'}
 						</span>
+						{#if progress.visited}
+							<span class="visited">
+								Visited {progress.visited}/{progress.shops} · {progress.told}
+								{progress.told === 1 ? 'rumour' : 'rumours'} heard
+							</span>
+						{:else}
+							<span class="muted">Not visited yet</span>
+						{/if}
 						<span class="emblems" aria-hidden="true">
 							{#each town.shops as shop (shop.id)}{families.get(familyForShop(shop.type))
 									.emblem}{/each}
@@ -216,6 +259,18 @@
 		letter-spacing: 0.06em;
 		color: var(--accent);
 		font-weight: 600;
+	}
+	.town-list li.here {
+		--frame: var(--accent);
+	}
+	.here-badge {
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--accent);
+	}
+	.visited {
+		color: var(--good);
+		font-size: 0.9rem;
 	}
 	.emblems {
 		letter-spacing: 0.15em;

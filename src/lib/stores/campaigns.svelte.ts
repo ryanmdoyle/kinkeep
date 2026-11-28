@@ -144,6 +144,11 @@ class CampaignStore {
 		this.update(campaign.id, { rumours: (campaign.rumours ?? []).filter((r) => r.id !== id) });
 	}
 
+	/** Where the party is now (a saved town's id), or nowhere in particular. */
+	setPartyTown(townId: string | undefined) {
+		this.update(this.active.id, { partyTownId: townId });
+	}
+
 	setRumourMode(mode: RumourMode) {
 		this.update(this.active.id, { rumourMode: mode });
 	}

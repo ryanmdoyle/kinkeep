@@ -237,6 +237,12 @@ select {
 	white-space: nowrap;
 }
 
+/* Player view (see stores/view.svelte.ts): hide the DM's details and buttons. */
+:root[data-view='players'] .dm-only,
+:root[data-view='players'] .no-print {
+	display: none !important;
+}
+
 @media print {
 	.no-print {
 		display: none !important;

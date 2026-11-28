@@ -1022,7 +1022,7 @@ const FAMILY_DEFS: FamilyDef[] = [
 				'Calls each party member by a title they have not earned yet.',
 				'Keeps a bowl of unmarked keys and invites each customer to take one. Nobody knows what they open.',
 				'Wears silk gloves and refuses to touch any item barehanded, "for its sake".',
-				'Has a single {color} streak in their silver hair that shifts shade when the weather turns.',
+				'Has a single {color} streak in their hair that shifts shade when the weather turns.',
 				'Keeps every clock in the shop turned to face the wall, and will not say why.',
 				"Will buy items from the party, but only after hearing each item's full story.",
 				'Offers haggling customers a riddle: solve it and the price drops, fail and it rises.',

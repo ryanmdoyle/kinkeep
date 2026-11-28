@@ -161,7 +161,7 @@ const REGION_TABLE = table<Region>({
 					'A foreign captain is paying good coin for anyone who knows the reefs off {place}.',
 					"The tide went out further than anyone's ever seen and showed a stone road running out to sea.",
 					"There are lanterns in the caves under the cliffs again, but nobody's landed any goods in months.",
-					'{person} hauled up a brass diving helm in their net. There was a note inside it, dry as a bone.',
+					'{person} hauled a brass diving helm out of the shallows. There was a note inside it, dry as a bone.',
 					'Pirates have been sighted to the {direction}, flying the flag of a ship that sank twenty years ago.',
 					"A whale beached itself near {place} with a ship's figurehead lodged in its jaw.",
 					'The herring have gone {direction}, every last one, in a single night. Something chased them.',
@@ -258,7 +258,7 @@ const REGION_TABLE = table<Region>({
 					"There's a giant's bootprint in the snowfield above the pass. It's facing towards town.",
 					"The mine owner's hired a dowser from {place}. She walks the tunnels with a hazel rod and won't say what she's after.",
 					'Rockslides keep blocking the same stretch of road, always at night, always just after the ore wagons pass.',
-					'{person} heard hammering behind solid rock in the deep shaft. Next morning their pick was gone.'
+					'{person} heard hammering behind solid rock in the deep shaft. Next morning every pick in the camp was gone.'
 				]
 			})
 		},
@@ -589,7 +589,7 @@ const REGION_TABLE = table<Region>({
 					'Marsh lights have been seen in the middle of {place}, not out in the reeds. Hovering over one house.',
 					"The flood marks on the old church say the water's never been this low. Something is draining the marsh.",
 					'The river mussels have black pearls in them now, cold to the touch even in summer.',
-					'{person} swears something in the deep pool bit through their pole and spat it back.',
+					'{person} went fishing in the deep pool and swears something bit through the line and spat the hook back.',
 					'From the bell tower you can see the bog cotton has grown in a pattern. It looks like writing.',
 					'A barge from {place} drifted downriver with no crew and a cargo of sealed jars. The jars are humming.'
 				]

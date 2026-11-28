@@ -36,6 +36,7 @@
 	const mode = $derived(campaign.rumourMode ?? 'first');
 	const placements = $derived(towns.rumourPlacements(campaign.id));
 	const placedCount = $derived(bank.filter((r) => placements.has(r.id)).length);
+	const toldCount = $derived(bank.filter((r) => placements.get(r.id)?.some((p) => p.told)).length);
 	const draftLines = $derived(draft.split('\n').filter((l) => l.trim()).length);
 
 	function add(event: SubmitEvent) {
@@ -98,8 +99,11 @@
 		></textarea>
 	</label>
 	<p class="hint muted">
-		Optional fill-ins: <code>{'{place}'}</code> a nearby town, <code>{'{person}'}</code> a local,
-		<code>{'{monster}'}</code>, <code>{'{direction}'}</code>, <code>{'{kin}'}</code> another shop family.
+		Optional fill-ins, typed in lowercase exactly as shown: <code>{'{place}'}</code> another town
+		nearby, <code>{'{person}'}</code> a local (e.g. “Agnes the cooper”), <code>{'{monster}'}</code>,
+		<code>{'{direction}'}</code>, <code>{'{kin}'}</code> another shop family's surname (“the
+		{'{kin}'} family”). “a {'{monster}'}” becomes “an owlbear” when it should. Anything else in
+		braces is left as typed. You can reword any rumour on its shop card once it's placed.
 	</p>
 	<div class="row">
 		<label class="stack truth-pick">
@@ -135,7 +139,10 @@
 
 <section aria-labelledby="bank-title">
 	<h2 id="bank-title" class="bank-title">
-		Your rumours <span class="muted">({bank.length}, {placedCount} placed in saved towns)</span>
+		Your rumours
+		<span class="muted">
+			({bank.length}, {placedCount} placed in saved towns, {toldCount} told to the party)
+		</span>
 	</h2>
 	{#if bank.length === 0}
 		<p class="card empty muted">None yet. Until you add some, shopkeepers tell built-in rumours.</p>
@@ -186,11 +193,11 @@
 					</div>
 					<p class="placed muted">
 						{#if placed.length}
-							Told by
+							Placed with
 							{#each placed as p, i (p.townId + p.keeper)}
 								{i ? ', ' : ''}<a href="{resolve('/towns')}?id={encodeURIComponent(p.townId)}">
 									{p.keeper} in {p.town}
-								</a>
+								</a>{#if p.told}<span class="told">✓ told</span>{/if}
 							{/each}
 						{:else}
 							Not placed in a saved town yet.
@@ -203,6 +210,11 @@
 </section>
 
 <style>
+	.told {
+		color: var(--good);
+		font-weight: 600;
+		margin-left: 0.3rem;
+	}
 	.head {
 		margin-bottom: 1rem;
 	}

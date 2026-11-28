@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import SettlementView from '#lib/components/SettlementView.svelte';
 	import { CONTENT_VERSION, normalizeVersion } from '#lib/content/versioned.ts';
@@ -10,6 +11,7 @@
 	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import { load, save } from '#lib/stores/storage.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
+	import { view } from '#lib/stores/view.svelte.ts';
 	import type { RegionId, Settlement, TierId } from '#lib/types.ts';
 
 	const params = page.url.searchParams;
@@ -98,6 +100,12 @@
 		if (towns.has(next.id)) towns.put(next);
 	}
 
+	/** Recording a visit or a told rumour saves the town, so the record isn't lost. */
+	function track(next: Settlement) {
+		settlement = next;
+		towns.put(next);
+	}
+
 	async function copyLink() {
 		try {
 			await navigator.clipboard.writeText(location.href);
@@ -112,6 +120,30 @@
 	const linkSeed = params.get('seed');
 	if (linkSeed)
 		build(linkSeed, params.get('v') ? normalizeVersion(params.get('v')) : CONTENT_VERSION);
+
+	/**
+	 * Links to this page from this page (a town named in a rumour, the back
+	 * button) don't reload it, so build whatever town the new address names.
+	 */
+	afterNavigate(({ type, to }) => {
+		if (type === 'enter' || !to) return;
+		const query = to.url.searchParams;
+		const seed = query.get('seed');
+		if (!seed) return;
+		const nextName = query.get('name') ?? '';
+		// Our own address-bar update after building.
+		if (settlement?.seed === seed && nextName.trim() === name.trim()) return;
+		const linkSize = query.get('size');
+		size = TIERS.some((t) => t.id === linkSize) ? (linkSize as TierId) : '';
+		const linkRegion = query.get('region');
+		if (linkRegion === 'random' || REGIONS.some((r) => r.id === linkRegion)) {
+			region = linkRegion as RegionId | 'random';
+		}
+		name = nextName;
+		seedInput = seed;
+		build(seed, query.get('v') ? normalizeVersion(query.get('v')) : CONTENT_VERSION);
+		window.scrollTo(0, 0);
+	});
 </script>
 
 <div class="controls no-print">
@@ -185,6 +217,10 @@
 		<button class="btn" type="submit" disabled={!seedInput.trim()}>Build this town</button>
 	</form>
 </div>
+<p class="book-link no-print">
+	Running a published adventure? <a href={resolve('/towns/new')}>Set up a town from the book</a>
+	with its own name and shops, run by your families.
+</p>
 
 {#if settlement}
 	{#if (settlement.contentVersion ?? 1) < CONTENT_VERSION}
@@ -200,7 +236,7 @@
 			</button>
 		</p>
 	{/if}
-	<SettlementView {settlement} onChange={update}>
+	<SettlementView {settlement} onChange={update} onTrack={track}>
 		{#snippet actions()}
 			<div class="toolbar">
 				<div class="buttons">
@@ -217,6 +253,14 @@
 						{copied ? 'Copied!' : 'Copy link'}
 					</button>
 					<button class="btn" type="button" onclick={() => window.print()}>Print</button>
+					<button
+						class="btn"
+						type="button"
+						onclick={() => view.toggle(true)}
+						title="Hide rumours, quirks and other DM details to show or print for the players"
+					>
+						Player view
+					</button>
 				</div>
 				<span class="muted seed">
 					Seed: <code>{settlement?.seed}</code> · content v{settlement?.contentVersion ?? 1}
@@ -237,6 +281,10 @@
 {/if}
 
 <style>
+	.book-link {
+		margin: -0.5rem 0 1.25rem;
+		font-size: 0.9rem;
+	}
 	.controls {
 		display: grid;
 		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
