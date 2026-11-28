@@ -15,7 +15,7 @@
 				"keeper": "Tamsin (older) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Don't tell me, let me guess. Rope, rations and a tinderbox? Thought so!",
 				"quirks": [
-					"Keeps a ledger of every traveller who has ever passed through.",
+					"Keeps a ledger of every traveler who has ever passed through.",
 					"Keeps a stool by the counter just for folk who need a sit and a natter."
 				],
 				"rumour": "[true] Hew the cooper is selling off family heirlooms in a hurry. Debts, or something worse.",
@@ -150,7 +150,7 @@
 					"Offers a discount to anyone who can name all the Pennywhistle cousins. Nobody can."
 				],
 				"rumour": "[false] Someone's stealing washing off the lines. Only left socks, and only on washdays.",
-				"stock": "1xxx98j",
+				"stock": "p74e16",
 				"orders": "1xzh46z"
 			},
 			{
@@ -251,7 +251,7 @@
 					"Taps their claws on the bar in time with the music, whether or not there is any.",
 					"Can carry eight full tankards at once and will show off at the slightest excuse."
 				],
-				"rumour": "[true] A plough horse at Eldercroft cut its furrow in a perfect spiral, then lay down in the middle.",
+				"rumour": "[true] A plow horse at Eldercroft cut its furrow in a perfect spiral, then lay down in the middle.",
 				"stock": "48kgav",
 				"orders": "1axn3y4"
 			},
@@ -294,7 +294,7 @@
 				"keeper": "Mabry (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
 				"greeting": "Don't touch the blue one. Or, actually, go ahead, I need the data.",
 				"quirks": [
-					"Tastes every ingredient and describes the flavour like a fussy wine merchant.",
+					"Tastes every ingredient and describes the flavor like a fussy wine merchant.",
 					"Talks to the cauldron in a baby voice \"so it won't sulk\"."
 				],
 				"rumour": "[false] A physician from Wheatmarket bought my whole stock of smelling salts. He's treating a patient who won't stay awake.",
@@ -345,7 +345,7 @@
 					"Haggles enthusiastically, even when the customer is offering more than the price."
 				],
 				"rumour": "[true] Nomads sold a scroll they found in a jar under a fallen pillar. Half the town is bidding for it.",
-				"stock": "urtu00",
+				"stock": "a82gm",
 				"orders": "yiwskx"
 			},
 			{
@@ -366,7 +366,7 @@
 				"quirks": [
 					"Talks to the armor stands as if they were old friends."
 				],
-				"rumour": "[true] A squire had his master's shield repainted. New crest, new colours, and he begged me not to tell anyone the old ones.",
+				"rumour": "[true] A squire had his master's shield repainted. New crest, new colors, and he begged me not to tell anyone the old ones.",
 				"stock": "1izh7dh",
 				"orders": "d8iz5h"
 			},
@@ -425,7 +425,7 @@
 					"Counts heads at breakfast and frets aloud if any guest is missing.",
 					"Hangs a sword over the fireplace that is \"purely decorative\". It is very sharp."
 				],
-				"rumour": "[true] Agatha the one-eyed fiddler ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
+				"rumour": "[true] Agatha the one-eyed fiddler plowed up a stone with writing on it. The priest took it away and won't say what it said.",
 				"stock": "113yutu",
 				"orders": "1axn3y4"
 			},
@@ -436,7 +436,7 @@
 				"quirks": [
 					"Keeps a wall of tankards for regulars, and one hook that is always left empty."
 				],
-				"rumour": "[partly true] Hay carts coming from Cherrymere are being stopped and searched by men who don't wear the lord's colours.",
+				"rumour": "[partly true] Hay carts coming from Cherrymere are being stopped and searched by men who don't wear the lord's colors.",
 				"stock": "1rymp4c",
 				"orders": "1axn3y4"
 			},
@@ -448,7 +448,7 @@
 					"Gets the hiccups when telling a fib, which is why they're so honest."
 				],
 				"rumour": "[true] Godric the eel-catcher swears the scales in the market are weighted. They want someone to prove it before the fair.",
-				"stock": "1and0n0",
+				"stock": "3a256",
 				"orders": "4c9j0l"
 			},
 			{
@@ -456,7 +456,7 @@
 				"keeper": "Wynn (ancient) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Wipe your boots, dears. Now then, what can a Pennywhistle do for you?",
 				"quirks": [
-					"Hums the same tune constantly and does not realise it."
+					"Hums the same tune constantly and does not realize it."
 				],
 				"rumour": "[true] The chapel bell rang thirteen times at midnight. The bell-rope was cut years ago.",
 				"stock": "mp1cmw",
@@ -503,7 +503,7 @@
 				"keeper": "Pottle (young) Drives a hard bargain (+10%)",
 				"greeting": "Mind the floor, it had a spill and it's still deciding what it is.",
 				"quirks": [
-					"Keeps two fire buckets by the door, one labelled \"CUSTOMERS\" and one labelled \"ME\"."
+					"Keeps two fire buckets by the door, one labeled \"CUSTOMERS\" and one labeled \"ME\"."
 				],
 				"rumour": "[false] Willow bark's running short. Every fever in Upper Higham is the same fever, and it isn't breaking.",
 				"stock": "15wavv8",
@@ -588,7 +588,7 @@
 					"Runs a noticeboard of lost pets, odd jobs and strange sightings."
 				],
 				"rumour": "[true] The market cross has started leaning. Old folk say it marks where something's buried, and now it's pointing.",
-				"stock": "f75peq",
+				"stock": "viu0fz",
 				"orders": "1x0oxqq"
 			},
 			{
@@ -605,11 +605,11 @@
 			{
 				"name": "Hagga Thornhide's Mail & Plate",
 				"keeper": "Hagga (middle-aged) Loves to haggle (DC 12 Persuasion for 10% off)",
-				"greeting": "Welcome to Thornhide's. Take your time. Armour should never be rushed, and neither should you.",
+				"greeting": "Welcome to Thornhide's. Take your time. Armor should never be rushed, and neither should you.",
 				"quirks": [
 					"Keeps a rag doll in full plate on the counter. The doll's fit is flawless."
 				],
-				"rumour": "[partly true] Someone in Elmgrove is selling shoddy armour stamped with my family's mark. I'd like a word with them.",
+				"rumour": "[partly true] Someone in Elmgrove is selling shoddy armor stamped with my family's mark. I'd like a word with them.",
 				"stock": "scy9sm",
 				"orders": "1w2lmox"
 			},
@@ -693,7 +693,7 @@
 					"Hangs a \"Back Soon\" sign in the window and has never once taken it down."
 				],
 				"rumour": "[false] A wealthy stranger is buying up the debts of every shop on the high street. Mine included.",
-				"stock": "b0v8bw",
+				"stock": "1e61i7k",
 				"orders": "1axn3y4"
 			},
 			{
@@ -738,7 +738,7 @@
 				"quirks": [
 					"Cannot abide a squeak and oils every hinge in the room, including yours if you stand still."
 				],
-				"rumour": "[true] Someone in Plumridge is selling shoddy armour stamped with my family's mark. I'd like a word with them.",
+				"rumour": "[true] Someone in Plumridge is selling shoddy armor stamped with my family's mark. I'd like a word with them.",
 				"stock": "6mbxcc",
 				"orders": "tgi78i"
 			},
@@ -852,7 +852,7 @@
 					"Is convinced one of the adventurers is secretly royalty."
 				],
 				"rumour": "[false] Somebody's been paying for flour with coins from a mint that closed before my grandmother was born.",
-				"stock": "6mogr1",
+				"stock": "1757ilj",
 				"orders": "1axn3y4"
 			},
 			{
@@ -872,7 +872,7 @@
 				"keeper": "Oskeld (ancient) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Shop's open. Forge is hot. Don't just stand there.",
 				"quirks": [
-					"Fixes dented pots for the neighbours for free, grumbling the whole time."
+					"Fixes dented pots for the neighbors for free, grumbling the whole time."
 				],
 				"rumour": "[partly true] Highwaymen to the north wear painted wooden masks. Folk say they never speak a word.",
 				"stock": "1ff9mpu",
@@ -915,7 +915,7 @@
 			{
 				"name": "The Bubbling Beaker",
 				"keeper": "Quibble (middle-aged) Slightly desperate for sales (−10%)",
-				"greeting": "Don't mind the hair, it was a different colour this morning. What brings you in?",
+				"greeting": "Don't mind the hair, it was a different color this morning. What brings you in?",
 				"quirks": [
 					"Gets distracted mid-sentence by a new idea and scribbles it down.",
 					"Talks to the cauldron in a baby voice \"so it won't sulk\"."
@@ -929,7 +929,7 @@
 				"keeper": "Quillon (ancient) Fair and firm (no haggling)",
 				"greeting": "Come in! Mind the cat. That's not a cat. Mind it anyway.",
 				"quirks": [
-					"Lets customers choose the colour of their potion. It does not affect the potion. Probably.",
+					"Lets customers choose the color of their potion. It does not affect the potion. Probably.",
 					"Keeps a frog familiar that \"tastes-tests\" ingredients."
 				],
 				"rumour": "[true] There's a mushroom in the churchyard that wasn't there yesterday. Bright blue, and it smells of cinnamon.",
@@ -944,7 +944,7 @@
 					"Keeps a bowl of unmarked keys and invites each customer to take one. Nobody knows what they open.",
 					"Speaks of the other Veyls as if they were all the same person."
 				],
-				"rumour": "[true] A travelling scholar paid in advance for any book bound with a black ribbon. Any at all.",
+				"rumour": "[true] A traveling scholar paid in advance for any book bound with a black ribbon. Any at all.",
 				"stock": "1hcs9wf",
 				"orders": "ppf8pk"
 			},
@@ -1026,8 +1026,8 @@
 				"quirks": [
 					"Has an ancient, enormous cat that sleeps on the counter."
 				],
-				"rumour": "[false] Hew the baker ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
-				"stock": "syvclt",
+				"rumour": "[false] Hew the baker plowed up a stone with writing on it. The priest took it away and won't say what it said.",
+				"stock": "kia5pp",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1050,7 +1050,7 @@
 					"Has a crate of \"things adventurers left behind\" and wants help returning them."
 				],
 				"rumour": "[false] The pedlar who comes every spring hasn't turned up. Twenty years, and he's never once been late.",
-				"stock": "1wsfjyz",
+				"stock": "15sr6xm",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1093,7 +1093,7 @@
 				"greeting": "Is anybody hurt? Truly? Then let's keep it that way.",
 				"quirks": [
 					"Cannot refuse a child who wants to try on a helmet, so a box of tiny ones sits by the door.",
-					"Speaks so softly that customers lean in, then apologises for making them lean."
+					"Speaks so softly that customers lean in, then apologizes for making them lean."
 				],
 				"rumour": "[true] The hedges along the west lane grew a foot overnight, and they're thickest on the side facing the manor.",
 				"stock": "1nu57hp",
@@ -1114,11 +1114,11 @@
 			{
 				"name": "The Kindly Helm",
 				"keeper": "Zurra (young) Drives a hard bargain (+10%)",
-				"greeting": "Welcome to Thornhide's. Take your time. Armour should never be rushed, and neither should you.",
+				"greeting": "Welcome to Thornhide's. Take your time. Armor should never be rushed, and neither should you.",
 				"quirks": [
 					"Asks who you are coming home to, and engraves the name inside your breastplate for free."
 				],
-				"rumour": "[false] A plough horse at Elmchurch-on-the-River cut its furrow in a perfect spiral, then lay down in the middle.",
+				"rumour": "[false] A plow horse at Elmchurch-on-the-River cut its furrow in a perfect spiral, then lay down in the middle.",
 				"stock": "13xys7j",
 				"orders": "1axn3y4"
 			},
@@ -1140,7 +1140,7 @@
 				"quirks": [
 					"Offers free samples on a spoon while holding a bucket nearby, \"just in case\"."
 				],
-				"rumour": "[false] Hay carts coming from Old Tarnbarrow are being stopped and searched by men who don't wear the lord's colours.",
+				"rumour": "[false] Hay carts coming from Old Tarnbarrow are being stopped and searched by men who don't wear the lord's colors.",
 				"stock": "t4odb7",
 				"orders": "1ai9lsn"
 			},
@@ -1277,7 +1277,7 @@
 				"greeting": "Ooh, adventurers! Are you here about the business at the mill? No? You will be.",
 				"quirks": [
 					"Writes letters to every other Pennywhistle shop weekly and will happily pass messages along.",
-					"Talks to the stock, apologising to the tins as they are moved."
+					"Talks to the stock, apologizing to the tins as they are moved."
 				],
 				"rumour": "[true] The mill wheel turned all night with the sluice shut. There wasn't a drop in the race.",
 				"stock": "drghln",
@@ -1312,7 +1312,7 @@
 				"quirks": [
 					"Wears a leather eyepatch over a perfectly good eye, \"to rest it for fine work\"."
 				],
-				"rumour": "[true] Bandits to the north have a new leader. They've stopped robbing travellers and started robbing tax wagons.",
+				"rumour": "[true] Bandits to the north have a new leader. They've stopped robbing travelers and started robbing tax wagons.",
 				"stock": "1psw7ns",
 				"orders": "1axn3y4"
 			},
@@ -1382,7 +1382,7 @@
 					"Decides one party member has rare blood and keeps politely asking for \"just a thimble\".",
 					"Has not worn a matching pair of socks in years, on principle."
 				],
-				"rumour": "[true] A traveller left a bottle for me to identify. Whatever's in it, the cork keeps pushing itself out.",
+				"rumour": "[true] A traveler left a bottle for me to identify. Whatever's in it, the cork keeps pushing itself out.",
 				"stock": "1h4ouih",
 				"orders": "hkiu0s"
 			},
@@ -1393,7 +1393,7 @@
 				"quirks": [
 					"Never gives change, only a small odd trinket of exactly equal value."
 				],
-				"rumour": "[partly true] Something big has been bumping the hulls in the harbour at night.",
+				"rumour": "[partly true] Something big has been bumping the hulls in the harbor at night.",
 				"stock": "1e4m8k8",
 				"orders": "1fyne97"
 			},
@@ -1415,7 +1415,7 @@
 				"quirks": [
 					"Keeps a small hourglass on the counter in which the sand runs upwards."
 				],
-				"rumour": "[true] The harbourmaster has been taking bribes to let a certain ship dock after dark.",
+				"rumour": "[true] The harbormaster has been taking bribes to let a certain ship dock after dark.",
 				"stock": "mxc5f3",
 				"orders": "xaiz8w"
 			}
@@ -1494,10 +1494,10 @@
 				"keeper": "Bunty (young) Soft-hearted (−5% for a sad story)",
 				"greeting": "Welcome, welcome! If we haven't got it, my cousin in the next town does.",
 				"quirks": [
-					"Hums the same tune constantly and does not realise it."
+					"Hums the same tune constantly and does not realize it."
 				],
 				"rumour": "[partly true] A field to the south has a ring of dead wheat in the middle. Perfect circle, and it grows a little every night.",
-				"stock": "kq60mp",
+				"stock": "10ul883",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1508,7 +1508,7 @@
 					"Has a pocket for everything and takes ages finding the right one."
 				],
 				"rumour": "[partly true] The new family at the end of the lane buy food for ten. There are only three of them.",
-				"stock": "f5i531",
+				"stock": "n9464s",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1518,8 +1518,8 @@
 				"quirks": [
 					"Weighs everything on brass scales they claim have never told a lie."
 				],
-				"rumour": "[partly true] Beatrix the beadle ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
-				"stock": "leucnl",
+				"rumour": "[partly true] Beatrix the beadle plowed up a stone with writing on it. The priest took it away and won't say what it said.",
+				"stock": "1fajf1d",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1530,7 +1530,7 @@
 					"Hangs a \"Back Soon\" sign in the window and has never once taken it down."
 				],
 				"rumour": "[false] Perkin the rat-catcher hasn't paid their tab in three months, and nobody knows where their money went.",
-				"stock": "1tjmu08",
+				"stock": "z0vusu",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1539,7 +1539,7 @@
 				"greeting": "Mm. Adventurers. Wipe your boots. Steel hates mud.",
 				"quirks": [
 					"Is dreadfully allergic to cats, and every cat in town knows it.",
-					"Fixes dented pots for the neighbours for free, grumbling the whole time."
+					"Fixes dented pots for the neighbors for free, grumbling the whole time."
 				],
 				"rumour": "[partly true] Three swords came in for sharpening, all with the same black stain that won't scour off.",
 				"stock": "1y40z3a",
@@ -1594,7 +1594,7 @@
 				"keeper": "Narrek (middle-aged) Fair and firm (no haggling)",
 				"greeting": "There you are. I had a feeling someone would need me today.",
 				"quirks": [
-					"Hands each customer a care guide for their armour, illustrated with little drawings."
+					"Hands each customer a care guide for their armor, illustrated with little drawings."
 				],
 				"rumour": "[partly true] The lord's steward has been measuring fields with a rope and a strange brass gauge. Nobody asked him to.",
 				"stock": "1526hua",
@@ -1648,9 +1648,9 @@
 			{
 				"name": "Mosswick & Mosswick, Apothecaries",
 				"keeper": "Nock (middle-aged) Drives a hard bargain (+10%)",
-				"greeting": "Don't mind the hair, it was a different colour this morning. What brings you in?",
+				"greeting": "Don't mind the hair, it was a different color this morning. What brings you in?",
 				"quirks": [
-					"Cranks a big fan that blows the fumes out of the window and into the neighbour's shop."
+					"Cranks a big fan that blows the fumes out of the window and into the neighbor's shop."
 				],
 				"rumour": "[true] Someone ordered enough sleeping draught to fell a giant. Paid in very old coins.",
 				"stock": "zlmzp4",
@@ -1659,10 +1659,10 @@
 			{
 				"name": "The Frothing Cauldron",
 				"keeper": "Pockle (middle-aged) Slightly desperate for sales (−10%)",
-				"greeting": "Don't mind the hair, it was a different colour this morning. What brings you in?",
+				"greeting": "Don't mind the hair, it was a different color this morning. What brings you in?",
 				"quirks": [
 					"Charges by the gulp, and watches very closely.",
-					"Keeps two fire buckets by the door, one labelled \"CUSTOMERS\" and one labelled \"ME\"."
+					"Keeps two fire buckets by the door, one labeled \"CUSTOMERS\" and one labeled \"ME\"."
 				],
 				"rumour": "[true] The new reeve in Cressleigh-on-the-River is taxing ale by the sip.",
 				"stock": "rl15wr",
@@ -1793,8 +1793,8 @@
 				"quirks": [
 					"Is certain the shop is haunted by a very tidy ghost who folds the linens."
 				],
-				"rumour": "[true] A traveller paid me to keep a parcel behind the counter until someone says the word 'lantern'. It's heavy for its size.",
-				"stock": "1ukmoae",
+				"rumour": "[true] A traveler paid me to keep a parcel behind the counter until someone says the word 'lantern'. It's heavy for its size.",
+				"stock": "1ywdgqk",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1805,7 +1805,7 @@
 					"Is convinced one of the adventurers is secretly royalty."
 				],
 				"rumour": "[true] Our bridge to the south washed out, and someone rebuilt it in a single night. Better than before.",
-				"stock": "1oiz10x",
+				"stock": "mtfvwj",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1816,7 +1816,7 @@
 					"Tucks a sprig of lavender behind each customer's ear, whether they like it or not."
 				],
 				"rumour": "[true] Somebody's been paying for flour with coins from a mint that closed before my grandmother was born.",
-				"stock": "zlqsux",
+				"stock": "v6xlqf",
 				"orders": "1axn3y4"
 			},
 			{
@@ -1914,10 +1914,10 @@
 				"keeper": "Rokka (middle-aged) Soft-hearted (−5% for a sad story)",
 				"greeting": "Welcome, little one. ...Yes, you're all little ones to me.",
 				"quirks": [
-					"Practises calligraphy on leather offcuts and gives them away as bookmarks.",
+					"Practices calligraphy on leather offcuts and gives them away as bookmarks.",
 					"Cries at weddings, funerals and particularly well-made rivets."
 				],
-				"rumour": "[true] Someone in Upper Eaglecroft is selling shoddy armour stamped with my family's mark. I'd like a word with them.",
+				"rumour": "[true] Someone in Upper Eaglecroft is selling shoddy armor stamped with my family's mark. I'd like a word with them.",
 				"stock": "12jbm6b",
 				"orders": "1axn3y4"
 			},
@@ -1951,7 +1951,7 @@
 				"quirks": [
 					"Keeps a frog familiar that \"tastes-tests\" ingredients."
 				],
-				"rumour": "[false] A woman in a grey hood bought all my mandrake root and asked if I knew where to find more.",
+				"rumour": "[false] A woman in a gray hood bought all my mandrake root and asked if I knew where to find more.",
 				"stock": "19f0wyj",
 				"orders": "1axn3y4"
 			},
@@ -2031,7 +2031,7 @@
 				"keeper": "Tilly (young) Gives regulars a discount (−10% on return visits)",
 				"greeting": "Ooh, new faces! You look like folk who need rope. Everyone needs rope.",
 				"quirks": [
-					"Presses flowers from every traveller's homeland and would love one from the party."
+					"Presses flowers from every traveler's homeland and would love one from the party."
 				],
 				"rumour": "[false] Honey from the wild hives to the west makes folk fall asleep where they stand. The bees seem fine.",
 				"stock": "zgn45t",

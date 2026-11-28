@@ -10,11 +10,11 @@ import type {
 } from '#lib/types.ts';
 import { load, save } from './storage.ts';
 
-const KEY = 'kinkeep:campaigns';
-const ACTIVE_KEY = 'kinkeep:campaign';
+const KEY = 'wares-whispers:campaigns';
+const ACTIVE_KEY = 'wares-whispers:campaign';
 /** Pre-campaign storage, migrated into the first campaign. */
-const LEGACY_FAMILIES_KEY = 'kinkeep:families';
-export const TOWNS_KEY = 'kinkeep:towns';
+const LEGACY_FAMILIES_KEY = 'wares-whispers:families';
+export const TOWNS_KEY = 'wares-whispers:towns';
 
 function clone<T>(value: T): T {
 	return JSON.parse(JSON.stringify(value)) as T;

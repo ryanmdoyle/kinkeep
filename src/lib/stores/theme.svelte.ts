@@ -1,7 +1,7 @@
 import { load, save } from './storage.ts';
 
 // app.html reads this key before the page paints, so keep the two in step.
-export const THEME_KEY = 'kinkeep:theme';
+export const THEME_KEY = 'wares-whispers:theme';
 
 export type Theme = 'light' | 'dark';
 

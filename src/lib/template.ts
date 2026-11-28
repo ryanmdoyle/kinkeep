@@ -26,7 +26,7 @@ const IRREGULAR: Record<string, string> = {
 };
 
 /**
- * The plural of a word or name. Names (capitalised) only take "es" after a
+ * The plural of a word or name. Names (capitalized) only take "es" after a
  * hissing sound ("the Marshes", but "the Dandys"); other words follow the
  * usual rules ("harpies", "dire wolves").
  */

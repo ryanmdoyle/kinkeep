@@ -26,21 +26,21 @@
 		{ href: resolve('/towns'), label: 'Saved towns', match: '/towns' },
 		{ href: resolve('/party'), label: 'Party', match: '/party' },
 		{ href: resolve('/families'), label: 'Families', match: '/families' },
-		{ href: resolve('/rumours'), label: 'Rumours', match: '/rumours' },
+		{ href: resolve('/rumors'), label: 'Rumors', match: '/rumors' },
 		{ href: resolve('/campaigns'), label: 'Campaigns', match: '/campaigns' }
 	];
 </script>
 
 <svelte:head>
 	<link rel="icon" href={asset('favicon.svg')} />
-	<title>Kinkeep: settlements & shopkeepers</title>
+	<title>Wares & Whispers: towns, shops and shopkeepers</title>
 </svelte:head>
 
 <header class="site-header no-print">
 	<div class="inner">
 		<a class="brand" href={resolve('/')}>
 			<img src={asset('favicon.svg')} alt="" width="28" height="28" />
-			<span>Kinkeep</span>
+			<span>Wares &amp; Whispers</span>
 		</a>
 		<nav aria-label="Main">
 			{#each links as link (link.href)}

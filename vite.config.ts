@@ -3,7 +3,7 @@ import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 
 // Set BASE_PATH when the site lives in a sub-folder, e.g. GitHub Pages
-// serves this repo at /kinkeep. Leave it unset for a custom domain or
+// serves this repo at /<repo-name>. Leave it unset for a custom domain or
 // Cloudflare Pages.
 const base = (process.env.BASE_PATH ?? '') as '' | `/${string}`;
 

@@ -125,7 +125,7 @@
 				<p class="progress dm-only">
 					The party has visited {progress.visited} of {progress.shops}
 					{progress.shops === 1 ? 'shop' : 'shops'} and heard {progress.told} of {progress.rumours}
-					{progress.rumours === 1 ? 'rumour' : 'rumours'}.
+					{progress.rumours === 1 ? 'rumor' : 'rumors'}.
 				</p>
 			{/if}
 		</header>

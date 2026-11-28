@@ -74,7 +74,7 @@
 					<span class="role">{FAMILY_ROLE_LABELS[family.id]}</span>
 					<strong>
 						{family.groupName}
-						{#if families.isCustom(family.id)}<span class="custom">customised</span>{/if}
+						{#if families.isCustom(family.id)}<span class="custom">customized</span>{/if}
 					</strong>
 					<span class="muted">{family.race} · {family.personality}</span>
 				</span>

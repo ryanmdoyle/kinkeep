@@ -4,7 +4,7 @@ Every shared link holds a seed and a **content version** (`?seed=mossy-otter-412
 rebuilds the same town forever, because a town only reads the table entries that existed in its
 version.
 
-## Adding names, quirks, rumours, items...
+## Adding names, quirks, rumors, items...
 
 Every random table is written in numbered blocks:
 
@@ -18,7 +18,7 @@ export const MONSTERS = table({
 1. In `src/lib/content/versioned.ts`, bump `CONTENT_VERSION` (e.g. `1` → `2`) the first time you
    add something after a release.
 2. Put the new lines in a block with that number. Add a `2: [...]` block to any table you're
-   adding to: family quirks, names, rumours, regional dishes, catalog items, regions...
+   adding to: family quirks, names, rumors, regional dishes, catalog items, regions...
 3. Run `npm test`. It writes `src/lib/content/__golden__/content-v2.json` for the new version.
 
 Keep adding to the `2:` blocks until you deploy. Once version 2 is live, its blocks are frozen and
@@ -43,7 +43,7 @@ Only the newest, not-yet-deployed version's file should ever change (update it w
 ## Changing the generator itself
 
 Content tables are covered by the version blocks. For changes to the rules in `generator.ts`
-(new shop types, new price logic), keep the old behaviour for old versions with
+(new shop types, new price logic), keep the old behavior for old versions with
 `if (ctx.version >= N)`. Give any new random roll its own stream with `rng.fork('new-label')`, so
 it doesn't shift existing rolls. The golden tests show whether old towns moved.
 

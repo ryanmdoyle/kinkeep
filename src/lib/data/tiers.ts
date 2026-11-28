@@ -51,7 +51,7 @@ export const TIERS: Tier[] = [
 		label: 'Village',
 		min: 401,
 		max: 900,
-		blurb: 'A church, a green, a tavern and a smith who makes ploughshares and the odd spear.',
+		blurb: 'A church, a green, a tavern and a smith who makes plowshares and the odd spear.',
 		priceMod: 1.1,
 		stockChance: 0.6,
 		featuredCap: 1
@@ -62,7 +62,7 @@ export const TIERS: Tier[] = [
 		label: 'Small town',
 		min: 901,
 		max: 2000,
-		blurb: 'A weekly market and specialised craftsmen. The first place with a real armorer.',
+		blurb: 'A weekly market and specialized craftsmen. The first place with a real armorer.',
 		priceMod: 1.05,
 		stockChance: 0.65,
 		featuredCap: 1
@@ -188,7 +188,7 @@ export const SHOP_RULES: ShopRule[] = [
 	}
 ];
 
-/** Other trades and institutions with MDME-style support values, for flavour. */
+/** Other trades and institutions with MDME-style support values, for flavor. */
 export const TRADES: { label: string; supportValue: number; minTier: number }[] = [
 	{ label: 'Blacksmiths', supportValue: 1500, minTier: 2 },
 	{ label: 'Bakers', supportValue: 800, minTier: 2 },

@@ -11,7 +11,7 @@ import type { Relation } from '#lib/types.ts';
 export const RETURNING: Record<Relation, string[]> = {
 	positive: [
 		"Back again! I was hoping you'd come by.",
-		"My favourite customers! The good stock's in the back. For you, I'll fetch it.",
+		"My favorite customers! The good stock's in the back. For you, I'll fetch it.",
 		'There they are! Sit, sit. Tell me everything.',
 		'Welcome back, friends. I set something aside for you.',
 		'Ah! Just the faces I wanted to see.',

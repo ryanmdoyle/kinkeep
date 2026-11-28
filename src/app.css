@@ -1,5 +1,5 @@
 :root {
-	/* Each colour is light-dark(light, dark). The page follows the system
+	/* Each color is light-dark(light, dark). The page follows the system
 	   setting unless the header toggle pins one (data-theme on <html>). */
 	--bg: light-dark(#f6efe0, #14100c);
 	--surface: light-dark(#fffaf0, #2a221b);
@@ -9,7 +9,7 @@
 	--line: light-dark(#d9c8a6, #4b3e31);
 	--accent: light-dark(#8a3f1c, #e0a064);
 	--accent-ink: light-dark(#fffaf0, #14100c);
-	/* Third colour (verdigris), used only for things you can click. */
+	/* Third color (verdigris), used only for things you can click. */
 	--action: light-dark(#2f6b68, #6cbfb3);
 	--focus: light-dark(#c26a1b, #f0b77a);
 	--danger: light-dark(#a3301f, #f08a78);
@@ -176,7 +176,7 @@ select {
 
 /*
  * Stat-block containers: thick bars top and bottom, no sides, with square
- * caps on the ends of the top bar. Set --frame to recolour the bars.
+ * caps on the ends of the top bar. Set --frame to recolor the bars.
  */
 .card {
 	--frame: var(--accent);

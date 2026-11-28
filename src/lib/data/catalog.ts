@@ -3,7 +3,7 @@ import type { CatalogItem, ShopType } from '#lib/types.ts';
 
 /*
  * Item lists use SRD 5.1 names and prices (CC-BY-4.0) plus a few homebrew
- * flavour items. minTier: 0 thorp, 1 hamlet, 2 village, 3 small town,
+ * flavor items. minTier: 0 thorp, 1 hamlet, 2 village, 3 small town,
  * 4 large town, 5 small city, 6 large city, 7 metropolis.
  */
 
@@ -46,7 +46,7 @@ export const GENERAL_GOODS: Versioned<CatalogItem> = table({
 		i('Lantern, hooded', 5, 2, 'Light'),
 		i('Hunting trap', 5, 2, 'Gear'),
 		i("Traveler's clothes", 2, 2, 'Clothing'),
-		i("Healer's kit", 5, 2, 'Gear', { note: '10 uses, stabilise a creature' }),
+		i("Healer's kit", 5, 2, 'Gear', { note: '10 uses, stabilize a creature' }),
 		i('Caltrops (bag of 20)', 1, 2, 'Gear'),
 		i('Chain (10 ft)', 5, 3, 'Gear'),
 		i('Manacles', 2, 3, 'Gear'),

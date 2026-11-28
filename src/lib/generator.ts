@@ -46,7 +46,7 @@ import type {
  *    by position, so even at the newest version, adding a line only changes
  *    picks that the new line wins.
  *
- * When changing generator LOGIC (not content), keep the old behaviour for
+ * When changing generator LOGIC (not content), keep the old behavior for
  * old versions: `if (ctx.version >= 2) { ...new rule... }`, and use new
  * fork labels for new rolls. The golden tests fail if an old version's
  * towns change.

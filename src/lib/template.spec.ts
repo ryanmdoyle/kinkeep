@@ -12,13 +12,13 @@ describe('article', () => {
 });
 
 describe('plural', () => {
-	it('pluralises names', () => {
+	it('pluralizes names', () => {
 		expect(plural('Emberforge')).toBe('Emberforges');
 		expect(plural('Marsh')).toBe('Marshes');
 		expect(plural('Veyl')).toBe('Veyls');
 		expect(plural('Dandy')).toBe('Dandys');
 	});
-	it('pluralises words', () => {
+	it('pluralizes words', () => {
 		expect(plural('harpy')).toBe('harpies');
 		expect(plural('dire wolf')).toBe('dire wolves');
 		expect(plural('basilisk')).toBe('basilisks');

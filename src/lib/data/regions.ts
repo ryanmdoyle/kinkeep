@@ -11,7 +11,7 @@ const item = (
 
 /**
  * Regions nudge prices, move some goods into smaller places (or out of
- * them), add local goods, and flavour names, inn food and rumours.
+ * them), add local goods, and flavor names, inn food and rumours.
  */
 const REGION_TABLE = table<Region>({
 	1: [
@@ -46,22 +46,22 @@ const REGION_TABLE = table<Region>({
 					"A noble's hunting party went into the {direction} woods four days ago and hasn't come out.",
 					'Scarecrows on the {direction} farms are being found turned to face the road.',
 					'The new reeve in {place} is taxing ale by the sip.',
-					"The miller's daughter has been grinding at midnight, and the flour comes out grey.",
+					"The miller's daughter has been grinding at midnight, and the flour comes out gray.",
 					'A field to the {direction} has a ring of dead wheat in the middle. Perfect circle, and it grows a little every night.',
 					"Every sheep at {place} was shorn overnight. The wool's gone, and so is whoever sheared them.",
 					"The lord's steward has been measuring fields with a rope and a strange brass gauge. Nobody asked him to.",
-					"{person} ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
+					"{person} plowed up a stone with writing on it. The priest took it away and won't say what it said.",
 					"The cows in the {direction} pasture are giving blue milk. Tastes fine, they say. I'm not trying it.",
 					'The fair at {place} has a tent that nobody hired. It only opens after dark.',
 					'Someone is buying up the old orchards and felling every tree but one in each.',
 					"The scarecrow on the {kin} family's plot wears a different hat every morning. Nobody's lending it hats.",
-					'A plough horse at {place} cut its furrow in a perfect spiral, then lay down in the middle.',
+					'A plow horse at {place} cut its furrow in a perfect spiral, then lay down in the middle.',
 					"The hedges along the {direction} lane grew a foot overnight, and they're thickest on the side facing the manor.",
 					"The mill weir's holding back more water than it should. Something's blocking the river upstream.",
 					"The harvest queen goes missing for a day each year and comes back with a basket of fruit nobody can name. It's nearly time.",
 					'A shepherd swears one ram leads his whole flock up to the old hill fort at night.',
 					"The tithe barn was locked when the steward left for the winter. Now there's lamplight under the doors.",
-					"Hay carts coming from {place} are being stopped and searched by men who don't wear the lord's colours."
+					"Hay carts coming from {place} are being stopped and searched by men who don't wear the lord's colors."
 				]
 			})
 		},
@@ -153,8 +153,8 @@ const REGION_TABLE = table<Region>({
 				1: [
 					'A ghost ship was seen off the point last night, sails full in no wind.',
 					'The fishing fleet came back with nets full of black pearls, and one boat came back empty.',
-					'The harbourmaster has been taking bribes to let a certain ship dock after dark.',
-					'Something big has been bumping the hulls in the harbour at night.',
+					'The harbormaster has been taking bribes to let a certain ship dock after dark.',
+					'Something big has been bumping the hulls in the harbor at night.',
 					'A bottle washed up with a map inside. Three people have already tried to buy it off the fishwife who found it.',
 					'The lighthouse keeper on the point has started lighting the lamp at noon.',
 					"Gulls won't land on the {direction} jetty. Not one, not even for bread.",
@@ -168,7 +168,7 @@ const REGION_TABLE = table<Region>({
 					"{person} found a mermaid's comb on the strand. Every night since, someone's been singing under their window.",
 					'Ships from the islands have stopped coming. The last one in had claw marks along the waterline.',
 					'A press gang has been working the docks, but none of the men they took have turned up on any ship.',
-					'The {kin} family bought a share in a ship that has never once come into harbour.',
+					'The {kin} family bought a share in a ship that has never once come into harbor.',
 					'The old sea wall is cracking from the landward side. Something under the town is pushing out.',
 					'Wreckers have been lighting false beacons on the cliffs to the {direction}. Two ships lost this season.'
 				]
@@ -198,7 +198,7 @@ const REGION_TABLE = table<Region>({
 					'Stone',
 					'Iron',
 					'Crag',
-					'Grey',
+					'Gray',
 					'Granite',
 					'Eagle',
 					'Copper',
@@ -411,7 +411,7 @@ const REGION_TABLE = table<Region>({
 					"The {kin} family's spice caravan was robbed, but the thieves only took the saffron and left a gold bar in its place.",
 					"Bones of something huge have surfaced in the dunes to the {direction}. The vultures won't touch them.",
 					"The nomads say the stars over the great dune are wrong this month. They're moving their camp.",
-					"A traveller walked in from the {direction} with no water and not a drop of sweat on him. He's asking for the oldest map in town.",
+					"A traveler walked in from the {direction} with no water and not a drop of sweat on him. He's asking for the oldest map in town.",
 					'A caravan on the old road was swallowed by a sinkhole. The guards say the sand opened like a mouth.',
 					'Nomads sold a scroll they found in a jar under a fallen pillar. Half the town is bidding for it.',
 					"A new stall at the night market sells water that never warms. The trader won't say where she draws it.",
@@ -493,7 +493,7 @@ const REGION_TABLE = table<Region>({
 					'Someone is leaving carved wooden dolls on doorsteps. They look like the people inside.',
 					'Every bird in the {direction} wood went silent at noon yesterday, all at once, for as long as it takes to say a prayer.',
 					"The charcoal burners found a ring of mushrooms big enough to stand in. One of them did, and he's not been right since.",
-					'A trapper came back with a pelt that still changes colour with the seasons. He wants a fortune for it.',
+					'A trapper came back with a pelt that still changes color with the seasons. He wants a fortune for it.',
 					'{person} felled an old oak to the {direction} and has found acorns in their boots every morning since.',
 					"Someone's marking trees for felling with a sign none of the foresters use.",
 					"A girl from the {kin} family was lost in the woods all night. She came home wearing a crown of woven ivy and won't say who made it.",
@@ -501,7 +501,7 @@ const REGION_TABLE = table<Region>({
 					'The stream that runs through {place} flows the other way after sundown.',
 					'Woodsmen keep finding tiny doors carved into tree roots. Ankle high, with brass hinges.',
 					'The forester at {place} has stopped marking trees for felling. He says the trees asked him to.',
-					'An archer in a green cloak has been shooting the hats off travellers on the {direction} road. Never misses, never robs.',
+					'An archer in a green cloak has been shooting the hats off travelers on the {direction} road. Never misses, never robs.',
 					"The {kin} family's woodpile walked off in the night, logs and kindling, in a trail towards the old hollow.",
 					'Owls have taken over the abandoned watchtower. Hundreds of them, and they all go quiet when people pass.',
 					"A boy came out of the deep wood speaking a language nobody knows. He'd been gone a year by our count, a day by his.",

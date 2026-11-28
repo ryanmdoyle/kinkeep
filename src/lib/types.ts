@@ -41,7 +41,7 @@ export interface Region {
 	tierShift: Record<string, number>;
 	/** Regional goods added to shop catalogs. */
 	extraItems: Partial<Record<ShopType, Versioned<CatalogItem>>>;
-	/** Region-flavoured rumours. */
+	/** Region-flavored rumours. */
 	rumours: Versioned<string>;
 }
 
@@ -55,7 +55,7 @@ export interface Family {
 	race: string;
 	/** Single emoji or character used as the family's sign on every shop. */
 	emblem: string;
-	/** Accent color (CSS color) so the family is recognisable at a glance. */
+	/** Accent color (CSS color) so the family is recognizable at a glance. */
 	color: string;
 	/** The look every member shares. */
 	signature: string;
@@ -232,7 +232,7 @@ export interface Settlement {
 	shops: Shop[];
 	/** How many of each shop type really exist (only some are detailed). */
 	shopTotals: Partial<Record<ShopType, number>>;
-	/** Other realistic tradespeople and institutions, for flavour. */
+	/** Other realistic tradespeople and institutions, for flavor. */
 	trades: TradeCount[];
 	notes?: string;
 	/** Set up by hand from a published adventure rather than built from a seed. */

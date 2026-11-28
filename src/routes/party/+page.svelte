@@ -88,7 +88,7 @@
 			<li><strong>{metCount}</strong> keepers met</li>
 			<li>
 				<strong>{heard.length}</strong>
-				{heard.length === 1 ? 'rumour' : 'rumours'} heard
+				{heard.length === 1 ? 'rumor' : 'rumors'} heard
 				{#if heard.some((h) => h.rumour.truth === 'false')}
 					<span class="muted">
 						({heard.filter((h) => h.rumour.truth === 'false').length} false)
@@ -232,10 +232,10 @@
 	</section>
 
 	<section aria-labelledby="heard-title">
-		<h2 id="heard-title" class="section-title">Rumours the party has heard</h2>
+		<h2 id="heard-title" class="section-title">Rumors the party has heard</h2>
 		{#if heard.length === 0}
 			<p class="card empty muted">
-				None yet. Tick “Told to the party” on a rumour when a keeper tells it.
+				None yet. Tick “Told to the party” on a rumor when a keeper tells it.
 			</p>
 		{:else}
 			<div class="truths">

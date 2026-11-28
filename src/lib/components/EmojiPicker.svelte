@@ -30,7 +30,7 @@
 			emoji: '⚒️ 🔨 🪓 ⛏️ 🔧 🪛 ⚙️ 🔩 ⛓️ 🪝 🧲 🔥 🪚 🧰 ⚓ 🛠️ 🪜 🧹'
 		},
 		{
-			name: 'Weapons & armour',
+			name: 'Weapons & armor',
 			icon: '⚔️',
 			emoji: '⚔️ 🗡️ 🏹 🛡️ 🪃 🔱 🪖 🏰 🐎 🎯 💣 🧨'
 		},

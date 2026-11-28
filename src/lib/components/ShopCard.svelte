@@ -316,7 +316,7 @@
 			<div class="rumour dm-only" class:told={shop.keeper.rumour.told}>
 				{#if editingRumour && onEditRumour}
 					<label class="rumour-edit">
-						<span class="label">Rumour</span>
+						<span class="label">Rumor</span>
 						<textarea
 							rows="3"
 							value={shop.keeper.rumour.text}
@@ -325,7 +325,7 @@
 					</label>
 				{:else}
 					<p>
-						<span class="label">Rumour</span>
+						<span class="label">Rumor</span>
 						{#if shop.keeper.rumour.custom}<span class="mine">yours</span>{/if}
 						{#if shop.keeper.rumour.edited}<span class="mine">edited</span>{/if}
 						<RumourText
@@ -373,7 +373,7 @@
 							</button>
 						{/if}
 						{#if onRumour && !shop.keeper.rumour.told && !editingRumour}
-							<button class="link no-print" type="button" onclick={onRumour}>Another rumour</button>
+							<button class="link no-print" type="button" onclick={onRumour}>Another rumor</button>
 						{/if}
 					</span>
 				</p>

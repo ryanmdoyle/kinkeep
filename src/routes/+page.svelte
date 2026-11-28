@@ -19,7 +19,7 @@
 	// Most campaigns stay in one region for a while, so remember the last choice.
 	let region = $state<RegionId | 'random'>(
 		(params.get('region') as RegionId | 'random') ??
-			load<RegionId | 'random'>('kinkeep:region', 'heartland')
+			load<RegionId | 'random'>('wares-whispers:region', 'heartland')
 	);
 	let name = $state(params.get('name') ?? '');
 	let seedInput = $state(params.get('seed') ?? '');
@@ -49,9 +49,9 @@
 		const query = new URLSearchParams({ seed, v: String(version) });
 		if (size) query.set('size', size);
 		query.set('region', region);
-		save('kinkeep:region', region);
+		save('wares-whispers:region', region);
 		if (name.trim()) query.set('name', name.trim());
-		// Update the address bar in place (works at / and under a base path like /kinkeep/).
+		// Update the address bar in place (works at / and under a base path like /wares-whispers/).
 		const url = new URL(location.href);
 		url.search = query.toString();
 		goto(url, { replace: true, shallow: true });
@@ -76,7 +76,7 @@
 		try {
 			query = new URL(text, location.href).searchParams;
 		} catch {
-			seedError = "That doesn't look like a Kinkeep link.";
+			seedError = "That doesn't look like a Wares & Whispers link.";
 			return;
 		}
 		const linkSeed = query.get('seed');
@@ -226,7 +226,7 @@
 	{#if (settlement.contentVersion ?? 1) < CONTENT_VERSION}
 		<p class="card notice no-print">
 			This link was made with content version {settlement.contentVersion ?? 1}, so it uses only the
-			names, quirks and rumours that existed then.
+			names, quirks and rumors that existed then.
 			<button
 				class="link"
 				type="button"
@@ -257,7 +257,7 @@
 						class="btn"
 						type="button"
 						onclick={() => view.toggle(true)}
-						title="Hide rumours, quirks and other DM details to show or print for the players"
+						title="Hide rumors, quirks and other DM details to show or print for the players"
 					>
 						Player view
 					</button>
@@ -273,7 +273,7 @@
 		<h1>Who keeps the shops in the next town?</h1>
 		<p class="muted">
 			Pick a size and generate a settlement sized like a real medieval one. Every shop is run by a
-			member of the same family everywhere in your world, so your players will recognise the dwarf
+			member of the same family everywhere in your world, so your players will recognize the dwarf
 			at the forge, the halfling behind the counter and the gnome surrounded by smoke.
 		</p>
 		<button class="btn primary" type="button" onclick={generateNew}> Generate a settlement </button>

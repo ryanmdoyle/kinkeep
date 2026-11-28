@@ -38,11 +38,11 @@
 
 	function exportAll() {
 		// Version 2 backups hold every campaign and every town.
-		const data = { app: 'kinkeep', version: 2, campaigns: campaigns.list, towns: towns.all };
+		const data = { app: 'wares-whispers', version: 2, campaigns: campaigns.list, towns: towns.all };
 		const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
 		const a = document.createElement('a');
 		a.href = URL.createObjectURL(blob);
-		a.download = `kinkeep-backup-${new Date().toISOString().slice(0, 10)}.json`;
+		a.download = `wares-whispers-backup-${new Date().toISOString().slice(0, 10)}.json`;
 		a.click();
 		URL.revokeObjectURL(a.href);
 	}
@@ -115,7 +115,7 @@
 			class="btn"
 			type="button"
 			onclick={() => view.toggle(true)}
-			title="Hide rumours, quirks, notes and other DM details to show or print for the players"
+			title="Hide rumors, quirks, notes and other DM details to show or print for the players"
 		>
 			Player view
 		</button>
@@ -180,7 +180,7 @@
 						{#if progress.visited}
 							<span class="visited">
 								Visited {progress.visited}/{progress.shops} · {progress.told}
-								{progress.told === 1 ? 'rumour' : 'rumours'} heard
+								{progress.told === 1 ? 'rumor' : 'rumors'} heard
 							</span>
 						{:else}
 							<span class="muted">Not visited yet</span>

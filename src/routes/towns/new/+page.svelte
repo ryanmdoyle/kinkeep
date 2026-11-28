@@ -11,7 +11,7 @@
 
 	let name = $state('');
 	let tier = $state<TierId>('village');
-	const lastRegion = load<RegionId | 'random'>('kinkeep:region', 'heartland');
+	const lastRegion = load<RegionId | 'random'>('wares-whispers:region', 'heartland');
 	let region = $state<RegionId>(lastRegion === 'random' ? 'heartland' : lastRegion);
 	let population = $state<number | undefined>();
 	let description = $state('');
@@ -77,7 +77,7 @@
 	<h1>A town from a book</h1>
 	<p class="muted">
 		Running a published adventure? Set up its town here, with the book's name and the shops it has,
-		and your families will run them: keepers, rumours and stock as usual, with nothing else added.
+		and your families will run them: keepers, rumors and stock as usual, with nothing else added.
 		It's saved to “{campaigns.active.name}” straight away.
 	</p>
 </header>
@@ -116,7 +116,7 @@
 					<option value={r.id}>{r.label}</option>
 				{/each}
 			</select>
-			<p class="hint muted">Local goods, prices and rumours.</p>
+			<p class="hint muted">Local goods, prices and rumors.</p>
 		</div>
 		<div class="field">
 			<label for="book-pop">Population <span class="muted">(optional)</span></label>

@@ -5,9 +5,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
 		<script>
+			// The app was called Kinkeep: move its saved data to the new keys once, before the
+			// stores read them.
+			try {
+				for (const k of Object.keys(localStorage)) {
+					if (!k.startsWith('kinkeep:')) continue;
+					const to = 'wares-whispers:' + k.slice('kinkeep:'.length);
+					if (localStorage.getItem(to) === null) localStorage.setItem(to, localStorage.getItem(k));
+					localStorage.removeItem(k);
+				}
+			} catch {}
 			// Apply a saved light/dark choice before first paint (see stores/theme.svelte.ts).
 			try {
-				const t = JSON.parse(localStorage.getItem('kinkeep:theme'));
+				const t = JSON.parse(localStorage.getItem('wares-whispers:theme'));
 				if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
 			} catch {}
 		</script>

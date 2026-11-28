@@ -31,7 +31,7 @@
 	<h1>Campaigns</h1>
 	<p class="muted">
 		A campaign keeps its own saved towns and families, and remembers which town names, shopkeepers,
-		quirks and rumours it has already used, so new towns don't repeat them until there's nothing
+		quirks and rumors it has already used, so new towns don't repeat them until there's nothing
 		fresh left. Forgetting a town frees its content again.
 	</p>
 </header>
@@ -80,7 +80,7 @@
 				{plural(townCount, 'saved town', 'saved towns')} ·
 				{plural(usage.keeper, 'shopkeeper', 'shopkeepers')} ·
 				{plural(usage.quirk, 'quirk', 'quirks')} and
-				{plural(usage.rumour, 'rumour', 'rumours')} used ·
+				{plural(usage.rumour, 'rumor', 'rumors')} used ·
 				{customCount
 					? plural(customCount, 'custom family', 'custom families')
 					: 'built-in families'}
@@ -95,7 +95,7 @@
 				<span>
 					Avoid repeats
 					<small class="muted">
-						Skip names, quirks and rumours used in this campaign's saved towns. A seed shared from
+						Skip names, quirks and rumors used in this campaign's saved towns. A seed shared from
 						here can differ in those details for someone else.
 					</small>
 				</span>

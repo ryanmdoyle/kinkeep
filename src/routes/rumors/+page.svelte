@@ -12,17 +12,17 @@
 		{
 			value: 'first',
 			label: 'Tell mine first',
-			hint: 'Each new shopkeeper tells one of yours that hasn’t been placed yet. Once all are placed, built-in rumours fill in.'
+			hint: 'Each new shopkeeper tells one of yours that hasn’t been placed yet. Once all are placed, built-in rumors fill in.'
 		},
 		{
 			value: 'mix',
 			label: 'Mix them in',
-			hint: 'About half the shopkeepers tell one of yours (while some are unplaced); the rest tell built-in rumours.'
+			hint: 'About half the shopkeepers tell one of yours (while some are unplaced); the rest tell built-in rumors.'
 		},
 		{
 			value: 'only',
 			label: 'Only mine',
-			hint: 'No built-in rumours at all. Yours repeat once they’re all placed, and shops none of yours suit stay quiet.'
+			hint: 'No built-in rumors at all. Yours repeat once they’re all placed, and shops none of yours suit stay quiet.'
 		}
 	];
 
@@ -42,7 +42,7 @@
 	function add(event: SubmitEvent) {
 		event.preventDefault();
 		const count = campaigns.addRumours(draft.split('\n'), draftTruth, draftRoles);
-		added = count ? `Added ${count} ${count === 1 ? 'rumour' : 'rumours'}.` : '';
+		added = count ? `Added ${count} ${count === 1 ? 'rumor' : 'rumors'}.` : '';
 		draft = '';
 	}
 
@@ -51,14 +51,14 @@
 	}
 
 	function remove(rumour: CustomRumour) {
-		if (confirm('Delete this rumour? Towns that already have it keep it.')) {
+		if (confirm('Delete this rumor? Towns that already have it keep it.')) {
 			campaigns.removeRumour(rumour.id);
 		}
 	}
 </script>
 
 <header class="head">
-	<h1>Rumours in {campaign.name}</h1>
+	<h1>Rumors in {campaign.name}</h1>
 	<p class="muted">
 		Running a published adventure, or have hooks you want the party to hear? Add them here and the
 		shopkeepers in this campaign's towns will spread them. Saved towns remember who told which one.
@@ -66,7 +66,7 @@
 </header>
 
 <section class="card block" aria-labelledby="mode-title">
-	<h2 id="mode-title">How shopkeepers use your rumours</h2>
+	<h2 id="mode-title">How shopkeepers use your rumors</h2>
 	<div class="modes" role="radiogroup" aria-labelledby="mode-title">
 		{#each MODES as m (m.value)}
 			<label class="mode" class:selected={mode === m.value}>
@@ -87,10 +87,10 @@
 </section>
 
 <form class="card block" onsubmit={add} aria-labelledby="add-title">
-	<h2 id="add-title">Add rumours</h2>
+	<h2 id="add-title">Add rumors</h2>
 	<label class="stack">
 		<span>
-			Rumours <small class="muted">One per line. Paste a whole rumour table if you like.</small>
+			Rumors <small class="muted">One per line. Paste a whole rumor table if you like.</small>
 		</span>
 		<textarea
 			rows="5"
@@ -103,7 +103,7 @@
 		nearby, <code>{'{person}'}</code> a local (e.g. “Agnes the cooper”), <code>{'{monster}'}</code>,
 		<code>{'{direction}'}</code>, <code>{'{kin}'}</code> another shop family's surname (“the
 		{'{kin}'} family”). “a {'{monster}'}” becomes “an owlbear” when it should. Anything else in
-		braces is left as typed. You can reword any rumour on its shop card once it's placed.
+		braces is left as typed. You can reword any rumor on its shop card once it's placed.
 	</p>
 	<div class="row">
 		<label class="stack truth-pick">
@@ -131,7 +131,7 @@
 	</div>
 	<div class="row actions">
 		<button class="btn primary" type="submit" disabled={!draftLines}>
-			Add {draftLines > 1 ? `${draftLines} rumours` : 'rumour'}
+			Add {draftLines > 1 ? `${draftLines} rumors` : 'rumor'}
 		</button>
 		{#if added}<span class="muted" role="status">{added}</span>{/if}
 	</div>
@@ -139,13 +139,13 @@
 
 <section aria-labelledby="bank-title">
 	<h2 id="bank-title" class="bank-title">
-		Your rumours
+		Your rumors
 		<span class="muted">
 			({bank.length}, {placedCount} placed in saved towns, {toldCount} told to the party)
 		</span>
 	</h2>
 	{#if bank.length === 0}
-		<p class="card empty muted">None yet. Until you add some, shopkeepers tell built-in rumours.</p>
+		<p class="card empty muted">None yet. Until you add some, shopkeepers tell built-in rumors.</p>
 	{:else}
 		<ul class="bank">
 			{#each bank as rumour (rumour.id)}
@@ -153,7 +153,7 @@
 				<li class="card rumour">
 					<textarea
 						rows="2"
-						aria-label="Rumour text"
+						aria-label="Rumor text"
 						value={rumour.text}
 						onchange={(e) =>
 							e.currentTarget.value.trim() &&

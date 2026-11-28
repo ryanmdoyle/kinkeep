@@ -1,5 +1,5 @@
 /**
- * Versioned content tables: how Kinkeep grows its tables without breaking
+ * Versioned content tables: how Wares & Whispers grows its tables without breaking
  * old seeds.
  *
  * Every random table is split into blocks keyed by the content version that
