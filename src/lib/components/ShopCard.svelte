@@ -493,7 +493,7 @@
 										</span>{/if}
 									{#if item.mustHave}<span
 											class="tag dm-only"
-											title="On the campaign's must-have list, so this town keeps some"
+											title="One of the campaign's town minimums, so this town keeps some"
 										>
 											kept in the back
 										</span>{:else if item.added}<span

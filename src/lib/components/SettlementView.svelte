@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import ShopCard from '#lib/components/ShopCard.svelte';
 	import { SHOP_RULES, getTier } from '#lib/data/tiers.ts';
 	import { getRegion } from '#lib/data/regions.ts';
@@ -93,7 +94,7 @@
 		onChange(restock(settlement, towns.inputFor(undefined, settlement.id), shopId));
 	}
 
-	/** Must-haves this town lacks (a town saved before they were added). */
+	/** Town minimums this town lacks (a town saved before they were added). */
 	const missing = $derived(missingMustHaves(settlement, campaigns.active.mustHaves));
 
 	const tier = $derived(getTier(settlement.tier));
@@ -215,11 +216,11 @@
 					type="button"
 					onclick={() => onChange(stockMustHaves(settlement, campaigns.active.mustHaves))}
 				>
-					Add must-haves
+					Add town minimums
 				</button>
 				<span class="muted">
 					Not in town yet: {missing.map((m) => m.name).join(', ')}.
-					<a href="/campaigns">Edit the list</a>
+					<a href="{resolve('/campaigns')}#town-minimums">Change them</a>
 				</span>
 			</div>
 		{/if}
