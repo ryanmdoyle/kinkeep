@@ -425,7 +425,7 @@
 					"Counts heads at breakfast and frets aloud if any guest is missing.",
 					"Hangs a sword over the fireplace that is \"purely decorative\". It is very sharp."
 				],
-				"rumour": "[true] Agatha the blind fiddler ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
+				"rumour": "[true] Agatha the one-eyed fiddler ploughed up a stone with writing on it. The priest took it away and won't say what it said.",
 				"stock": "113yutu",
 				"orders": "1axn3y4"
 			},
@@ -886,7 +886,7 @@
 					"Accepts payment in coin or good ale. Nothing else. Not even gems.",
 					"Is dreadfully allergic to cats, and every cat in town knows it."
 				],
-				"rumour": "[true] A hunter brought in a broken wereboar claw to be set as a knife handle. Said there were more where that came from.",
+				"rumour": "[true] A hunter brought in a trophy off a wereboar to be set as a knife handle. Said there were more where that came from.",
 				"stock": "k757ti",
 				"orders": "1s9bzhj"
 			},
@@ -1185,7 +1185,7 @@
 					"Is exquisitely polite to the furniture.",
 					"Keeps a bowl of unmarked keys and invites each customer to take one. Nobody knows what they open."
 				],
-				"rumour": "[false] Ellen the widow up the hill has been sleepwalking to the standing stones and drawing circles in the dirt. Perfect circles.",
+				"rumour": "[false] Ellen the hermit up the hill has been sleepwalking to the standing stones and drawing circles in the dirt. Perfect circles.",
 				"stock": "xhwxrb",
 				"orders": "1re471h"
 			}
@@ -1404,7 +1404,7 @@
 				"quirks": [
 					"Drinks tea that never cools, from a cup that never empties."
 				],
-				"rumour": "[true] Hodge the goose-girl brought me a letter from the old wizard on the hill. It's dated next spring.",
+				"rumour": "[true] Hodge the goose-herd brought me a letter from the old wizard on the hill. It's dated next spring.",
 				"stock": "164hldq",
 				"orders": "1n3pr76"
 			},
@@ -1574,7 +1574,7 @@
 				"quirks": [
 					"Won't name a price until the customer has held the weapon for a full minute."
 				],
-				"rumour": "[true] Bring me the claws of a giant boar and I'll make arrowheads that bite through anything.",
+				"rumour": "[true] Bring me a piece of a giant boar and I'll make arrowheads that bite through anything.",
 				"stock": "16w7zxo",
 				"orders": "1axn3y4"
 			},
@@ -1697,7 +1697,7 @@
 				"greeting": "Close the door softly. Some of the stock is sleeping.",
 				"quirks": [
 					"Asks each customer for a single hair \"for the records\", and never says which records.",
-					"Has a single midnight blue streak in their silver hair that shifts shade when the weather turns."
+					"Has a single midnight blue streak in their hair that shifts shade when the weather turns."
 				],
 				"rumour": "[false] The harvest came in twice this year. Twice. Nobody is asking how.",
 				"stock": "xhedeb",
@@ -1860,7 +1860,7 @@
 				"quirks": [
 					"Checks the balance of every weapon on one finger before handing it over."
 				],
-				"rumour": "[true] Petronel the gravedigger heard hammering behind solid rock in the deep shaft. Next morning their pick was gone.",
+				"rumour": "[true] Petronel the gravedigger heard hammering behind solid rock in the deep shaft. Next morning every pick in the camp was gone.",
 				"stock": "1s2mtpf",
 				"orders": "1axn3y4"
 			},
@@ -1871,7 +1871,7 @@
 				"quirks": [
 					"Bangs the anvil once to close each sale, loud enough to rattle the windows."
 				],
-				"rumour": "[partly true] A hunter brought in a broken owlbear claw to be set as a knife handle. Said there were more where that came from.",
+				"rumour": "[partly true] A hunter brought in a trophy off an owlbear to be set as a knife handle. Said there were more where that came from.",
 				"stock": "13n4sap",
 				"orders": "1axn3y4"
 			},
@@ -1962,7 +1962,7 @@
 				"quirks": [
 					"Uses a brass ear trumpet to listen to potions \"settling\"."
 				],
-				"rumour": "[true] Robin the alewife brought me a sick crow that talked in its fever. It kept saying one name, over and over: Eaglestow.",
+				"rumour": "[true] Robin the brewer brought me a sick crow that talked in its fever. It kept saying one name, over and over: Eaglestow.",
 				"stock": "3ikmr7",
 				"orders": "1axn3y4"
 			},

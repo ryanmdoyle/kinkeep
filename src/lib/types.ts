@@ -102,6 +102,8 @@ export interface StockItem {
 	price: number;
 	/** -1 means "as much as you like" (meals, drinks, services). */
 	qty: number;
+	/** How many the party has bought since the last restock. */
+	sold?: number;
 	note?: string;
 	rarity?: CatalogItem['rarity'];
 }
@@ -109,6 +111,8 @@ export interface StockItem {
 export interface Shopkeeper {
 	familyId: FamilyRole;
 	firstName: string;
+	/** The keeper's own surname, shown instead of the family's (set by the DM). */
+	surname?: string;
 	age: string;
 	quirks: string[];
 	greeting: string;
@@ -118,9 +122,21 @@ export interface Shopkeeper {
 	rumour?: Rumour;
 	/** Content keys of the quirk lines used, so a campaign can avoid repeating them. */
 	quirkKeys?: string[];
+	/** How the party stands with this keeper (missing = neutral). Set once they've visited. */
+	relation?: Relation;
+	/** The DM's own note about this keeper. */
+	note?: string;
 }
 
+export type Relation = 'positive' | 'neutral' | 'negative';
+
 export type Truth = 'true' | 'partly true' | 'false';
+
+/** A town named in a rumour that doesn't exist yet (until the party goes there). */
+export interface RumourPlace {
+	name: string;
+	tier: TierId;
+}
 
 export interface Rumour {
 	text: string;
@@ -129,6 +145,12 @@ export interface Rumour {
 	key?: string;
 	/** True when it came from the campaign's own rumour bank. */
 	custom?: boolean;
+	/** The DM has marked it as actually told to the party. */
+	told?: boolean;
+	/** The DM has reworded it (or changed whether it's true). */
+	edited?: boolean;
+	/** Towns the rumour names, and how big they are, so the party can go there. */
+	places?: RumourPlace[];
 }
 
 /** A rumour the DM wants spread through their campaign's shops. */
@@ -156,7 +178,20 @@ export interface Shop {
 	keeper: Shopkeeper;
 	stock: StockItem[];
 	/** Things they can order in from a bigger town, with a wait. */
-	specialOrders: { name: string; price: number; wait: string }[];
+	specialOrders: SpecialOrder[];
+	/** The DM gave this shop its name (a town from a book): rerolls keep it. */
+	fixedName?: boolean;
+	/** The party has actually been here. */
+	visited?: boolean;
+}
+
+/** Something a shop can order in from a bigger town, with a wait. */
+export interface SpecialOrder {
+	name: string;
+	price: number;
+	wait: string;
+	/** Set once the party orders it: the day they did (YYYY-MM-DD) and whether they've collected it. */
+	order?: { at: string; collected?: boolean };
 }
 
 export interface TradeCount {
@@ -183,6 +218,10 @@ export interface Settlement {
 	/** Other realistic tradespeople and institutions, for flavour. */
 	trades: TradeCount[];
 	notes?: string;
+	/** Set up by hand from a published adventure rather than built from a seed. */
+	fromBook?: boolean;
+	/** The DM's own description, shown instead of the size and region blurbs. */
+	description?: string;
 }
 
 export interface Campaign {
@@ -199,4 +238,8 @@ export interface Campaign {
 	/** The DM's own rumours to spread through the campaign's shops. */
 	rumours?: CustomRumour[];
 	rumourMode?: RumourMode;
+	/** Whether the party's standing with a keeper changes their prices (missing = yes). */
+	standingPrices?: boolean;
+	/** The saved town the party is in right now. */
+	partyTownId?: string;
 }

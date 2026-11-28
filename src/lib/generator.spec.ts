@@ -233,3 +233,14 @@ describe('custom rumours', () => {
 		expect(custom).toBeLessThan(town.shops.length);
 	});
 });
+
+describe('rumour places', () => {
+	it('never sends the party to the town they are already in', () => {
+		for (let n = 0; n < 150; n++) {
+			const town = generateSettlement({ seed: `place-${n}`, tier: 'large-city', families });
+			for (const shop of town.shops) {
+				expect(shop.keeper.rumour?.text ?? '').not.toContain(town.name);
+			}
+		}
+	});
+});

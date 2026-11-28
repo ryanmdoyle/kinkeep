@@ -3,13 +3,20 @@
 	import { asset, resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
+	import { view } from '#lib/stores/view.svelte.ts';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
 
+	// Player view is a flag on <html> so the stylesheet can hide DM-only parts anywhere.
+	$effect(() => {
+		document.documentElement.dataset.view = view.players ? 'players' : 'dm';
+	});
+
 	const links = [
 		{ href: resolve('/'), label: 'Generate', match: '/' },
 		{ href: resolve('/towns'), label: 'Saved towns', match: '/towns' },
+		{ href: resolve('/party'), label: 'Party', match: '/party' },
 		{ href: resolve('/families'), label: 'Families', match: '/families' },
 		{ href: resolve('/rumours'), label: 'Rumours', match: '/rumours' },
 		{ href: resolve('/campaigns'), label: 'Campaigns', match: '/campaigns' }
@@ -48,6 +55,18 @@
 		</label>
 	</div>
 </header>
+
+{#if view.players}
+	<div class="view-bar" role="status">
+		<span><strong>Player view</strong> · only what the party can see</span>
+		<span class="view-actions">
+			<button class="btn small" type="button" onclick={() => window.print()}>Print</button>
+			<button class="btn small primary" type="button" onclick={() => view.toggle(false)}>
+				Back to DM view
+			</button>
+		</span>
+	</div>
+{/if}
 
 <main>
 	{@render children()}
@@ -101,6 +120,29 @@
 		background: var(--surface-2);
 		color: var(--ink);
 		font-weight: 600;
+	}
+	.view-bar {
+		position: sticky;
+		top: 0;
+		z-index: 5;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem 1rem;
+		padding: 0.5rem 1rem;
+		background: var(--surface-2);
+		border-bottom: 2px solid var(--accent);
+		font-size: 0.92rem;
+	}
+	.view-actions {
+		display: flex;
+		gap: 0.5rem;
+	}
+	@media print {
+		.view-bar {
+			display: none;
+		}
 	}
 	main {
 		max-width: 1100px;

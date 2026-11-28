@@ -15,6 +15,7 @@ import { contentKey, usedKeys } from '#lib/content/keys.ts';
 import { at, CONTENT_VERSION, normalizeVersion } from '#lib/content/versioned.ts';
 import { roundPrice } from '#lib/money.ts';
 import { createRng, hashString, randomSeed, type Rng } from '#lib/rng.ts';
+import { fillTemplate } from '#lib/template.ts';
 import type {
 	CatalogItem,
 	CustomRumour,
@@ -76,6 +77,8 @@ export interface GenerateOptions extends CampaignInput {
 /** Everything the shop builders need, passed around as one bundle. */
 interface Ctx {
 	version: number;
+	/** The town being built, so rumours don't name it as somewhere else. */
+	townName?: string;
 	tier: Tier;
 	region: Region;
 	families: Family[];
@@ -138,23 +141,37 @@ function realisticCount(rng: Rng, pop: number, supportValue: number): number {
 	return whole + (rng.chance(expected - whole) ? 1 : 0);
 }
 
-function fillTemplate(template: string, vars: Record<string, string>): string {
-	return template.replace(/\{(\w+)\}/g, (match, key: string) => vars[key] ?? match);
-}
-
-/** Fills {place}, {person}, {monster}, {direction} and {kin} in a rumour line. */
-function fillRumour(ctx: Ctx, rng: Rng, family: Family, template: string): string {
+/**
+ * Fills {place}, {person}, {monster}, {direction} and {kin} in a rumour line,
+ * and notes the town {place} named so the party can go there.
+ */
+function fillRumour(
+	ctx: Ctx,
+	rng: Rng,
+	family: Family,
+	template: string
+): Pick<Rumour, 'text' | 'places'> {
 	const { version: v, region } = ctx;
 	const fill = rng.fork('fill');
 	const others = ctx.families.filter((f) => f.id !== family.id);
-	const place = fill.fork('place');
-	return fillTemplate(template, {
-		place: settlementName(place, place.int(0, 4), v, region),
+	// A rumour about "the caravan from Oakford" shouldn't be told in Oakford.
+	let place = '';
+	let placeTier = 0;
+	for (let attempt = 0; attempt < 6; attempt++) {
+		const roll = fill.fork(attempt ? `place:${attempt}` : 'place');
+		placeTier = roll.int(0, 4);
+		place = settlementName(roll, placeTier, v, region);
+		if (place !== ctx.townName) break;
+	}
+	const text = fillTemplate(template, {
+		place,
 		person: `${fill.fork('person').pick(at(LOCAL_NAMES, v))} ${fill.fork('trade').pick(at(LOCAL_TRADES, v))}`,
 		monster: fill.fork('monster').pick(at(MONSTERS, v)),
 		direction: fill.fork('direction').pick(at(DIRECTIONS, v)),
 		kin: others.length ? fill.fork('kin').pick(others).surname : 'other'
 	});
+	if (!template.includes('{place}')) return { text };
+	return { text, places: [{ name: place, tier: TIERS[placeTier].id }] };
 }
 
 /** One of the campaign's own rumours that this shopkeeper could tell, if any. */
@@ -172,7 +189,7 @@ function customRumour(ctx: Ctx, rng: Rng, family: Family): Rumour | undefined {
 	const key = contentKey.customRumour(chosen.id);
 	ctx.taken.add(key);
 	return {
-		text: fillRumour(ctx, rng, family, chosen.text),
+		...fillRumour(ctx, rng, family, chosen.text),
 		truth: chosen.truth,
 		key,
 		custom: true
@@ -214,7 +231,7 @@ function makeRumour(ctx: Ctx, rng: Rng, family: Family): Rumour | undefined {
 	const total = TRUTH_WEIGHTS.reduce((a, b) => a + b.weight, 0);
 	let roll = rng.fork('truth').next() * total;
 	const truth = TRUTH_WEIGHTS.find((t) => (roll -= t.weight) <= 0)?.truth ?? 'true';
-	return { text: fillRumour(ctx, rng, family, template), truth, key };
+	return { ...fillRumour(ctx, rng, family, template), truth, key };
 }
 
 function makeKeeper(ctx: Ctx, rng: Rng, family: Family): Shopkeeper {
@@ -382,6 +399,7 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 		if (!ctx.taken.has(contentKey.town(name))) break;
 	}
 	ctx.taken.add(contentKey.town(name));
+	ctx.townName = name;
 
 	const shops: Shop[] = [];
 	const shopTotals: Partial<Record<ShopType, number>> = {};
@@ -434,15 +452,88 @@ export function generateSettlement(opts: GenerateOptions): Settlement {
 	};
 }
 
+/** A thorp's "general store" is a passing peddler, unless the DM set the town up by hand. */
+function isPeddler(settlement: Settlement, ctx: Ctx, type: ShopType): boolean {
+	return !settlement.fromBook && ctx.tier.index === 0 && type === 'general';
+}
+
+export interface BookTownOptions extends CampaignInput {
+	name: string;
+	tier: TierId;
+	region: RegionId;
+	/** Leave out for a typical population for the size. */
+	population?: number;
+	description?: string;
+	/** Every shop the town has, in order, with its name from the book if given. */
+	shops: { type: ShopType; name?: string }[];
+	campaignId?: string;
+}
+
+/**
+ * A town from a published adventure: the DM's name, size, region and exact
+ * shops, run by the campaign's families. Nothing else is added. It gets a
+ * random seed so rerolls work, but it's saved rather than rebuilt from a link.
+ */
+export function generateBookTown(opts: BookTownOptions): Settlement {
+	const seed = randomSeed();
+	const version = CONTENT_VERSION;
+	const root = createRng(seed);
+	const tier = getTier(opts.tier);
+	const region = getRegion(opts.region);
+	const ctx = newCtx(opts, version, tier, region);
+	const name = opts.name.trim() || 'Unnamed town';
+	ctx.taken.add(contentKey.town(name));
+	ctx.townName = name;
+	const population =
+		opts.population && opts.population > 0
+			? Math.round(opts.population)
+			: rollPopulation(root.fork('population'), tier);
+
+	// Book names first, so a family-named shop never takes one of them.
+	for (const s of opts.shops) if (s.name?.trim()) ctx.taken.add(contentKey.shop(s.name.trim()));
+	const counts: Partial<Record<ShopType, number>> = {};
+	const shops = opts.shops.map((s) => {
+		const idx = counts[s.type] ?? 0;
+		counts[s.type] = idx + 1;
+		const shop = makeShop(ctx, root.fork(`shop:${s.type}:${idx}`), s.type, idx);
+		const bookName = s.name?.trim();
+		return bookName ? { ...shop, name: bookName, fixedName: true } : shop;
+	});
+
+	const trades = TRADES.filter((t) => tier.index >= t.minTier).map((t) => ({
+		label: t.label,
+		count: Math.max(1, realisticCount(root.fork(`trade:${t.label}`), population, t.supportValue))
+	}));
+
+	return {
+		id: hashString(`${opts.campaignId ?? ''}|book|${name}|${seed}`).toString(36),
+		seed,
+		contentVersion: version,
+		campaignId: opts.campaignId,
+		name,
+		tier: tier.id,
+		region: region.id,
+		population,
+		createdAt: new Date().toISOString(),
+		shops,
+		shopTotals: counts,
+		trades,
+		fromBook: true,
+		description: opts.description?.trim() || undefined
+	};
+}
+
 /** Rerolls are meant to be fresh, so they use the newest content and a random stream. */
 function contextFor(settlement: Settlement, input: CampaignInput): Ctx {
-	return newCtx(
+	const ctx = newCtx(
 		input,
 		CONTENT_VERSION,
 		getTier(settlement.tier),
 		getRegion(settlement.region),
 		usedKeys(settlement)
 	);
+	ctx.townName = settlement.name;
+	return ctx;
 }
 
 const freshRng = (settlement: Settlement, label: string) =>
@@ -461,12 +552,83 @@ export function rerollShop(
 	const target = settlement.shops.find((s) => s.id === shopId);
 	if (!target) return settlement;
 	const ctx = contextFor(settlement, input);
-	const peddler = ctx.tier.index === 0 && target.type === 'general';
+	const peddler = isPeddler(settlement, ctx, target.type);
 	const fresh = makeShop(ctx, freshRng(settlement, shopId), target.type, 0, peddler);
+	// A shop the DM named (from a book) keeps its name; only the keeper and stock change.
+	const named = target.fixedName ? { name: target.name, fixedName: true } : {};
 	return {
 		...settlement,
-		shops: settlement.shops.map((s) => (s.id === shopId ? { ...fresh, id: shopId } : s))
+		shops: settlement.shops.map((s) => (s.id === shopId ? { ...fresh, ...named, id: shopId } : s))
 	};
+}
+
+/**
+ * Time passes: fresh stock for one shop, or every shop if `shopId` is left
+ * out. Keepers stay the same, what the party bought is forgotten, and special
+ * orders (and any the party placed) are kept.
+ */
+export function restock(settlement: Settlement, input: CampaignInput, shopId?: string): Settlement {
+	const ctx = contextFor(settlement, input);
+	return {
+		...settlement,
+		shops: settlement.shops.map((shop) => {
+			if (shopId && shop.id !== shopId) return shop;
+			const peddler = isPeddler(settlement, ctx, shop.type);
+			const rng = freshRng(settlement, `${shop.id}:restock`);
+			const { stock } = makeStock(ctx, rng, shop.type, shop.keeper, peddler);
+			return { ...shop, stock };
+		})
+	};
+}
+
+/**
+ * Writes up one more of a shop type the town has more of than are detailed
+ * (a city's third weaponsmith, say). It goes after the others of its type.
+ * Each extra shop rolls on the stream it would have had if the town had
+ * detailed it to begin with, so the same town always gets the same extras.
+ */
+export function detailAnotherShop(
+	settlement: Settlement,
+	type: ShopType,
+	input: CampaignInput
+): Settlement {
+	const same = settlement.shops.filter((s) => s.type === type);
+	if (same.length >= (settlement.shopTotals[type] ?? 0)) return settlement;
+	const ctx = contextFor(settlement, input);
+	const idx = Math.max(-1, ...same.map((s) => Number(s.id.split('-').pop()) || 0)) + 1;
+	const shop = makeShop(ctx, createRng(settlement.seed).fork(`shop:${type}:${idx}`), type, idx);
+	const last = settlement.shops.lastIndexOf(same.at(-1)!);
+	const shops = [...settlement.shops];
+	shops.splice(last + 1, 0, shop);
+	return { ...settlement, shops };
+}
+
+/**
+ * Adds a shop to a town from a book, with the book's name if given. Unlike
+ * `detailAnotherShop` there's no limit: the DM says what the town has.
+ */
+export function addBookShop(
+	settlement: Settlement,
+	type: ShopType,
+	input: CampaignInput,
+	name?: string
+): Settlement {
+	const ctx = contextFor(settlement, input);
+	const same = settlement.shops.filter((s) => s.type === type);
+	const idx = Math.max(-1, ...same.map((s) => Number(s.id.split('-').pop()) || 0)) + 1;
+	const bookName = name?.trim();
+	if (bookName) ctx.taken.add(contentKey.shop(bookName));
+	let shop = makeShop(ctx, createRng(settlement.seed).fork(`shop:${type}:${idx}`), type, idx);
+	if (bookName) shop = { ...shop, name: bookName, fixedName: true };
+	// After the others of its type, or where its type comes in the usual order.
+	const order = SHOP_RULES.map((r) => r.type);
+	let at = settlement.shops.findIndex((s) => order.indexOf(s.type) > order.indexOf(type));
+	if (same.length) at = settlement.shops.lastIndexOf(same.at(-1)!) + 1;
+	if (at < 0) at = settlement.shops.length;
+	const shops = [...settlement.shops];
+	shops.splice(at, 0, shop);
+	const shopTotals = { ...settlement.shopTotals, [type]: (settlement.shopTotals[type] ?? 0) + 1 };
+	return { ...settlement, shops, shopTotals };
 }
 
 /** Gives one shopkeeper a new rumour, leaving everything else alone. */

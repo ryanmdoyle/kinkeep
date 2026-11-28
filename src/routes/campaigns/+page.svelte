@@ -100,6 +100,22 @@
 				</span>
 			</label>
 
+			<label class="check">
+				<input
+					type="checkbox"
+					checked={campaign.standingPrices ?? true}
+					onchange={(e) =>
+						campaigns.update(campaign.id, { standingPrices: e.currentTarget.checked })}
+				/>
+				<span>
+					Standing changes prices
+					<small class="muted">
+						Keepers charge the party 10% less when on positive terms and 20% more when on negative
+						terms. Regulars always get any discount their keeper promises.
+					</small>
+				</span>
+			</label>
+
 			<div class="actions">
 				<button class="btn small danger" type="button" onclick={() => remove(campaign)}>
 					Delete campaign

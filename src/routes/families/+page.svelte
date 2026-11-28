@@ -48,10 +48,12 @@
 	<div>
 		<h1>Families in {campaigns.active.name}</h1>
 		<p class="muted">
-			Each kind of shop is run by the same family everywhere in this campaign. Change anything here
-			and every town in the campaign (including saved ones) shows the new details. Unchanged
-			families keep picking up new built-in names and quirks; reset a family to get them back after
-			editing it. Changes save automatically in this browser.
+			Each kind of shop is run by the same family everywhere in this campaign. Their look, emblem,
+			color and personality update everywhere at once, and renaming a family renames its shops and
+			mentions in saved towns too. Shopkeepers you've already met keep their own first names,
+			greetings and quirks; new lines here go to new shopkeepers. Unchanged families keep picking up
+			new built-in names and quirks; reset a family to get them back after editing it. Changes save
+			automatically in this browser.
 		</p>
 	</div>
 	<button
@@ -101,8 +103,15 @@
 							{:else}
 								<input
 									value={family[field.key]}
-									onchange={(e) =>
-										families.update(family.id, { [field.key]: e.currentTarget.value })}
+									onchange={(e) => {
+										const value = e.currentTarget.value;
+										// A family always needs a name (saved towns are renamed from it).
+										if (field.key === 'surname' && !value.trim()) {
+											e.currentTarget.value = family.surname;
+											return;
+										}
+										families.update(family.id, { [field.key]: value });
+									}}
 								/>
 							{/if}
 						</label>
