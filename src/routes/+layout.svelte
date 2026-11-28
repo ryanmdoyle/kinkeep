@@ -7,7 +7,7 @@
 	import { view } from '#lib/stores/view.svelte.ts';
 	import type { LayoutProps } from './$types';
 
-	let { children }: LayoutProps = $props();
+	let { children, data }: LayoutProps = $props();
 
 	// Player view is a flag on <html> so the stylesheet can hide DM-only parts anywhere.
 	$effect(() => {
@@ -85,6 +85,14 @@
 					</svg>
 				{/if}
 			</button>
+			{#if data.user}
+				<form class="account" method="POST" action={resolve('/logout')}>
+					<span class="who" title={data.user.email}>{data.user.email}</span>
+					<button class="btn small" type="submit">Sign out</button>
+				</form>
+			{:else if data.accounts}
+				<a class="btn small" href={resolve('/login')}>Sign in</a>
+			{/if}
 		</div>
 	</div>
 </header>
@@ -155,6 +163,19 @@
 	.theme-toggle:hover {
 		background: var(--surface-2);
 		color: var(--ink);
+	}
+	.account {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.who {
+		max-width: 12rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: var(--muted);
+		font-size: 0.88rem;
 	}
 	.campaign select {
 		max-width: 14rem;

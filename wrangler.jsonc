@@ -1,0 +1,30 @@
+// Cloudflare Worker for the app (see docs/PLAN.md, phase 3).
+// The SvelteKit adapter sets `main` and the static assets itself.
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "wares-and-whispers",
+	"compatibility_date": "2026-11-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": { "enabled": true },
+
+	// Postgres (Supabase) through Hyperdrive, which pools connections for Workers.
+	// Point the Hyperdrive config at Supabase's session pooler or direct
+	// connection, not the transaction pooler.
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			// Replace with your Hyperdrive config's id (PLAN.md step 3.3).
+			"id": "00000000000000000000000000000000",
+			// Used by `npm run dev`: the Supabase CLI's local database. Set
+			// CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE in .env to use another.
+			"localConnectionString": "postgresql://postgres:postgres@127.0.0.1:54322/postgres"
+		}
+	],
+
+	// Public values the browser also sees. Secrets go in the dashboard or
+	// `wrangler secret put`, never here.
+	"vars": {
+		"PUBLIC_SUPABASE_URL": "",
+		"PUBLIC_SUPABASE_PUBLISHABLE_KEY": ""
+	}
+}

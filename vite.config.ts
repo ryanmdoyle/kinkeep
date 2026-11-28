@@ -1,10 +1,9 @@
 import { defineConfig } from 'vitest/config';
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
 
-// Set BASE_PATH when the site lives in a sub-folder, e.g. GitHub Pages
-// serves this repo at /<repo-name>. Leave it unset for a custom domain or
-// Cloudflare Pages.
+// Set BASE_PATH when the site lives in a sub-folder. Leave it unset on
+// Cloudflare Workers, which serve the app from the root.
 const base = (process.env.BASE_PATH ?? '') as '' | `/${string}`;
 
 export default defineConfig({
@@ -15,8 +14,9 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			// 404.html lets static hosts fall back to the app for unknown URLs.
-			adapter: adapter({ fallback: '404.html' }),
+			// A Cloudflare Worker serves the app; wrangler.jsonc configures it. Unit
+			// tests don't need the adapter (or the Workers emulator it starts).
+			adapter: process.env.VITEST ? undefined : adapter(),
 			paths: { base }
 		})
 	],

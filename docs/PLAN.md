@@ -66,38 +66,77 @@ Legend: 🧑 needs you (accounts, keys, clicks in a dashboard) · 🤖 code on t
 ### Phase 1: Groundwork (pure code, nothing external)
 
 - [x] 🤖 1.1 This plan
-- [ ] 🤖 1.2 Surname placeholders: `src/lib/render.ts` (`tokenFamilies`, `renderText`,
+- [x] 🤖 1.2 Surname placeholders: `src/lib/render.ts` (`tokenFamilies`, `renderText`,
       `tokenizeText`, `renderSettlement`, `tokenizeSettlement`, `renderFamily`,
       `tokenizeFamily`). Test: for every golden seed, building with placeholders and filling them
       in gives exactly today's town.
-- [ ] 🤖 1.3 Copper-piece helpers for the database boundary
+- [x] 🤖 1.3 Copper-piece helpers for the database boundary
 
 ### Phase 2: Schema
 
-- [ ] 🤖 2.1 Prisma 7, `prisma/schema.prisma`, `prisma.config.ts`
-- [ ] 🤖 2.2 Initial migration SQL (generated, plus RLS on every table)
-- [ ] 🤖 2.3 Mapping layer: a `Settlement` to rows and back, with a party's state merged in, so
-      the existing UI and pure functions keep working. Round-trip tests.
+- [x] 🤖 2.1 Prisma 7, `prisma/schema.prisma`, `prisma.config.ts`
+- [x] 🤖 2.2 Initial migration SQL (generated, plus RLS on every table, checked by a test)
+- [x] 🤖 2.3 Mapping layer (`src/lib/server/rows.ts`): a `Settlement` to rows and back, with a
+      party's state merged in, so the existing UI and pure functions keep working. Round-trip
+      tests, plus `npm run test:db` against a real Postgres.
 
 ### Phase 3: Platform
 
 - [ ] 🧑 3.1 Supabase project. Collect: project URL, anon (publishable) key, service role
       (secret) key, session pooler and direct connection strings.
-- [ ] 🧑 3.2 Supabase Auth settings: email/password on; Discord and Google OAuth apps; site URL
-      and redirect URLs (localhost, the workers.dev preview, the final domain); custom SMTP
-      (Resend or Postmark) before inviting real users.
-- [ ] 🧑 3.3 Cloudflare: a Hyperdrive config pointing at Supabase's **session pooler** (or direct
-      connection), and a Worker connected to this repo with Workers Builds. Set its production
-      branch to this branch for now (it becomes the "next" site on workers.dev); switch to `main`
-      at cutover.
-- [ ] 🧑 3.4 Run the first migration from your machine: `npx prisma migrate deploy`
-- [ ] 🤖 3.5 `adapter-cloudflare`, `wrangler.jsonc` (Hyperdrive binding, `nodejs_compat`),
-      Prisma client created per request, `/api/health` that runs one query
-- [ ] 🤖 3.6 Supabase auth in `hooks.server.ts` (`locals.supabase`, `locals.user`), profile row
-      created on first sign-in, `/login`, `/signup`, `/auth/callback`, sign out, account menu
+- [ ] 🧑 3.2 Supabase Auth settings (details under "Setting up Supabase" below)
+- [ ] 🧑 3.3 Cloudflare: Hyperdrive and a Worker (details under "Setting up Cloudflare" below)
+- [ ] 🧑 3.4 Run the first migration from your machine: `npm run db:migrate` (with `DIRECT_URL`
+      in `.env`)
+- [x] 🤖 3.5 `adapter-cloudflare`, `wrangler.jsonc` (Hyperdrive binding, `nodejs_compat`),
+      Prisma client opened per request, `/api/health` that runs a query. Checked in workerd
+      locally against Postgres through the Hyperdrive binding: concurrent requests work and no
+      connections are left open. The Worker is about 1.6 MB gzipped (Prisma's query engine is
+      most of it), under the 3 MB free-plan limit.
+- [x] 🤖 3.6 Supabase auth in `hooks.server.ts` (`locals.supabase`, `locals.user` checked with
+      `getClaims`), profile row created on first sign-in, `/login` (email and password, Discord,
+      Google), `/auth/callback`, `/logout`, account menu in the header. Checked locally up to the
+      redirect to Supabase; signing in for real needs 3.1 and 3.2.
 
 **Milestone:** a preview URL where you can sign up, sign in, and see your name come back from
 Postgres.
+
+#### Setting up Supabase (3.1, 3.2)
+
+1. Create a project. From **Project Settings → API** take the project URL and the publishable
+   (anon) key. From **Connect** take the **session pooler** and **direct** connection strings.
+2. **Authentication → Sign In / Providers:** email on. Add Discord (discord.com/developers →
+   OAuth2) and Google (Google Cloud console → OAuth client). Each provider's callback URL is
+   `https://<project>.supabase.co/auth/v1/callback`.
+3. **Authentication → URL Configuration:** Site URL is the app's address. Redirect URLs:
+   `http://localhost:5173/**`, `https://*.workers.dev/**` (or the exact preview URL) and the final
+   domain with `/**`.
+4. **Authentication → Emails → Confirm signup:** so confirmation links work even when opened in
+   a different browser, change the link to
+   `{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email`.
+5. **Authentication → Emails → SMTP:** Supabase's built-in sender is for testing only. Add
+   Resend or Postmark before real people sign up.
+6. **Project Settings → Data API:** optional belt and braces. Every table already has RLS on
+   with no policies, so the publishable key can't read anything.
+
+#### Setting up Cloudflare (3.3)
+
+1. **Hyperdrive:** `npx wrangler hyperdrive create wares-and-whispers --connection-string="<session pooler string>"`
+   and put the id it prints in `wrangler.jsonc`.
+2. **Worker:** Workers & Pages → Create → Import a repository → this repo. Build command
+   `npm run build`, deploy command `npx wrangler deploy`. Set the production branch to
+   `claude/app-architecture-schema-n851fx` for now so it becomes the preview of the new app;
+   switch it to `main` at cutover.
+3. **Variables:** set `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` (both public)
+   in `wrangler.jsonc` or the dashboard.
+4. Open `/api/health` on the deployed Worker. It should list the `init` migration.
+
+#### Running it locally
+
+1. Copy `.env.example` to `.env` and fill it in. A local Postgres (or the Supabase CLI's) works
+   for `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE` and `DIRECT_URL`.
+2. `npm install`, `npm run db:migrate`, `npm run dev`, then open
+   `http://localhost:5173/api/health`.
 
 ### Phase 4: The DM's data on the server
 

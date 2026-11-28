@@ -1,7 +1,4 @@
-// Fully static, client-rendered app: everything is generated in the browser
-// and saved to localStorage, so there is no server to talk to.
-export const prerender = true;
+// Pages still render in the browser and keep towns in localStorage while the
+// move to the database happens (docs/PLAN.md). They're served by the Worker
+// now rather than prerendered, so the server can say who's signed in.
 export const ssr = false;
-// Static hosts serve folders as /path/ (index.html inside); matching that
-// keeps URLs stable on GitHub Pages and Cloudflare Pages.
-export const trailingSlash = 'always';

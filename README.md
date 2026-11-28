@@ -82,17 +82,19 @@ such.
 
 ## Development
 
+> This branch is moving the app to Cloudflare Workers with Supabase (accounts) and Postgres.
+> [docs/PLAN.md](docs/PLAN.md) has the plan, the setup steps and how to run it locally. The
+> deploy notes below are for the current static site on `main`.
+
 ```sh
 npm install
-npm run dev        # start the dev server
+npm run dev        # start the dev server (Cloudflare Workers runtime)
 npm test           # unit tests (Vitest)
+npm run test:db    # database tests (needs TEST_DATABASE_URL)
 npm run check      # type-check
-npm run build      # static site in ./build
-npm run preview    # serve the built site
+npm run build      # build the Worker
+npm run db:migrate # apply database migrations (needs DIRECT_URL)
 ```
-
-Built with SvelteKit (static adapter, client-side only). `npm run build` produces a plain static
-site in `build/`.
 
 ## Deploying
 
