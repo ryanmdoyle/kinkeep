@@ -6,13 +6,16 @@
 		addBookShop,
 		detailAnotherShop,
 		familyForShop,
+		itemForShop,
+		missingMustHaves,
 		rerollRumour,
 		rerollShop,
-		restock
+		restock,
+		stockMustHaves
 	} from '#lib/generator.ts';
 	import { families } from '#lib/stores/families.svelte.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
-	import { removeShop, renameShop } from '#lib/edit.ts';
+	import { addStockItem, removeShop, removeStockItem, renameShop } from '#lib/edit.ts';
 	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import {
 		editRumour,
@@ -89,6 +92,9 @@
 		if (sold && !confirm(`Restock ${what}? What the party bought is cleared.`)) return;
 		onChange(restock(settlement, towns.inputFor(undefined, settlement.id), shopId));
 	}
+
+	/** Must-haves this town lacks (a town saved before they were added). */
+	const missing = $derived(missingMustHaves(settlement, campaigns.active.mustHaves));
 
 	const tier = $derived(getTier(settlement.tier));
 	const region = $derived(getRegion(settlement.region));
@@ -202,6 +208,21 @@
 				Time passes: new stock everywhere, same keepers. Special orders stay.
 			</span>
 		</div>
+		{#if missing.length}
+			<div class="shops-bar no-print">
+				<button
+					class="btn small"
+					type="button"
+					onclick={() => onChange(stockMustHaves(settlement, campaigns.active.mustHaves))}
+				>
+					Add must-haves
+				</button>
+				<span class="muted">
+					Not in town yet: {missing.map((m) => m.name).join(', ')}.
+					<a href="/campaigns">Edit the list</a>
+				</span>
+			</div>
+		{/if}
 	{/if}
 	<div class="shops">
 		{#each settlement.shops as shop (shop.id)}
@@ -230,6 +251,11 @@
 				onRestock={onChange ? () => restockShops(shop.id) : undefined}
 				onRename={onTrack ? (p) => onTrack(renameShop(settlement, shop.id, p)) : undefined}
 				onRemove={onChange ? () => onChange(removeShop(settlement, shop.id)) : undefined}
+				itemFor={(name, qty) => itemForShop(settlement, shop, name, qty)}
+				onAddItem={onTrack ? (item) => onTrack(addStockItem(settlement, shop.id, item)) : undefined}
+				onRemoveItem={onTrack
+					? (name) => onTrack(removeStockItem(settlement, shop.id, name))
+					: undefined}
 			/>
 		{/each}
 	</div>

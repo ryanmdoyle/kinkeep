@@ -1,9 +1,9 @@
 import { renameText } from '#lib/rename.ts';
-import type { Family, Settlement, Shop, Shopkeeper } from '#lib/types.ts';
+import type { Family, Settlement, Shop, Shopkeeper, StockItem } from '#lib/types.ts';
 
 /**
  * Hand edits to a town: renaming shops and keepers (to match a published
- * adventure, say) and removing shops.
+ * adventure, say), removing shops, and adding or removing stock.
  */
 
 export interface NamePatch {
@@ -74,4 +74,41 @@ export function removeShop(settlement: Settlement, shopId: string): Settlement {
 	if (left > 0) shopTotals[shop.type] = left;
 	else delete shopTotals[shop.type];
 	return { ...settlement, shops, shopTotals };
+}
+
+const sameName = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
+
+function mapShop(settlement: Settlement, shopId: string, change: (shop: Shop) => Shop): Settlement {
+	return {
+		...settlement,
+		shops: settlement.shops.map((shop) => (shop.id === shopId ? change(shop) : shop))
+	};
+}
+
+/**
+ * Puts an item on a shop's shelves (replacing one of the same name, and
+ * forgetting what the party bought of it). Items the DM adds stay through
+ * restocks and rerolls.
+ */
+export function addStockItem(settlement: Settlement, shopId: string, item: StockItem): Settlement {
+	const name = item.name.trim();
+	if (!name) return settlement;
+	const added: StockItem = { ...item, name, added: true };
+	delete added.sold;
+	delete added.mustHave;
+	return mapShop(settlement, shopId, (shop) => {
+		const exists = shop.stock.some((i) => sameName(i.name, name));
+		const stock = exists
+			? shop.stock.map((i) => (sameName(i.name, name) ? added : i))
+			: [...shop.stock, added];
+		return { ...shop, stock };
+	});
+}
+
+/** Takes an item off a shop's shelves. A restock may bring it back. */
+export function removeStockItem(settlement: Settlement, shopId: string, name: string): Settlement {
+	return mapShop(settlement, shopId, (shop) => ({
+		...shop,
+		stock: shop.stock.filter((i) => !sameName(i.name, name))
+	}));
 }

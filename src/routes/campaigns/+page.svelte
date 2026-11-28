@@ -1,4 +1,5 @@
 <script lang="ts">
+	import MustHaves from '#lib/components/MustHaves.svelte';
 	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
 	import { towns } from '#lib/stores/towns.svelte.ts';
 	import type { Campaign } from '#lib/types.ts';
@@ -115,6 +116,8 @@
 					</small>
 				</span>
 			</label>
+
+			<MustHaves {campaign} />
 
 			<div class="actions">
 				<button class="btn small danger" type="button" onclick={() => remove(campaign)}>

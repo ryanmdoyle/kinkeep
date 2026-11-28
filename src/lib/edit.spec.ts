@@ -1,8 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { DEFAULT_FAMILIES } from '#lib/data/families.ts';
-import { keeperName, removeShop, renameShop } from '#lib/edit.ts';
-import { addBookShop, generateBookTown, generateSettlement, rerollShop } from '#lib/generator.ts';
+import { addStockItem, keeperName, removeShop, removeStockItem, renameShop } from '#lib/edit.ts';
+import {
+	addBookShop,
+	generateBookTown,
+	generateSettlement,
+	itemForShop,
+	rerollShop,
+	restock
+} from '#lib/generator.ts';
 import { keepersByFamily } from '#lib/party.ts';
+import { sell } from '#lib/tracking.ts';
+import type { Settlement } from '#lib/types.ts';
 
 const families = DEFAULT_FAMILIES;
 const input = {
@@ -82,5 +91,44 @@ describe('adding and removing shops', () => {
 		const next = removeShop(town, town.shops[0].id);
 		expect(next.shops).toHaveLength(town.shops.length - 1);
 		expect(next.shopTotals).toEqual(town.shopTotals);
+	});
+});
+
+describe('editing stock', () => {
+	const village = generateSettlement({ seed: 'stock-edit', tier: 'village', ...input });
+	const store = village.shops.find((s) => s.type === 'general')!;
+	const stockOf = (town: Settlement) => town.shops.find((s) => s.id === store.id)!.stock;
+
+	it("prices a catalog item at this keeper's prices", () => {
+		const potion = itemForShop(village, store, 'potion of HEALING', 2)!;
+		expect(potion).toMatchObject({ name: 'Potion of healing', category: 'Potion', qty: 2 });
+		expect(potion.price).toBeGreaterThan(50);
+		expect(itemForShop(village, store, 'Bottled moonlight')).toBeUndefined();
+	});
+
+	it('adds an item, and keeps it through restocks and rerolls', () => {
+		const potion = itemForShop(village, store, 'Potion of healing')!;
+		let town = addStockItem(village, store.id, potion);
+		expect(stockOf(town).at(-1)).toMatchObject({ name: 'Potion of healing', added: true });
+		town = sell(town, store.id, 'Potion of healing', 1);
+		const restocked = stockOf(restock(town, input, store.id));
+		expect(restocked.filter((i) => i.name === 'Potion of healing')).toEqual([
+			{ ...potion, added: true }
+		]);
+		const rerolled = stockOf(rerollShop(town, store.id, input));
+		expect(rerolled.some((i) => i.name === 'Potion of healing' && i.added)).toBe(true);
+	});
+
+	it('replaces an item of the same name instead of listing it twice', () => {
+		const torch = stockOf(village).find((i) => i.name === 'Torch')!;
+		const town = addStockItem(village, store.id, { ...torch, name: 'torch ', qty: 99, price: 1 });
+		const torches = stockOf(town).filter((i) => i.name.toLowerCase() === 'torch');
+		expect(torches).toEqual([{ ...torch, name: 'torch', qty: 99, price: 1, added: true }]);
+	});
+
+	it('removes an item', () => {
+		const town = removeStockItem(village, store.id, 'TORCH');
+		expect(stockOf(town).some((i) => i.name === 'Torch')).toBe(false);
+		expect(stockOf(town)).toHaveLength(stockOf(village).length - 1);
 	});
 });

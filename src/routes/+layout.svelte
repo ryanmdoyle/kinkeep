@@ -3,6 +3,7 @@
 	import { asset, resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { campaigns } from '#lib/stores/campaigns.svelte.ts';
+	import { theme } from '#lib/stores/theme.svelte.ts';
 	import { view } from '#lib/stores/view.svelte.ts';
 	import type { LayoutProps } from './$types';
 
@@ -11,6 +12,13 @@
 	// Player view is a flag on <html> so the stylesheet can hide DM-only parts anywhere.
 	$effect(() => {
 		document.documentElement.dataset.view = view.players ? 'players' : 'dm';
+	});
+
+	// A pinned theme sets color-scheme on <html>; with none, the system setting decides.
+	$effect(() => {
+		const root = document.documentElement;
+		if (theme.chosen) root.dataset.theme = theme.chosen;
+		else delete root.dataset.theme;
 	});
 
 	const links = [
@@ -41,18 +49,43 @@
 				</a>
 			{/each}
 		</nav>
-		<label class="campaign">
-			<span class="visually-hidden">Campaign</span>
-			<select
-				value={campaigns.active.id}
-				onchange={(e) => campaigns.select(e.currentTarget.value)}
-				title="Towns, families and used content belong to the campaign"
+		<div class="tools">
+			<label class="campaign">
+				<span class="visually-hidden">Campaign</span>
+				<select
+					value={campaigns.active.id}
+					onchange={(e) => campaigns.select(e.currentTarget.value)}
+					title="Towns, families and used content belong to the campaign"
+				>
+					{#each campaigns.list as c (c.id)}
+						<option value={c.id}>{c.name}</option>
+					{/each}
+				</select>
+			</label>
+			<button
+				class="theme-toggle"
+				type="button"
+				onclick={() => theme.toggle()}
+				aria-label={theme.current === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+				title={theme.current === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
 			>
-				{#each campaigns.list as c (c.id)}
-					<option value={c.id}>{c.name}</option>
-				{/each}
-			</select>
-		</label>
+				{#if theme.current === 'dark'}
+					<!-- Sun: shown in dark mode, switches to light. -->
+					<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+						<circle cx="12" cy="12" r="4.5" fill="currentColor" />
+						<g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+							<path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22" />
+							<path d="M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" />
+						</g>
+					</svg>
+				{:else}
+					<!-- Moon: shown in light mode, switches to dark. -->
+					<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+						<path fill="currentColor" d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+					</svg>
+				{/if}
+			</button>
+		</div>
 	</div>
 </header>
 
@@ -101,6 +134,27 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.25rem;
+	}
+	.tools {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: var(--muted);
+		cursor: pointer;
+	}
+	.theme-toggle:hover {
+		background: var(--surface-2);
+		color: var(--ink);
 	}
 	.campaign select {
 		max-width: 14rem;

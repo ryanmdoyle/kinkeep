@@ -3,6 +3,7 @@
 	import RumourText from '#lib/components/RumourText.svelte';
 	import { keeperName, type NamePatch } from '#lib/edit.ts';
 	import { SHOP_RULES } from '#lib/data/tiers.ts';
+	import { allCatalogItems } from '#lib/generator.ts';
 	import { formatPrice, roundPrice } from '#lib/money.ts';
 	import {
 		partyPrices,
@@ -41,7 +42,10 @@
 		onOrder,
 		onRestock,
 		onRename,
-		onRemove
+		onRemove,
+		itemFor,
+		onAddItem,
+		onRemoveItem
 	}: {
 		shop: Shop;
 		family: Family;
@@ -63,6 +67,10 @@
 		onSell?: (itemName: string, delta: number) => void;
 		onOrder?: (name: string, action: OrderAction) => void;
 		onRestock?: () => void;
+		/** A catalog item as this shop would sell it (to suggest a price when adding one). */
+		itemFor?: (name: string, qty: number) => StockItem | undefined;
+		onAddItem?: (item: StockItem) => void;
+		onRemoveItem?: (name: string) => void;
 	} = $props();
 
 	const bought = $derived(purchases(shop));
@@ -71,6 +79,26 @@
 
 	let editingRumour = $state(false);
 	let editing = $state(false);
+	let editingStock = $state(false);
+
+	let newItem = $state('');
+	let newQty = $state(1);
+	let newPrice = $state<number | undefined>(undefined);
+	/** The catalog item being added, priced for this shop, if it's in the catalog. */
+	const suggested = $derived(newItem.trim() ? itemFor?.(newItem, newQty) : undefined);
+
+	function addItem(event: SubmitEvent) {
+		event.preventDefault();
+		const name = newItem.trim();
+		if (!name || !onAddItem) return;
+		const price = newPrice ?? suggested?.price;
+		if (price === undefined || price < 0) return;
+		const qty = Math.max(1, Math.round(newQty) || 1);
+		onAddItem(suggested ? { ...suggested, price } : { name, category: 'Other', price, qty });
+		newItem = '';
+		newQty = 1;
+		newPrice = undefined;
+	}
 
 	function removeThis() {
 		const tracked = shop.visited ? ' and everything you tracked there' : '';
@@ -401,7 +429,7 @@
 
 	<details class="stock" open>
 		<summary>Stock ({shop.stock.length} items)</summary>
-		{#if bought.length || onRestock}
+		{#if bought.length || onRestock || onAddItem}
 			<div class="stock-tools dm-only">
 				{#if bought.length}
 					<p class="bought">
@@ -417,6 +445,17 @@
 						title="Time passes: new stock, same keeper. Special orders stay."
 					>
 						Restock
+					</button>
+				{/if}
+				{#if onAddItem}
+					<button
+						class="link no-print"
+						type="button"
+						aria-expanded={editingStock}
+						onclick={() => (editingStock = !editingStock)}
+						title="Add items to this shop or take them off the shelves"
+					>
+						{editingStock ? 'Done editing' : 'Edit stock'}
 					</button>
 				{/if}
 			</div>
@@ -439,9 +478,29 @@
 							{@const left = remaining(item)}
 							<tr class:sold-out={left === 0}>
 								<td>
+									{#if editingStock && onRemoveItem}<button
+											class="remove-item no-print"
+											type="button"
+											onclick={() => onRemoveItem(item.name)}
+											aria-label="Remove {item.name}"
+											title="Take it off the shelves"
+										>
+											✕
+										</button>{/if}
 									{item.name}
 									{#if item.rarity}<span class="rarity {item.rarity.replace(' ', '-')}">
 											{item.rarity}
+										</span>{/if}
+									{#if item.mustHave}<span
+											class="tag dm-only"
+											title="On the campaign's must-have list, so this town keeps some"
+										>
+											kept in the back
+										</span>{:else if item.added}<span
+											class="tag dm-only"
+											title="You added this: it stays through restocks"
+										>
+											added
 										</span>{/if}
 									{#if item.note}<span class="note">{item.note}</span>{/if}
 								</td>
@@ -485,6 +544,49 @@
 					</tbody>
 				{/each}
 			</table>
+		{/if}
+		{#if editingStock && onAddItem}
+			<form class="add-item no-print" onsubmit={addItem}>
+				<label class="item">
+					<span>Add an item</span>
+					<input
+						bind:value={newItem}
+						list="item-names-{shop.id}"
+						placeholder="e.g. Potion of healing"
+						autocomplete="off"
+					/>
+				</label>
+				<label class="small-field">
+					<span>How many</span>
+					<input type="number" min="1" max="999" bind:value={newQty} />
+				</label>
+				<label class="small-field">
+					<span>Price (gp)</span>
+					<input
+						type="number"
+						min="0"
+						step="any"
+						bind:value={newPrice}
+						placeholder={suggested ? String(suggested.price) : ''}
+						required={!suggested}
+					/>
+				</label>
+				<button class="btn small" type="submit" disabled={!newItem.trim()}>Add</button>
+				<datalist id="item-names-{shop.id}">
+					{#each allCatalogItems() as item (item.name)}
+						<option value={item.name}></option>
+					{/each}
+				</datalist>
+				<p class="muted add-hint">
+					{#if suggested}
+						{formatPrice(suggested.price)} here, from the item lists. Type a price to change it.
+					{:else if newItem.trim()}
+						Not in the item lists, so it's your own: give it a price.
+					{:else}
+						Pick from the item lists or type your own. Items you add stay through restocks.
+					{/if}
+				</p>
+			</form>
 		{/if}
 		{#if shop.specialOrders.length}
 			<div class="orders">
@@ -960,6 +1062,14 @@
 	.rarity.very-rare {
 		color: var(--very-rare);
 	}
+	.tag {
+		font-size: 0.7rem;
+		padding: 0 0.35rem;
+		margin-left: 0.25rem;
+		border: 1px dashed currentColor;
+		color: var(--accent);
+		white-space: nowrap;
+	}
 	.stock-tools {
 		display: flex;
 		align-items: baseline;
@@ -970,6 +1080,48 @@
 	}
 	.stock-tools .link {
 		margin-left: auto;
+	}
+	.stock-tools .link + .link {
+		margin-left: 0;
+	}
+	.remove-item {
+		background: none;
+		border: 1px solid var(--line);
+		color: var(--danger);
+		cursor: pointer;
+		font-size: 0.7rem;
+		line-height: 1;
+		padding: 0.15rem 0.3rem;
+		margin-right: 0.3rem;
+	}
+	.add-item {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 0.5rem 0.6rem;
+		margin-top: 0.6rem;
+		padding: 0.6rem;
+		border: 1px dashed var(--line);
+		font-size: 0.88rem;
+	}
+	.add-item label span {
+		display: block;
+		font-weight: 600;
+		margin-bottom: 0.2rem;
+	}
+	.add-item .item {
+		flex: 1 1 100%;
+	}
+	.add-item .small-field {
+		flex: 1 1 5rem;
+	}
+	.add-item .small-field input {
+		width: 100%;
+	}
+	.add-hint {
+		flex: 1 1 100%;
+		margin: 0;
+		font-size: 0.8rem;
 	}
 	.bought {
 		margin: 0;
