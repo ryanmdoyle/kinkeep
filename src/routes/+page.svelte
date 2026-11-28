@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import SettlementView from '#lib/components/SettlementView.svelte';
+	import TownMinimums from '#lib/components/TownMinimums.svelte';
 	import { CONTENT_VERSION, normalizeVersion } from '#lib/content/versioned.ts';
 	import { REGIONS } from '#lib/data/regions.ts';
 	import { TIERS } from '#lib/data/tiers.ts';
@@ -221,6 +222,7 @@
 	Running a published adventure? <a href={resolve('/towns/new')}>Set up a town from the book</a>
 	with its own name and shops, run by your families.
 </p>
+<TownMinimums />
 
 {#if settlement}
 	{#if (settlement.contentVersion ?? 1) < CONTENT_VERSION}

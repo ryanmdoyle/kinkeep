@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import SettlementView from '#lib/components/SettlementView.svelte';
+	import TownMinimums from '#lib/components/TownMinimums.svelte';
 	import { getRegion } from '#lib/data/regions.ts';
 	import { getTier } from '#lib/data/tiers.ts';
 	import { familyForShop } from '#lib/generator.ts';
@@ -141,6 +142,7 @@
 				Saved in this browser. <a href={resolve('/campaigns')}>Switch campaign</a>, or export a
 				backup (every campaign) to move them to another device.
 			</p>
+			<TownMinimums />
 		</div>
 		<div class="io no-print">
 			<a class="btn" href={resolve('/towns/new')}>Town from a book</a>

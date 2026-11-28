@@ -63,10 +63,11 @@ A settlement and shopkeeper generator for tabletop RPGs (built with D&D 5e in mi
 - **Your own stock.** "Edit stock" on any shop lets you add an item (from the item lists, priced for
   that keeper and town, or your own at your price) or take one off the shelves. Items you add stay
   through restocks and rerolls.
-- **Must-haves.** List items on the **Campaigns** page that every town in the campaign should have
-  somewhere, like a healing potion or two. Even a hamlet keeps them, in a shop that would sell them
+- **Town minimums.** List items on the **Campaigns** page that every town in the campaign should
+  have somewhere, like a healing potion or two. Even a hamlet keeps them, in a shop that would sell them
   or the back of the general store, for a quarter more where the town is too small to stock them.
   New towns and restocks get them on their own, and one click adds them to towns already saved.
+  While a campaign has any, the Generate and Saved towns pages say so; click the note to see them.
 - **Keepers remember.** Returning parties get a greeting that matches how things were left, and
   keepers they haven't met yet have heard about them from relatives they have ("I've had a letter
   from Magda in Oakford. Several pages. Mostly about you."). Standing changes prices (10% off for

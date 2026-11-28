@@ -5,7 +5,7 @@
 	import { towns } from '#lib/stores/towns.svelte.ts';
 	import type { Campaign, MustHave } from '#lib/types.ts';
 
-	/** A campaign's must-have list: items every one of its towns keeps somewhere. */
+	/** A campaign's town minimums (must-haves): items every one of its towns keeps somewhere. */
 	let { campaign }: { campaign: Campaign } = $props();
 
 	const catalog = new Map(allCatalogItems().map((item) => [item.name.toLowerCase(), item]));
@@ -51,8 +51,8 @@
 	}
 </script>
 
-<section class="must-haves">
-	<h3>Must-haves</h3>
+<section class="must-haves" id={campaign.id === campaigns.active.id ? 'town-minimums' : undefined}>
+	<h3>Town minimums</h3>
 	<p class="muted intro">
 		Items every town in this campaign keeps somewhere, even one too small to sell them. A shop that
 		would sell it gets it, or else it's kept in the back of the general store, for a quarter more in
