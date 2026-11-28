@@ -1,6 +1,17 @@
 /**
- * Prices are stored in gold pieces (gp) as plain numbers, e.g. 0.05 = 5 cp.
+ * Prices are gold pieces (gp) as plain numbers in the app, e.g. 0.05 = 5 cp.
+ * The database stores whole copper pieces (`priceCp`) so they add up exactly.
  */
+
+/** 2.5 gp -> 250 cp. */
+export function toCp(gp: number): number {
+	return Math.round(gp * 100);
+}
+
+/** 250 cp -> 2.5 gp. */
+export function fromCp(cp: number): number {
+	return cp / 100;
+}
 
 /** Rounds a price to something a shopkeeper would actually ask for. */
 export function roundPrice(gp: number): number {
